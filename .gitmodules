@@ -1,0 +1,12 @@
+[submodule "/Users/jamesvaughn/.zsh/zsh-autosuggestions"]
+	path = /Users/jamesvaughn/.zsh/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions
+[submodule "/Users/jamesvaughn/.zsh/zsh-completions"]
+	path = /Users/jamesvaughn/.zsh/zsh-completions
+	url = https://github.com/zsh-users/zsh-completions.git
+[submodule "/Users/jamesvaughn/.zsh/zsh-history-substring-search"]
+	path = /Users/jamesvaughn/.zsh/zsh-history-substring-search
+	url = https://github.com/zsh-users/zsh-history-substring-search.git
+[submodule "/Users/jamesvaughn/.zsh/zsh-syntax-highlighting"]
+	path = /Users/jamesvaughn/.zsh/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
