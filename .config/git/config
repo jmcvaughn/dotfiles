@@ -1,0 +1,13 @@
+[user]
+	name = James Vaughn
+	email = james.vaughn@canonical.com
+[merge]
+	tool = vimdiff
+[mergetool]
+	path = nvim
+	prompt = false
+[alias]
+	egrep = grep -E
+	igrep = grep -i
+[core]
+	excludesFile = ~/.config/git/ignore
