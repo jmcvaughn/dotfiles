@@ -10,3 +10,6 @@
 [submodule "/Users/jamesvaughn/.zsh/zsh-syntax-highlighting"]
 	path = /Users/jamesvaughn/.zsh/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule ".config/nvim/colors/gruvbox"]
+	path = .config/nvim/colors/gruvbox
+	url = https://github.com/morhetz/gruvbox
