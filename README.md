@@ -12,7 +12,7 @@ This project is inspired by [StreakyCobra's post on HackerNews](https://news.yco
 - The master branch serves as the base for all other branches, containing dotfiles common to all configurations. These files will not be modified per-branch; any conditional configuration (e.g. per-platform, per-distribution, per-system) will be made in the master branch and evaluated at runtime. An example of this is in .zshrc, where the `os` variable is set and checked to set `PATH`, aliases, etc. This is simply easier to manage.
 - Rebasing (`git rebase master`), not merging, is used to update non-master branches.
 
-Any files that aren't dotfiles (such as branch-specific scripts and documentation) are placed in .dotfiles-BRANCH/ (e.g. .dotfiles-mac/).
+In non-master branches, any additional setup scripts can be found in .scripts/ and any documentation can be found in .docs/. Refer to this documentation **before** cloning for any additional tasks required before cloning or for otherwise setting up a system.
 
 ## Cloning
 - Perform a bare clone of the repository:
