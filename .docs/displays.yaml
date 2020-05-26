@@ -1,0 +1,84 @@
+# macOS is colour-managed globally; this unfortunately includes any calibration
+# software. Therefore, prior to calibrating, set the ICC profile to
+# DisplayProfile_Linear.icc. As the name suggests, this is a linear profile,
+# i.e. a "null" profile.
+
+'MacBookPro16,1 #1 2020-07-19 22-52 D6500 2.2 M-S XYZLUT+MTX.icc':
+  DisplayCAL:
+    # Settings below are only those changed from "Laptop (Gamma 2.2)"
+    # Measured as close as possible to 120cdm^2
+    Display \& Instrument:
+      Correction: (Spectral) Apple MacBookPro16,1 (ColorMunki) 2020-07-11 02:36:12
+    Calibration:
+      Whitepoint: 6500K
+      Calibration speed: Medium
+    Profiling:
+      Amount of patches: 1148
+    # Appears as prompt, this is all that's supported by macOS' built-in colour
+    # management
+    Type: Single curve + matrix, black point compensation enabled
+
+'X34 #1 2021-03-21 18-06 120cdm2 D6500 2.2 M-S XYZLUT+MTX.icc':
+  Display:
+    Picture:
+      Acer eColor Management: User
+      Brightness: 31
+    Color:
+      Color Temp:
+        Color Temp: User
+        Red: 49
+        Green: 49
+        Blue: 49
+    OSD:
+      OSD Timeout: 60
+    Setting:
+      Ambient Light:
+        Ambient Light: False
+      Wide Mode: 1:1
+      Overclock:
+        Enable: True
+        Max Refresh: 100
+      Power-off USB charge: True
+
+  DisplayCAL:
+    # Settings below are only those changed from "Default (Gamma 2.2)"
+    Display \& Instrument:
+      Correction: 'Spectral: LCD White LED family (AC, LG, Samsung)'
+    Calibration:
+      Whitepoint: 6500K
+      White level: 120cd/m^2
+      Calibration speed: Medium
+    Profiling:
+      Amount of patches: 1148
+    # Appears as prompt, this is all that's supported by macOS' built-in colour
+    # management
+    Type: Single curve + matrix, black point compensation enabled
+
+'B346CK #2 2021-03-09 20-41 120cdm2 D6500 2.2 M-S XYZLUT+MTX.icc':
+  Display:
+    Picture:
+      Acer eColor Management: User
+      Brightness: 30
+      Colour Temp:
+        Colour Temp: User
+        Red: 44
+        Green: 48
+        Blue: 50
+    OSD:
+      OSD Timeout: 60
+    Setting:
+      Wide Mode: 1:1
+
+  DisplayCAL:
+    # Settings below are only those changed from "Default (Gamma 2.2)"
+    Display \& Instrument:
+      Correction: 'Spectral: LCD White LED family (AC, LG, Samsung)'
+    Calibration:
+      Whitepoint: 6500K
+      White level: 120cd/m^2
+      Calibration speed: Medium
+    Profiling:
+      Amount of patches: 1148
+    # Appears as prompt, this is all that's supported by macOS' built-in colour
+    # management
+    Type: Single curve + matrix, black point compensation enabled
