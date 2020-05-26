@@ -1,0 +1,77 @@
+#!/bin/bash
+
+# Script to mount/unmount ZFS sparsebundle disk images created by tz script.
+# Requires the disk image filename to be <POOL_NAME>.sparsebundle
+
+unmount_pool() {
+	# Get mountpoint and check if pool exists
+	if ! mountpoint=$(zfs get -Ho value mountpoint "$pool" 2> /dev/null); then
+		>&2 echo "Pool $pool not mounted, skipping..."
+		continue
+	fi
+
+	# Export zpool
+	zpool export "$pool" &> /dev/null
+
+	# Detach sparse bundle
+	hdiutil_info=$(mktemp)
+	hdiutil info -plist > "$hdiutil_info"
+	if ! grep -q "$pool" "$hdiutil_info"; then
+		>&2 echo "Disk image for $pool not found, skipping detach..."
+		continue
+	fi
+
+	disk=0
+	while true; do
+		if [[ "$(/usr/libexec/PlistBuddy -c "Print images:$disk:image-path" "$hdiutil_info" 2> /dev/null )" != *"/$pool.sparsebundle" ]]; then
+			((disk++))
+		else
+			break
+		fi
+	done
+
+	hdiutil detach "$(/usr/libexec/PlistBuddy -c "Print images:$disk:system-entities:0:dev-entry" "$hdiutil_info")" &> /dev/null
+	if [ "$?" -ne 0 ]; then
+		>&2 echo "Disk image for $pool failed to detach"
+	fi
+	sudo chown -R "$USER":"$(groups | cut -d ' ' -f 1)" "$mountpoint"
+
+	# Clean-up
+	rm "$hdiutil_info"
+}
+
+
+mount_pool() {
+	image=$(readlink -f "$image")  # Get full path
+	pool=$(basename "$(readlink -f "$image")")  # Strip to filename only
+	pool=${pool%.*}  # Remove extension
+
+	# Mount sparse bundle
+	hdiutil attach -nomount "$image" > /dev/null
+	sleep 1  # Wait for device file to be created
+
+	# Mount zpool
+	sudo zpool import -fd /dev/ "$pool"
+}
+
+
+main() {
+	while getopts 'u' o; do
+		case $o in
+			u) mode='unmount' ;;
+		esac
+	done
+	shift "$((OPTIND-1))"
+
+	if [ "$mode" = 'unmount' ]; then
+		for pool in "$@"; do
+			unmount_pool "$pool"
+		done
+	else
+		for image in "$@"; do
+			mount_pool "$image"
+		done
+	fi
+}
+
+main "$@"
