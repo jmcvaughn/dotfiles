@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Reference: https://github.com/matterhorn-chat/matterhorn/blob/master/docs/notification-scripts.md
+set -e
+
+highlights=(
+	'sla-action-required'
+	'sup-emea'
+	'sup-help'
+	'sup-new-case'
+)
+
+mentioned=${1?}
+sender=${2?}
+message=${3?}
+message=${message//\\/\\\\}  # Escape backslashes
+message=${message//\"/\\\"}  # Quote double quotes in the message text
+
+# Determine sound
+if [ "$sender" = 'obi-wan' ] && [ "$message" = '' ]; then
+	sound='Hero'
+else
+	for highlight in "${highlights[@]}"; do
+		[[ $message = *$highlight* ]] && sound='Hero' && break
+	done
+fi
+
+# Notify
+terminal-notifier -title 'Matterhorn' -subtitle "$sender" -message "$message" -contentImage "$HOME"/.config/matterhorn/mattermost-logomark-blue.png & disown
+afplay /System/Library/Sounds/"${sound:-Pop}".aiff & disown
