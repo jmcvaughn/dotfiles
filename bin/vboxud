@@ -1,0 +1,38 @@
+#!/bin/bash
+
+boxes=$(vagrant box outdated --global | gsed "s/'//g")
+
+# After stripping away single quotes in the previous command, Vagrant provides
+# the following outputs for outdated and up to date boxes:
+# * ubuntu/bionic64 for virtualbox (v20200525.0.0) is up to date
+# * ubuntu/bionic64 for virtualbox is outdated! Current: 20200521.0.0. Latest: 20200525.0.0
+#
+# Vagrant looks at individual boxes to determine whether they are outdated; it
+# does not compare differing versions. This is why, in the above example, the
+# second entry is marked as outdated even though the latest version is
+# installed (first entry).
+#
+# $outdated is formatted as follows:
+# <box> <provider> <latest_version> <current_version>
+#
+# $up_to_date is formatted as follows:
+# <box> <provider> <latest_version>
+# 
+# $to_install `grep`s out $up_to_date from $outdated, leaving a list of boxes
+# to install, formatted as follows:
+# <box> <provider>
+# 
+# Vagrant automatically installs the latest version so no need to specify this.
+outdated=$(echo "$boxes" | gawk '/outdated/ { gsub(".$", "", $8); print $2" "$4" "$10" "$8 }')
+up_to_date=$(echo "$boxes" | gawk '/up to date/ { gsub("([(]v|[)])", "", $5); print $2" "$4" "$5 }')
+to_install=$(echo "$outdated" | ggrep -v "${up_to_date:-$(uuidgen)}" | gcut -d ' ' -f '-2' | gsort -u)
+
+IFS=$'\n'
+
+# Install latest box versions
+for box in $to_install; do
+	vagrant box add --clean --provider "${box#* }" "${box% *}"
+done
+
+# Remove old boxes that are also unused
+vagrant box prune --force --keep-active-boxes
