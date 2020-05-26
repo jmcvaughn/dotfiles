@@ -28,7 +28,7 @@ $ alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 - Enable sparse checkout and exclude README.md at the root of the repository. Note that while Git 2.25.0 introduced the new `git sparse-checkout` command, the man page states this is currently experimental, so for now this will be configured manually:
 ```
 $ dotfiles config core.sparseCheckout true
-$ printf '/*\n!README.md\n' > $HOME/.dotfiles/info/sparse-checkout
+$ printf '/*\n!/README.md\n' > $HOME/.dotfiles/info/sparse-checkout
 $ dotfiles read-tree -mu HEAD
 ```
 
