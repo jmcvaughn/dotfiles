@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Script to "convert" tar files to ZFS images. Originally intended for sosreports.
+for tar in $@; do
+	tar=$(readlink -f "$tar")
+	mountpoint=${tar%.tar*}
+	image="${mountpoint}.sparsebundle"
+	pool=$(basename "$mountpoint")
+
+	if [ "${pool:0:1}" -eq "${pool:0:1}" ] 2> /dev/null ; then
+		cat <<- EOF >&2
+		ERROR: Pool $pool skipped; ZFS pool names must start with a letter.
+		Rename the file and try again.
+		EOF
+		break
+	fi
+
+	# Create sparse bundle
+	## Sometimes a mount error occurs and the disk somehow becomes a GPT disk. So
+	## creating it as such from the get-go.
+	hdiutil create -size 1t -align 4K -layout NONE "$image" > /dev/null
+
+	# Attach sparsebundle
+	disk=$(hdiutil attach -nomount "$image")
+	sleep 1  # Wait for device file to be created
+
+	# Trim whitespace as hdiutil returns disk with whitespace (thanks Apple)
+	disk=${disk//[[:space:]]/}
+
+	# Create zpool on image
+	sudo zpool create -m "$mountpoint" -o ashift=12 -O recordsize=1M -O compression=gzip-1 -O atime=off -O xattr=sa -O casesensitivity=insensitive -O normalization=formD "$pool" "$disk"
+
+	# Disable Spotlight for this pool
+	sleep 1  # Wait for index to initialise
+	sudo mdutil -i off "$mountpoint" &> /dev/null  # Turn off indexing immediately
+	sudo mdutil -X "$mountpoint" &> /dev/null  # Delete Spotlight index (.Spotlight-V100/)
+	sudo gtouch "$mountpoint"/.metadata_never_index  # Stop index being recreated
+
+	# Extract image
+	tx "$tar"
+done
