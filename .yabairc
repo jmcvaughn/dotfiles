@@ -1,0 +1,37 @@
+#!/bin/sh
+
+#-------------------------------------------------------------------------------
+# Config domain
+#-------------------------------------------------------------------------------
+
+# Global Settings
+yabai -m config auto_balance on
+yabai -m config mouse_modifier alt
+
+# Space Settings
+yabai -m config layout bsp
+
+
+#-------------------------------------------------------------------------------
+# Rule domain
+#-------------------------------------------------------------------------------
+
+# Unmanaged/floating applications
+yabai -m rule --add app='^(Activity Monitor|App Store|Archive Utility|Bitwarden|Calculator|Calendar|Cisco Webex Meetings|Dictionary|Digital Colour Meter|DisplayCAL|FaceTime|Finder|gnuplot_qt|IINA|Installer|Konfig|LaunchBar|Linn Kazoo|Messages|Microsoft Teams|Podcasts|Qobuz|Sonos.*|SoundSource|System (Information|Preferences)|Telegram|Textual|Tunnelblick|TV|Vagrant Manager|VirtualBox.*|VMware Fusion.*|WireGuard|WhatsApp|zoom\.us)$' manage=off
+
+# Unmanaged/floating windows
+yabai -m rule --add app='Firefox' title='^Opening .+' manage=off
+yabai -m rule --add app='Firefox' title='^Natterbox CTI$' manage=off
+yabai -m rule --add app='LibreOffice' title='^Options - .+' manage=off
+yabai -m rule --add app='Safari' title='^Meet – .+' manage=off
+yabai -m rule --add app='Safari' title='^Netflix$' manage=off
+yabai -m rule --add app='Safari' title='^.+ - YouTube$' manage=off  # Not a '-'
+## Set as floating by iTerm2 but yabai occasionally tiles it without this rule
+yabai -m rule --add app='iTerm2' title='^Matterhorn$' manage=off
+
+
+#-------------------------------------------------------------------------------
+# Signal domain
+#-------------------------------------------------------------------------------
+
+yabai -m signal --add event=window_created action="$HOME/.yabai/float_default_size.sh" app='Finder'

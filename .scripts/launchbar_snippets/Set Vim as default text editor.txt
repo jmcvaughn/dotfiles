@@ -1,0 +1,1 @@
+echo 'export EDITOR=vim' >> $HOME/.bashrc; export EDITOR=vim

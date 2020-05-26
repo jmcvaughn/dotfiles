@@ -1,0 +1,86 @@
+# For reference when recreating the configuration manually. Settings
+# synchronised; see com.googlecode.iterm2.plist
+
+# NOTE: Clear search history _before_ saving and committing
+
+General:
+  Closing:
+    Confirm \"Quit iTerm2 (⌘ Q)": False
+  Magic:
+    GPU rendering:
+      Advanced:
+        Maximize throughput (may increase latency): False
+  Selection:
+    Copy to pasteboard on selection: False
+  Window:
+    Adjust window when changing font size: False
+  Preferences:
+    Load preferences from a custom folder or URL: ~/.config/iterm2/
+  tmux:
+    Automatically bury the tmux client session after connecting: True
+
+Appearance:
+  General:
+    Theme: Minimal
+  Windows:
+    Show line under title bar when the tab bar is not visible: False
+  Tabs:
+    Show tab bar even when there is only one tab: True
+  Dimming:
+    Dim inactive split panes: False
+
+# Changing window title preferences in tmux profile doesn't seem to have an
+# effect
+Profiles:
+  All:
+    General:
+      Working Directory: Reuse previous session's directory
+    Colors:
+      Preset: https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/schemes/Gruvbox%20Dark.itermcolors
+      Cursor: Foreground
+      Cursor text: Background
+    Text:
+      Enable subpixel anti-aliasing: True  # Affects all profiles
+      Font: Source Code Pro Regular 12
+    Window:
+      Use transparency: False
+    Terminal:
+      Unlimited scrollback: True
+      Notification Center Alerts: False
+    Session:
+      \"Undo" can revive a session that has been closed for up to: 10 seconds
+      # This option seems backwards. Should be "Only if the following jobs"
+      Prompt before closing: If there are jobs besides  # Use default list
+    Keys:
+      Left Option Key: Esc+
+  Default:
+    General:
+      Title: Job — Host
+      Applications in terminal may change the title: False
+  Matterhorn:
+    General:
+      Title: Profile
+      Send text at start: ' matterhorn; exit'
+      Working Directory: Home directory
+    Window:
+      Columns: 180
+      Rows: 65
+    Keys:
+      A hotkey opens a dedicated window with this profile: True
+      Configure Hotkey Window:
+        Hotkey: Option + d
+        Animate showing and hiding: False
+
+Keys:
+  Ctrl + Shift + Tab: Previous Tab
+  Ctrl + Tab: Next Tab
+
+Advanced:
+  General:
+    Suppress confirmation of terminal-initiated downloads: True
+    Swap Find Next and Find Previous: False
+  Session:
+    Allow sessions to survive logging out and back in: False
+  Warnings:
+    Suppress warning about broadcasting input: True
+    Warn about short-lived sessions that live less than this many seconds: 0
