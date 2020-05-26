@@ -13,3 +13,6 @@
 [submodule ".zsh/zsh-syntax-highlighting"]
 	path = .zsh/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "git/markdown-css"]
+	path = git/markdown-css
+	url = https://github.com/otsaloma/markdown-css.git
