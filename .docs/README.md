@@ -1,4 +1,4 @@
-# server branch
+# home-server branch
 The documentation and scripts in this branch were copied and modified from my old [server_setup](https://github.com/jmcvaughn/server_setup) repository. For these components, this branch can be considered a continuation of that repository.
 
 ## Installation
