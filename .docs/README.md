@@ -91,6 +91,14 @@ Note all of this is performed under Juju's "admin" user; see the [Add the OpenSt
 ### Post-deployment setup
 The commands in this section are examples; modify as appropriate.
 
+#### Set the timezone
+By default, all the LXD containers will be using the Etc/UTC timezone. Correct this as follows:
+```
+$ for i in $(ju machines | awk '!/Machine/ { print $1 }'); do ju ssh $i sudo timedatectl set-timezone Europe/London; done
+```
+
+While it is possible to do this using `juju run --all` and appears to work without issue, `action cancelled` errors seem to (falsely) appear.
+
 #### Obtain the admin OpenStack RC file
 Obtain the admin user's password:
 ```
