@@ -14,6 +14,8 @@ This project is inspired by [StreakyCobra's post on HackerNews](https://news.yco
 
 In non-master branches, any additional setup scripts can be found in .scripts/ and any documentation can be found in .docs/. Refer to this documentation **before** cloning for any additional tasks required before cloning or for otherwise setting up a system.
 
+**WARNING: Never use `dotfiles clean`/`git clean` on this repository.** Doing so will result in files in your home directory being deleted. While it is possible to provide *some* level of safety by using a .gitignore for all files, this means `dotfiles status` will files that haven't been added (which is often convenient). Git does not provide a way to alias over a built-in, so `dotfiles config alias.clean 'noop'` will not work. Prioritising safety over convenience might seem like a bad compromise, but simply remembering to not use `clean` is straightforward enough. You have been warned.
+
 ## Cloning
 - Perform a bare clone of the repository:
 ```
