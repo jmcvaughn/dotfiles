@@ -22,7 +22,12 @@ sudo -u "$user" git clone --bare https://github.com/jmcvaughn/dotfiles.git "$use
 sudo -u "$user" git --git-dir="$user_home"/.dotfiles/ --work-tree="$user_home"/ config core.sparseCheckout true
 printf '/*\n!/README.md\n' | sudo -u "$user" tee "$user_home"/.dotfiles/info/sparse-checkout
 sudo -u "$user" git --git-dir="$user_home"/.dotfiles/ --work-tree="$user_home"/ checkout generic-ubuntu-server
-sudo -u "$user" git --git-dir="$user_home"/.dotfiles/ --work-tree="$user_home"/ submodule update --init
+## Login shell (`-i`) required, otherwise the following error occurs:
+## fatal: /usr/lib/git-core/git-submodule cannot be used without a working tree.
+## Vagrant runs scripts as UID 1000 with sudo so it doesn't require `-i`
+sudo -iu "$user" git --git-dir="$user_home"/.dotfiles/ --work-tree="$user_home"/ submodule update --init
+
+env | sudo -u "$user" tee "$user_home"/env
 
 # Set zsh as default shell
 sudo chsh -s /bin/zsh "$user"
