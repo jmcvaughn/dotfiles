@@ -5,6 +5,10 @@ user_home=$(getent passwd 1000 | cut -d ':' -f 6)
 
 sudo timedatectl set-timezone Europe/London
 
+if [ "$DISTRIB_RELEASE" = '16.04' ] || [ "$DISTRIB_RELEASE" = '18.04' ]; then
+	sudo apt-get update
+	sudo add-apt-repository -y ppa:neovim-ppa/unstable
+fi
 sudo apt-get update
 sudo apt-get -y dist-upgrade
 sudo apt-get -y install --no-install-recommends ubuntu-desktop
