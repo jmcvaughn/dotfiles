@@ -30,7 +30,10 @@ echo 'GRUB_CMDLINE_LINUX="$GRUB_CMDLINE_LINUX console=ttyS0"' | sudo tee /etc/de
 sudo update-grub
 
 # Install packages
-sudo apt-get update && sudo apt-get -y install ${packages[@]}
+sudo apt-get update
+sudo add-apt-repository -y ppa:neovim-ppa/unstable
+sudo apt-get update
+sudo apt-get -y install ${packages[@]}
 sudo snap install canonical-livepatch
 sudo snap install juju --classic --edge
 sudo snap refresh lxd --channel=4.0/stable | sudo snap install lxd --channel=4.0/stable
