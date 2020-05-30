@@ -23,13 +23,6 @@ esac
 
 # Paths
 if [[ $os == 'macOS' ]]; then
-	# Homebrew
-	## Disable analytics (https://docs.brew.sh/Analytics)
-	export HOMEBREW_NO_ANALYTICS=1
-	## Don't create Brewfile.lock.json
-	## (https://github.com/Homebrew/homebrew-bundle#install)
-	export HOMEBREW_BUNDLE_NO_LOCK=1
-
 	PATH="/usr/local/sbin:$PATH"  # Mainly for brew doctor
 	# curl
 	PATH="/usr/local/opt/curl/bin:$PATH"
@@ -194,6 +187,18 @@ if src_hilite_path=$(whence -p src-hilite-lesspipe.sh 2> /dev/null); then
 	export LESSOPEN="| $src_hilite_path %s"
 fi
 unset src_hilite_path
+
+if [[ $os == 'macOS' ]]; then
+	# Homebrew
+	## Disable analytics (https://docs.brew.sh/Analytics)
+	export HOMEBREW_NO_ANALYTICS=1
+	## Don't create Brewfile.lock.json
+	## (https://github.com/Homebrew/homebrew-bundle#install)
+	export HOMEBREW_BUNDLE_NO_LOCK=1
+
+	# QMK repository path
+	export QMK_HOME="$HOME/git/qmk_firmware"
+fi
 # }}}
 
 
