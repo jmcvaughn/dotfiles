@@ -195,9 +195,6 @@ if [[ $os == 'macOS' ]]; then
 	## Don't create Brewfile.lock.json
 	## (https://github.com/Homebrew/homebrew-bundle#install)
 	export HOMEBREW_BUNDLE_NO_LOCK=1
-
-	# QMK repository path
-	export QMK_HOME="$HOME/git/qmk_firmware"
 fi
 # }}}
 
