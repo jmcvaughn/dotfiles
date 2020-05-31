@@ -1,6 +1,9 @@
+# Neovim
 [submodule "gruvbox"]
 	path = .local/share/nvim/site/pack/plugins/start/gruvbox
 	url = https://github.com/morhetz/gruvbox
+
+# Zsh
 [submodule "zsh-autosuggestions"]
 	path = .zsh/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions
