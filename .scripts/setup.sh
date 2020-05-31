@@ -12,7 +12,7 @@ fi
 sudo apt-get update
 sudo apt-get -y dist-upgrade
 sudo apt-get -y install --no-install-recommends ubuntu-desktop
-sudo apt-get -y install apt-file devscripts language-pack-en neovim virt-manager virt-what ssh-askpass-gnome zsh
+sudo apt-get -y install apt-file aria2 devscripts jq language-pack-en neovim nfs-common source-highlight ssh-askpass-gnome tree virt-manager virt-what zip zsh
 if [ "$(sudo virt-what | head -n 1)" = 'virtualbox' ]; then
 	sudo apt-get -y install virtualbox-guest-dkms
 fi
