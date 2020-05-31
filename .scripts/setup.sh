@@ -13,7 +13,7 @@ if [ "$DISTRIB_RELEASE" = '16.04' ] || [ "$DISTRIB_RELEASE" = '18.04' ]; then
 fi
 sudo apt-get update
 sudo apt-get -y dist-upgrade
-sudo apt-get -y install apt-file devscripts language-pack-en neovim zsh
+sudo apt-get -y install apt-file aria2 devscripts jq language-pack-en neovim nfs-common source-highlight tree zip zsh
 
 sudo update-locale LANG=en_GB.UTF.8
 
