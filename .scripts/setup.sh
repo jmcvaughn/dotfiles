@@ -9,6 +9,7 @@ packages=(
 	genisoimage
 	ipmitool
 	jq
+	language-pack-en
 	neovim
 	nfs-kernel-server
 	python3-openstackclient
@@ -37,6 +38,9 @@ sudo apt-get -y install ${packages[@]}
 sudo snap install canonical-livepatch
 sudo snap install juju --classic --edge
 sudo snap refresh lxd --channel=4.0/stable | sudo snap install lxd --channel=4.0/stable
+
+# Set locale
+sudo update-locale LANG=en_GB.UTF-8
 
 # OpenSSH server: Set 'PasswordAuthentication no' in
 # /etc/ssh/sshd_config.d/PasswordAuthentication.conf. The installer adds this to
