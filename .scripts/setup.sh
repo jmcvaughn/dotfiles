@@ -19,7 +19,7 @@ if [ "$(sudo virt-what | head -n 1)" = 'virtualbox' ]; then
 	sudo apt-get -y install virtualbox-guest-dkms
 fi
 
-sudo update-locale LANG=en_GB.UTF.8
+sudo update-locale LANG=en_GB.UTF-8
 
 # Clone dotfiles
 sudo -u "$user" git clone --bare https://github.com/jmcvaughn/dotfiles.git "$user_home"/.dotfiles/
