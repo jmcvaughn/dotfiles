@@ -13,7 +13,9 @@ if [ "$DISTRIB_RELEASE" = '16.04' ] || [ "$DISTRIB_RELEASE" = '18.04' ]; then
 fi
 sudo apt-get update
 sudo apt-get -y dist-upgrade
-sudo apt-get -y install apt-file aria2 devscripts jq language-pack-en neovim nfs-common source-highlight tree zip zsh
+libvirt_pkgs='libvirt-clients libvirt-daemon-system'
+[ "$DISTRIB_RELEASE" = '16.04' ] && libvirt_pkgs='libvirt-bin'
+sudo apt-get -y install apt-file aria2 bridge-utils devscripts jq language-pack-en $libvirt_pkgs neovim nfs-common qemu-kvm source-highlight tree zip zsh
 
 sudo update-locale LANG=en_GB.UTF.8
 
