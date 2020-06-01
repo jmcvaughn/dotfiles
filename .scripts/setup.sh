@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# Set variables
+. /etc/lsb-release
 user=$(getent passwd 1000 | cut -d ':' -f 1)
 user_home=$(getent passwd 1000 | cut -d ':' -f 6)
 
