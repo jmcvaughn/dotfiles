@@ -242,6 +242,10 @@ alias igrep='grep --ignore-case --color=auto'
 alias les='less'
 alias lesn='less --LINE-NUMBERS'
 
+# gzip
+alias gz='gzip'
+alias zc='zcat'
+
 # Package updates
 [[ $os == 'Arch Linux' ]] && ud() {
 	sudo pacman -Syu $@ && sudo pacman -Rsn --noconfirm $(pacman -Qdtq) 2> /dev/null
