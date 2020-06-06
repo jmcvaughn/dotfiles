@@ -34,6 +34,11 @@ sudo -iu "$user" git --git-dir="$user_home"/.dotfiles/ --work-tree="$user_home"/
 # Set zsh as default shell
 sudo chsh -s /bin/zsh "$user"
 
+# Add user to libvirt group
+## Regardless of UID, user "ubuntu" seems to be automatically added to this
+## group
+sudo usermod --append --groups libvirt "$user"
+
 # Generate SSH key pair
 sudo -u "$user" ssh-keygen -b 4096 -t rsa -N '' -f "$user_home"/.ssh/id_rsa
 
