@@ -173,6 +173,8 @@ SAVEHIST=10000
 # Editor
 if whence -p nvim &> /dev/null; then
 	export EDITOR='nvim'
+	export MANPAGER='nvim +Man!'  # See ':help Man'
+	export MANWIDTH=999  # Big width so Neovim manages wrapping, allowing resizing
 elif whence -p vim &> /dev/null; then
 	export EDITOR='vim'
 else
@@ -180,7 +182,6 @@ else
 fi
 
 # less
-export manpager='less --line-numbers'
 export LESS='--ignore-case --RAW-CONTROL-CHARS --chop-long-lines --hilite-unread --no-init'
 ## Set LESSOPEN if source-highlight is found
 if src_hilite_path=$(whence -p src-hilite-lesspipe.sh 2> /dev/null); then
