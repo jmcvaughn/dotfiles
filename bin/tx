@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Script to extract tar files and recursively change ownership. Originally
+# intended for sosreports.
+for tar in "$@"; do
+	tar=$(readlink -f "$tar")
+	sudo tar -xaf "$tar" -C "$(dirname "$tar")" && sudo chown -R "$USER":"$(groups | cut -d ' ' -f 1)" "${tar%.tar*}"
+done
