@@ -303,6 +303,7 @@ alias virsh='virsh -c qemu:///system'
 for tool in virt-clone virt-convert virt-install virt-xml; do
 	alias $tool="$tool --connect qemu:///system"
 done
+alias watch='watch '
 if [[ $os == 'macOS' ]]; then
 	alias o='open'
 	alias oh='open .'
