@@ -29,7 +29,7 @@ sudo -u "$user" git --git-dir="$user_home"/.dotfiles/ --work-tree="$user_home"/ 
 ## Login shell (`-i`) required, otherwise the following error occurs:
 ## fatal: /usr/lib/git-core/git-submodule cannot be used without a working tree.
 ## Vagrant runs scripts as UID 1000 with sudo so it doesn't require `-i`
-sudo -iu "$user" git --git-dir="$user_home"/.dotfiles/ --work-tree="$user_home"/ submodule update --init
+sudo -iu "$user" git --git-dir="$user_home"/.dotfiles/ --work-tree="$user_home"/ submodule update --init --recursive --jobs 4
 
 # Set zsh as default shell
 sudo chsh -s /bin/zsh "$user"
