@@ -1,0 +1,13 @@
+Vagrant.configure("2") do |config|
+  #config.vm.box = "ubuntu/xenial64"
+  config.vm.box = "ubuntu/bionic64"
+
+  #config.vm.provider "virtualbox" do |vb|
+  #  vb.cpus = 2
+  #  vb.memory = 2048
+  #end
+
+  config.vm.provision "shell", path: "https://raw.githubusercontent.com/jmcvaughn/dotfiles/generic-ubuntu-server/.scripts/setup.sh"
+end
+
+# vim: set filetype=ruby:
