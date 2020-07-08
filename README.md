@@ -37,7 +37,7 @@ $ dotfiles read-tree -mu HEAD
 - Checkout the desired branch and clone the submodules
 ```
 $ dotfiles checkout mac
-$ dotfiles submodule update --init
+$ dotfiles submodule update --init --recursive --jobs 4
 ```
 
 To checkout README.md to modify it:
