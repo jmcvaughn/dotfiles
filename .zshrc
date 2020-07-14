@@ -311,6 +311,10 @@ fi
 # }}}
 
 
+# pyenv - amends PATH, environment variables, completion, functions
+whence -p pyenv &> /dev/null && eval "$(pyenv init -)"
+
+
 #-------------------------------------------------------------------------------
 # Prompts {{{
 #-------------------------------------------------------------------------------
