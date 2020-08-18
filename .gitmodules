@@ -2,6 +2,12 @@
 [submodule "gruvbox"]
 	path = .local/share/nvim/site/pack/plugins/start/gruvbox
 	url = https://github.com/morhetz/gruvbox
+[submodule "tcomment"]
+	path = .local/share/nvim/site/pack/plugins/start/tcomment_vim
+	url = https://github.com/tomtom/tcomment_vim.git
+[submodule "vim-unimpaired"]
+	path = .local/share/nvim/site/pack/plugins/start/vim-unimpaired
+	url = https://github.com/tpope/vim-unimpaired.git
 
 # Zsh
 [submodule "zsh-autosuggestions"]
