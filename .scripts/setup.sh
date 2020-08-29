@@ -38,7 +38,8 @@ fi
 sudo chsh -s /bin/zsh "$user"
 
 # Add this user to the same groups as "ubuntu" user, if it exists
-if [ "$user" != 'ubuntu' ] && ubuntu_groups=$(groups ubuntu | tr ' ' ',' | cut -d ',' -f '4-') > /dev/null 2>&1; then
+ubuntu_groups=$(groups ubuntu | tr ' ' ',' | cut -d ',' -f '4-') 2> /dev/null
+if [ "$user" != 'ubuntu' ] && [ -n "$ubuntu_groups" ]; then
 	sudo usermod --append --groups $ubuntu_groups "$user"
 fi
 
