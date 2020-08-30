@@ -2,73 +2,13 @@
 The documentation and scripts in this branch were copied and modified from my old [server_setup](https://github.com/jmcvaughn/server_setup) repository. For these components, this branch can be considered a continuation of that repository.
 
 ## Installation
-Use the Subiquity/live installer. This doesn't appears to have problems with refreshing partition tables; the old installer seems to.
+For my configuration, most working data is stored in separate ZFS file systems. As a result, the boot disk partitioning scheme doesn't matter too much; an ESP partition and a root partition is sufficient. If a disaster occurs, the installation can be rebuilt with minimal effort.
 
-For my configuration, most working data is stored in separate ZFS filesystems. As a result, the boot disk partitioning scheme doesn't matter too much; an ESP partition and a root partition is sufficient. If a disaster occurs, the installation can be rebuilt with minimal effort.
+As of Subiquity 20.04.2, the creation of multiple ESPs is supported. However, this functionality is only supported if booting newer installers; updating doesn't work. Therefore, you must use the Ubuntu Server 20.04.1 LTS live disk image or newer. To set up multiple ESPs, at the *Guided storage configuration* page, select *Custom storage layout*. Under the *Storage configuration* page, select *Use As Boot Device* and *Add As Another Boot Device* for your primary and backup devices respectively.
 
-If RAID-1 is desired for the ESP, you will need to use a v1.0 superblock (metadata at the end of the partition). The Subiquity installer doesn't allow this to be specified so for now, do the following:
-- Select "Custom storage layout"
-- Clear any existing partitions for your chosen disks
-- Select "Make Boot Device" under one of the disks
-- On the other disk, create an unformatted partition 512MiB in size
-- On both disks, create an unformatted partition spanning the rest of the disk space
-- Create a RAID-1 array using the large unformatted partition of your selected disks
-- Select "Format" under the RAID array and create the root partition (ext4 recommended as it allows both growing and shrinking unlike XFS, and doesn't suffer from performance issues under certain workloads unlike Btrfs)
+At the *SSH Setup* screen, remember to select *Install OpenSSH server*.
 
-At the "SSH Setup" screen, remember to select "Install OpenSSH server".
-
-There is no requirement to install any snaps at the "Featured Server Snaps" screen; those required are installed by the scripts in this repository.
-
-## Post-installation setup
-### Set up RAID-1 ESP
-1) Backup the existing ESP contents:
-```
-$ sudo cp -a /boot/efi{,.bak}/
-```
-
-2) Unmount the existing ESP:
-```
-$ sudo umount /boot/efi/
-```
-
-3) Create the new array, substituting the last argument with your own drives:
-```
-$ sudo mdadm --create /dev/md1 --level 1 --raid-devices 2 --metadata 1.0 --run /dev/disk/by-id/ata-Crucial_CT275MX300SSD1*part1
-```
-
-4) Add the new array to the `mdadm` configuration:
-```
-$ sudo mdadm --detail --scan | grep '/dev/md1 ' | sudo tee -a /etc/mdadm/mdadm.conf
-```
-
-5) Create a new FAT32 file system on the array:
-```
-$ sudo mkfs.fat -F 32 -s 1 -S 4096 /dev/md1
-```
-
-6) Modify fstab to use the new RAID-1 ESP, using the same mount options as the existing ESP and remembering to comment the existing ESP entry out:
-```
-$ EDITOR=vim sudo -e /etc/fstab
-```
-To obtain the new array device path, run:
-```
-$ sudo mdadm --detail --scan | awk -F '=' '/\/dev\/md1 / { print "/dev/disk/by-id/md-uuid-"$NF }'
-```
-
-7) Mount the new ESP:
-```
-$ sudo mount /boot/efi/
-```
-
-8) Copy the contents of the ESP back over and delete the backup:
-```
-$ sudo mv /boot/efi{.bak/*,} && sudo rm -r /boot/efi.bak/
-```
-
-9) Create a new boot entry using `efibootmgr` for disk that was not the ESP on install:
-```
-$ sudo efibootmgr --create --disk /dev/sdh --part 1 --label ubuntu --loader '\EFI\ubuntu\shimx64.efi'
-```
+There is no requirement to install any snaps at the *Featured Server Snaps* screen; those required are installed by the scripts in this repository.
 
 ## System setup
 Prior to running `setup.sh`:
@@ -120,10 +60,15 @@ $ openstack subnet create --network provider --allocation-pool start=10.188.1.1,
 
 #### Create flavours
 ```
-$ openstack flavor create --public --ram 2048 --disk 20 --vcpus 1 small
-$ openstack flavor create --public --ram 4096 --disk 40 --vcpus 2 medium
-$ openstack flavor create --public --ram 8192 --disk 40 --vcpus 4 large
-$ openstack flavor create --public --ram 16384 --disk 80 --vcpus 8 xlarge
+$ openstack flavor create --public --ram 1024 --disk 20 --vcpus 1 xs
+$ openstack flavor create --public --ram 2048 --disk 20 --vcpus 1 s
+$ openstack flavor create --public --ram 4096 --disk 40 --vcpus 2 m
+$ openstack flavor create --public --ram 8192 --disk 60 --vcpus 4 l
+$ openstack flavor create --public --ram 16384 --disk 80 --vcpus 8 xl
+$ openstack flavor create --public --ram 32768 --disk 80 --vcpus 8 xxl
+$ openstack flavor create --public --ram 65536 --disk 80 --vcpus 8 xxxl
+$ openstack flavor create --public --ram 98304 --disk 80 --vcpus 8 xxxxl
+$ openstack flavor create --public --ram 2048 --disk 20 --vcpus 1 --ephemeral-disk 5 s5  # Mainly for Ceph testing
 ```
 
 #### Set up users and domains
