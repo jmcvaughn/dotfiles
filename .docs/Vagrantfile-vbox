@@ -1,0 +1,16 @@
+# Vagrant Documentation: https://www.vagrantup.com/docs/index
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64"
+  config.vm.provision "shell", path: "https://raw.githubusercontent.com/jmcvaughn/dotfiles/generic-ubuntu-desktop/.scripts/setup.sh"
+
+  config.vm.provider "virtualbox" do |v|
+    v.gui = true
+    v.cpus = 1
+    v.memory = 3072
+    v.customize ["modifyvm", :id, "--nested-hw-virt", "on"]
+    v.customize ["modifyvm", :id, "--vram", "16"]
+  end
+end
+
+# vim: set filetype=ruby:
