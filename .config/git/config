@@ -11,3 +11,5 @@
 	igrep = grep -i
 [core]
 	excludesFile = ~/.config/git/ignore
+[pager]
+	status = true
