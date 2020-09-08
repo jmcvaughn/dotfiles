@@ -15,7 +15,7 @@ sudo apt-get update
 sudo apt-get -y upgrade
 libvirt_pkgs='libvirt-clients libvirt-daemon-system'
 [ "$DISTRIB_RELEASE" = '16.04' ] && libvirt_pkgs='libvirt-bin'
-sudo apt-get -y install apt-file aria2 bridge-utils devscripts jq language-pack-en $libvirt_pkgs neovim nfs-common ovmf qemu-kvm source-highlight tree zip zsh
+sudo apt-get -y install apt-file bridge-utils devscripts jq language-pack-en $libvirt_pkgs neovim nfs-common ovmf qemu-kvm source-highlight tree zip zsh
 sudo apt-get -y install --no-install-recommends virtinst
 
 sudo update-locale LANG=en_GB.UTF-8

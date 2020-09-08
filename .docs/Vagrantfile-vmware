@@ -1,0 +1,66 @@
+# Vagrant Documentation: https://www.vagrantup.com/docs/index
+
+Vagrant.configure("2") do |config|
+  #config.vm.box = "bento/ubuntu-14.04"
+  #config.vm.box = "bento/ubuntu-16.04"
+  #config.vm.box = "bento/ubuntu-18.04"
+  #config.vm.box = "bento/ubuntu-20.04"
+
+  config.vm.provision "shell", path: "https://raw.githubusercontent.com/jmcvaughn/dotfiles/generic-ubuntu-server/.scripts/setup.sh"
+
+  config.vm.provider "vmware_desktop" do |v|
+    #---------------------------------------------------------------------------
+    # VM settings
+    # Setting name comments reference Fusion GUI
+    # Anything commented out changes a default when uncommented
+    #---------------------------------------------------------------------------
+
+    # Processors & Memory > Processors: 1 processor core
+    v.vmx["numvcpus"] = 1
+
+    # Processors & Memory > Memory: 1024MB
+    ## Must be divisible by 4
+    v.vmx["memsize"] = 1024
+
+    # Processors & Memory > Enable hypervisor applications in this machine: True
+    v.vmx["vhv.enable"] = "TRUE"
+
+    # Display > Accelerate 3D Graphics: True
+    #v.vmx["mks.enable3d"] = "TRUE"  # Accelerate 3D Graphics
+
+    # USB & Bluetooth > USB Compatibility: USB 1.1
+    ## Required to enable controller
+    #v.vmx["usb.present"] = "TRUE"
+
+    # USB & Bluetooth > USB Compatibility: USB 2.0
+    ## Must also uncomment USB 1.1 compatibility
+    #v.vmx["ehci.present"] = "TRUE"
+
+    # USB & Bluetooth > USB Compatibility: USB 3.0
+    ## Must also uncomment USB 1.1 and 2.0 compatibility
+    #v.vmx["usb_xhci.present"] = "TRUE"
+
+    # Compatibility > Use Hardware Version: 16
+    ## Note:
+    ## - This may need to be changed for compatibility with other VMware products
+    ##   (e.g. ESXi) and versions; refer to the GUI
+    ##
+    ## - "Allow upgrading the virtual hardware for this machine." cannot be set
+    ##   via the VMX file, disabled by default
+    ##
+    v.vmx["virtualhw.version"] = "16"
+
+    # Advanced > Synchronize time: False
+    #tools.synctime = "FALSE"
+
+    # Advanced > Troubleshooting: None
+    v.vmx["vmx.buildType"] = "release"
+
+    # Advanced > Pass power status to VM: True
+    # These should be enabled/disabled together
+    #v.vmx["chipset.useAcpiBattery"] = "TRUE"
+    #v.vmx["chipset.useApmBattery"] = "TRUE"
+  end
+end
+
+# vim: set filetype=ruby:
