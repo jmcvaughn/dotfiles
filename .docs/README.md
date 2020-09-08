@@ -6,7 +6,7 @@ For Vagrant, this branch has only been tested with the official Ubuntu Bionic (1
 ## Usage
 Follow [the main repository README](../README.md) for cloning instructions for normal usage, though note that some packages may need to be installed.
 
-[.scripts/setup.sh](../.scripts/setup.sh) has been written to be idempotent. It can be run as part of the provisioning process or on a freshly provisioned system. For Vagrant, to use [.scripts/setup.sh](../.scripts/setup.sh) during the provisioning process, refer to the included [Vagrantfile](Vagrantfile) as a starting point.
+[.scripts/setup.sh](../.scripts/setup.sh) has been written to be idempotent. It can be run as part of the provisioning process or on a freshly provisioned system. For Vagrant, to use [.scripts/setup.sh](../.scripts/setup.sh) during the provisioning process, refer to [Vagrantfile-vmware](Vagrantfile-vmware) or [Vagrantfile-vbox](Vagrantfile-vbox) as starting points.
 
 For clouds (e.g. OpenStack), download and pass [.scripts/setup.sh](../.scripts/setup.sh) as a user-data script.
 
