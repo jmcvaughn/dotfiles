@@ -196,6 +196,9 @@ if [[ $os == 'macOS' ]]; then
 	## Don't create Brewfile.lock.json
 	## (https://github.com/Homebrew/homebrew-bundle#install)
 	export HOMEBREW_BUNDLE_NO_LOCK=1
+
+	# Use VMware Fusion as the default Vagrant provider
+	export VAGRANT_DEFAULT_PROVIDER='vmware_desktop'
 fi
 # }}}
 
