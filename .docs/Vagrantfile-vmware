@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
     v.vmx["memsize"] = 1024
 
     # Processors & Memory > Enable hypervisor applications in this machine: True
-    v.vmx["vhv.enable"] = "TRUE"
+    #v.vmx["vhv.enable"] = "TRUE"
 
     # Display > Accelerate 3D Graphics: True
     #v.vmx["mks.enable3d"] = "TRUE"  # Accelerate 3D Graphics
