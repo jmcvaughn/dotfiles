@@ -1,20 +1,10 @@
 PROMPT_COLOUR='green'  # Must remain set, evaluated every prompt
 
-case $(uname) in
-	Linux)
-		uname='Linux'
-		eval $(grep -E '^PRETTY_NAME=' /etc/os-release)
-		os=$PRETTY_NAME
-		unset PRETTY_NAME
-		;;
-	Darwin)
-		uname='Darwin'
-		os='macOS'
-		;;
-esac
+os=$(uname --operating-system 2> /dev/null || uname)  # GNU coreutils | BSD
+[[ $os == 'GNU/Linux' ]] && eval $(grep -E '^PRETTY_NAME=' /etc/os-release)
 
 # Mac: Source global zprofile to set initial PATH
-[[ $os == 'macOS' ]] && source /etc/zprofile
+[[ $os == 'Darwin' ]] && source /etc/zprofile
 
 
 #-------------------------------------------------------------------------------
@@ -22,7 +12,7 @@ esac
 #-------------------------------------------------------------------------------
 
 # Paths
-if [[ $os == 'macOS' ]]; then
+if [[ $os == 'Darwin' ]]; then
 	PATH="/usr/local/sbin:$PATH"  # Mainly for brew doctor
 	# curl
 	PATH="/usr/local/opt/curl/bin:$PATH"
@@ -43,7 +33,7 @@ if [[ $os == 'macOS' ]]; then
 	PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 	MANPATH="/usr/local/opt/gnu-tar/libexec/gnuman:$MANPATH"
 	export MANPATH
-elif [[ $uname == 'Linux' ]]; then
+elif [[ $os == 'GNU/Linux' ]]; then
 	PATH="$PATH:/snap/bin"  # Canonical snaps
 fi
 export PATH="$HOME/bin:$PATH"
@@ -147,7 +137,7 @@ source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Initialisation
 autoload -Uz compinit
-[[ $os == 'macOS' ]] && compinit -u || compinit
+[[ $os == 'Darwin' ]] && compinit -u || compinit
 
 # Completion system configuration
 ## Case-insensitive matching for lowercase only
@@ -157,7 +147,7 @@ zstyle ':completion:*' menu select
 
 ## Mac: Disable hosts file completion; only used for blocking, not manual hosts
 ## entries
-[[ $os == 'macOS' ]] && zstyle ':completion:*' hosts false
+[[ $os == 'Darwin' ]] && zstyle ':completion:*' hosts false
 # }}}
 
 
@@ -189,7 +179,7 @@ if src_hilite_path=$(whence -p src-hilite-lesspipe.sh 2> /dev/null); then
 fi
 unset src_hilite_path
 
-if [[ $os == 'macOS' ]]; then
+if [[ $os == 'Darwin' ]]; then
 	# Homebrew
 	## Disable analytics (https://docs.brew.sh/Analytics)
 	export HOMEBREW_NO_ANALYTICS=1
@@ -251,10 +241,10 @@ alias gz='gzip'
 alias zc='zcat'
 
 # Package updates
-[[ $os == 'Arch Linux' ]] && ud() {
+[[ $PRETTY_NAME == 'Arch Linux' ]] && ud() {
 	sudo pacman -Syu $@ && sudo pacman -Rsn --noconfirm $(pacman -Qdtq) 2> /dev/null
 }
-if [[ $os == 'Ubuntu'* ]]; then
+if [[ $PRETTY_NAME == 'Ubuntu'* ]]; then
 	alias ud='sudo apt-get update && sudo apt-get dist-upgrade'
 fi
 
@@ -307,7 +297,7 @@ for tool in virt-clone virt-convert virt-install virt-xml; do
 	alias $tool="$tool --connect qemu:///system"
 done
 alias watch='watch '
-if [[ $os == 'macOS' ]]; then
+if [[ $os == 'Darwin' ]]; then
 	alias o='open'
 	alias oh='open .'
 fi
@@ -323,8 +313,8 @@ whence -p pyenv &> /dev/null && eval "$(pyenv init -)"
 #-------------------------------------------------------------------------------
 
 # Prompt colour set at line 1
-if [[ $os == 'macOS' ]]; then
-	# Presume Mac is local machine, don't show hostname
+if [[ $os == 'Darwin' ]] || [[ $os == 'Android' ]]; then
+	# Presume Mac or Android is a local machine, don't show hostname
 	PROMPT='%F{$PROMPT_COLOUR}%B%3~%b%f ${vcs_info_msg_0_}%B%(?.%#.%F{red}%#%f)%b '
 else
 	# Show full hostname
@@ -334,7 +324,7 @@ fi
 
 
 # pkgfile - shows which missing package provides command
-[[ $os == 'Arch Linux' ]] && source /usr/share/doc/pkgfile/command-not-found.zsh
+[[ $PRETTY_NAME == 'Arch Linux' ]] && source /usr/share/doc/pkgfile/command-not-found.zsh
 
 
 #-------------------------------------------------------------------------------
