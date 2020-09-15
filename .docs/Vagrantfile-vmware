@@ -40,7 +40,7 @@ Vagrant.configure("2") do |config|
     ## Must also uncomment USB 1.1 and 2.0 compatibility
     #v.vmx["usb_xhci.present"] = "TRUE"
 
-    # Compatibility > Use Hardware Version: 16
+    # Compatibility > Use Hardware Version: 18
     ## Note:
     ## - This may need to be changed for compatibility with other VMware products
     ##   (e.g. ESXi) and versions; refer to the GUI
@@ -48,7 +48,7 @@ Vagrant.configure("2") do |config|
     ## - "Allow upgrading the virtual hardware for this machine." cannot be set
     ##   via the VMX file, disabled by default
     ##
-    v.vmx["virtualhw.version"] = "16"
+    v.vmx["virtualhw.version"] = "18"
 
     # Advanced > Synchronize time: False
     #tools.synctime = "FALSE"
