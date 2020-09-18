@@ -12,7 +12,6 @@ sudo apt-get update
 sudo add-apt-repository -y ppa:neovim-ppa/unstable
 
 sudo apt-get update
-sudo apt-get -y upgrade
 if grep -q 'vmx' /proc/cpuinfo; then
 	sudo apt-get -y install --no-install-recommends virtinst
 	libvirt_pkgs='libvirt-clients libvirt-daemon-system ovmf qemu-kvm'
@@ -47,5 +46,3 @@ fi
 
 # Generate SSH key pair
 sudo -u "$user" ssh-keygen -b 4096 -t rsa -N '' -f "$user_home"/.ssh/id_rsa
-
-sudo reboot
