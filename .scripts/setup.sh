@@ -12,7 +12,6 @@ sudo apt-get update
 sudo add-apt-repository -y ppa:neovim-ppa/unstable
 
 sudo apt-get update
-sudo apt-get -y upgrade
 sudo apt-get -y install --no-install-recommends ubuntu-desktop
 sudo apt-get -y install apt-file devscripts jq language-pack-en neovim nfs-common source-highlight ssh-askpass-gnome tree virt-manager virt-what zip zsh
 hypervisor=$(sudo virt-what | head -n 1)
@@ -51,5 +50,3 @@ cat << EOF | sudo tee /etc/gdm3/custom.conf
 AutomaticLoginEnable = true
 AutomaticLogin = $user
 EOF
-
-sudo reboot
