@@ -36,8 +36,8 @@ sudo add-apt-repository -y ppa:neovim-ppa/unstable
 sudo apt-get update
 sudo apt-get -y install ${packages[@]}
 sudo snap install canonical-livepatch
-sudo snap install juju --classic --edge
-sudo snap refresh lxd --channel=4.0/stable | sudo snap install lxd --channel=4.0/stable
+sudo snap install juju --classic
+sudo snap install lxd
 
 # Set locale
 sudo update-locale LANG=en_GB.UTF-8
