@@ -1,18 +1,27 @@
 # Vagrant Documentation: https://www.vagrantup.com/docs/index
 
 Vagrant.configure("2") do |config|
-  #config.vm.box = "bento/ubuntu-14.04"
-  #config.vm.box = "bento/ubuntu-16.04"
-  #config.vm.box = "bento/ubuntu-18.04"
-  #config.vm.box = "bento/ubuntu-20.04"
+  # config.vm.box = "bento/ubuntu-14.04"
+  # config.vm.box = "bento/ubuntu-16.04"
+  # config.vm.box = "bento/ubuntu-18.04"
+  # config.vm.box = "bento/ubuntu-20.04"
 
-  config.vm.provision "shell", path: "https://raw.githubusercontent.com/jmcvaughn/dotfiles/generic-ubuntu-server/.scripts/setup.sh"
+  # Network will be created with NAT disabled and the host connected. Use the
+  # VMware Fusion/Workstation GUI to make changes.
+  # config.vm.network "private_network", ip: "192.168.9.11"
+
+  # config.vm.provision "shell", path: "https://raw.githubusercontent.com/jmcvaughn/dotfiles/generic-ubuntu-server/.scripts/setup.sh"
 
   config.vm.provider "vmware_desktop" do |v|
+    # Hard-set to avoid issues with `vagrant reload`
+    v.vmx["ethernet0.pcislotnumber"] = "32"
+    ## Uncomment if using private network above
+    # v.vmx["ethernet1.pcislotnumber"] = "33"
+
     #---------------------------------------------------------------------------
     # VM settings
-    # Setting name comments reference Fusion GUI
-    # Anything commented out changes a default when uncommented
+    ## Setting name comments reference Fusion GUI
+    ## Anything commented out changes a default when uncommented
     #---------------------------------------------------------------------------
 
     # Processors & Memory > Processors: 1 processor core
@@ -23,22 +32,22 @@ Vagrant.configure("2") do |config|
     v.vmx["memsize"] = 1024
 
     # Processors & Memory > Enable hypervisor applications in this machine: True
-    #v.vmx["vhv.enable"] = "TRUE"
+    # v.vmx["vhv.enable"] = "TRUE"
 
     # Display > Accelerate 3D Graphics: True
-    #v.vmx["mks.enable3d"] = "TRUE"  # Accelerate 3D Graphics
+    # v.vmx["mks.enable3d"] = "TRUE"  # Accelerate 3D Graphics
 
     # USB & Bluetooth > USB Compatibility: USB 1.1
     ## Required to enable controller
-    #v.vmx["usb.present"] = "TRUE"
+    # v.vmx["usb.present"] = "TRUE"
 
     # USB & Bluetooth > USB Compatibility: USB 2.0
     ## Must also uncomment USB 1.1 compatibility
-    #v.vmx["ehci.present"] = "TRUE"
+    # v.vmx["ehci.present"] = "TRUE"
 
     # USB & Bluetooth > USB Compatibility: USB 3.0
     ## Must also uncomment USB 1.1 and 2.0 compatibility
-    #v.vmx["usb_xhci.present"] = "TRUE"
+    # v.vmx["usb_xhci.present"] = "TRUE"
 
     # Compatibility > Use Hardware Version: 18
     ## Note:
@@ -51,15 +60,15 @@ Vagrant.configure("2") do |config|
     v.vmx["virtualhw.version"] = "18"
 
     # Advanced > Synchronize time: False
-    #tools.synctime = "FALSE"
+    # tools.synctime = "FALSE"
 
     # Advanced > Troubleshooting: None
     v.vmx["vmx.buildType"] = "release"
 
     # Advanced > Pass power status to VM: True
-    # These should be enabled/disabled together
-    #v.vmx["chipset.useAcpiBattery"] = "TRUE"
-    #v.vmx["chipset.useApmBattery"] = "TRUE"
+    ## These should be enabled/disabled together
+    # v.vmx["chipset.useAcpiBattery"] = "TRUE"
+    # v.vmx["chipset.useApmBattery"] = "TRUE"
   end
 end
 
