@@ -1,6 +1,7 @@
 #!/bin/bash
 
 packages=(
+	apt-file
 	aria2
 	certbot
 	docker
