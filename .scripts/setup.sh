@@ -1,6 +1,7 @@
 #!/bin/bash
 
 packages=(
+	apparmor-utils
 	apt-file
 	aria2
 	certbot
@@ -52,6 +53,9 @@ sudo update-locale LANG=en_GB.UTF-8
 if [ "$(awk -F ':' "/$USER/ { print \$7 }" /etc/passwd)" != '/bin/zsh' ]; then
 	chsh -s /bin/zsh
 fi
+
+# Set AppArmor libvirtd profile to complain mode
+sudo aa-complain /usr/sbin/libvirtd
 
 # Add maas0 network
 sudo virsh net-define "$(dirname "$0")"/maas0.xml
