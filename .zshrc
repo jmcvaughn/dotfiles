@@ -291,6 +291,7 @@ alias ddi='sudo dd bs=16K conv=fsync status=progress'
 alias jj='juju'
 alias oc='openstack --os-cloud'
 alias os='openstack'
+alias ucomment="grep -vE '^([[:space:]]*(#|/|;)|$)'"
 alias va='vagrant'
 alias virsh='virsh -c qemu:///system'
 for tool in virt-clone virt-convert virt-install virt-xml; do
