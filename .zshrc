@@ -1,5 +1,8 @@
 PROMPT_COLOUR='green'  # Must remain set, evaluated every prompt
 
+# Uncomment to enable performance profiling at startup
+# zmodload zsh/zprof
+
 os=$(uname --operating-system 2> /dev/null || uname)  # GNU coreutils | BSD
 [[ $os == 'GNU/Linux' ]] && eval $(grep -E '^PRETTY_NAME=' /etc/os-release)
 
@@ -107,27 +110,6 @@ zstyle ':vcs_info:*' unstagedstr '%F{red}●%f'  # dot: Unicode U+25CF
 precmd() {
 	vcs_info  # Version control system prompt
 }
-# }}}
-
-
-#-------------------------------------------------------------------------------
-# Plugins {{{
-#-------------------------------------------------------------------------------
-
-# https://www.iterm2.com/documentation-shell-integration.html
-source $HOME/.zsh/iterm2_shell_integration.zsh
-
-# https://github.com/zsh-users/zsh-autosuggestions
-source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-# https://github.com/zsh-users/zsh-completions
-source $HOME/.zsh/zsh-completions/zsh-completions.plugin.zsh
-
-# https://github.com/zsh-users/zsh-history-substring-search
-source $HOME/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
-
-# https://github.com/zsh-users/zsh-syntax-highlighting
-source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # }}}
 
 
@@ -409,5 +391,29 @@ zle -N expandorcomplete-vicmd
 bindkey -M vicmd '\t' expandorcomplete-vicmd  # Tab
 # }}}
 
+
+#-------------------------------------------------------------------------------
+# Plugins {{{
+#-------------------------------------------------------------------------------
+
+# https://www.iterm2.com/documentation-shell-integration.html
+source $HOME/.zsh/iterm2_shell_integration.zsh
+
+# https://github.com/zsh-users/zsh-autosuggestions
+source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# https://github.com/zsh-users/zsh-completions
+source $HOME/.zsh/zsh-completions/zsh-completions.plugin.zsh
+
+# https://github.com/zsh-users/zsh-history-substring-search
+source $HOME/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
+
+# https://github.com/zsh-users/zsh-syntax-highlighting
+source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# }}}
+
+
+# Run zprof if module is enabled
+zmodload -e zsh/zprof && zprof
 
 # vim: set foldmethod=marker:
