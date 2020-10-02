@@ -5,10 +5,13 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", path: "https://raw.githubusercontent.com/jmcvaughn/dotfiles/generic-ubuntu-desktop/.scripts/setup.sh"
 
   config.vm.provider "vmware_desktop" do |v|
-    v.gui = true
+    #---------------------------------------------------------------------------
+    # Provider settings
+    #---------------------------------------------------------------------------
 
-    # Hard-set to avoid issues with `vagrant reload`
-    v.vmx["ethernet0.pciSlotNumber"] = "32"
+    v.gui = true
+    v.nat_device = "vmnet8"
+
 
     #---------------------------------------------------------------------------
     # VM settings
@@ -61,6 +64,10 @@ Vagrant.configure("2") do |config|
     ## These should be enabled/disabled together
     v.vmx["chipset.useAcpiBattery"] = "TRUE"
     v.vmx["chipset.useApmBattery"] = "TRUE"
+
+    # Other
+    ## Hard-set to avoid issues with `vagrant reload`
+    v.vmx["ethernet0.pciSlotNumber"] = "32"
   end
 end
 
