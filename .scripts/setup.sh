@@ -5,6 +5,7 @@ packages=(
 	apt-file
 	aria2
 	certbot
+	devscripts
 	docker
 	docker-compose
 	genisoimage
@@ -42,7 +43,7 @@ sudo add-apt-repository -y ppa:neovim-ppa/unstable
 sudo apt-get update
 sudo apt-get -y install --no-install-recommends virtinst
 sudo apt-get -y install ${packages[@]}
-sudo snap install canonical-livepatch maas
+sudo snap install canonical-livepatch cmadison maas
 sudo snap install openstackclients --channel latest/candidate
 sudo snap install juju --classic
 
