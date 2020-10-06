@@ -17,7 +17,6 @@ packages=(
 	nfs-kernel-server
 	ovmf
 	postgresql
-	python3-openstackclient
 	qemu-kvm
 	smartmontools
 	source-highlight
@@ -44,6 +43,7 @@ sudo apt-get update
 sudo apt-get -y install --no-install-recommends virtinst
 sudo apt-get -y install ${packages[@]}
 sudo snap install canonical-livepatch maas
+sudo snap install openstackclients --channel latest/candidate
 sudo snap install juju --classic
 
 # Set locale
