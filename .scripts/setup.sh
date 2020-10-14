@@ -17,7 +17,6 @@ packages=(
 	neovim
 	nfs-kernel-server
 	ovmf
-	postgresql
 	qemu-kvm
 	smartmontools
 	source-highlight
@@ -43,7 +42,7 @@ sudo add-apt-repository -y ppa:neovim-ppa/unstable
 sudo apt-get update
 sudo apt-get -y install --no-install-recommends virtinst
 sudo apt-get -y install ${packages[@]}
-sudo snap install canonical-livepatch cmadison maas
+sudo snap install canonical-livepatch cmadison maas maas-test-db
 sudo snap install openstackclients --channel latest/candidate
 sudo snap install juju --classic
 
