@@ -42,7 +42,11 @@ sudo passwd maas
 
 `setup.sh` installs the `maas` and `maas-test-db` snap packages. To set up MAAS:
 
-- Follow the [Setting up PostgreSQL from scratch](https://maas.io/docs/snap/2.8/ui/installation#heading--init-prod) steps in the MAAS documentation. Step 4 (edit /etc/postgresql/\*/main/pg\_hba.conf) can be skipped as localhost is already granted full access. Initialise MAAS using the address of `maasbr0`.
+- Initialise MAAS:
+
+```shell
+sudo maas init region+rack --database-uri maas-test-db:///
+```
 
 - Create an admin user:
 
