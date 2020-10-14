@@ -66,6 +66,6 @@ Settings:
       Network discovery: False
 ```
 
-- Configure the server as a KVM host by following the (Adding a VM host)[https://maas.io/docs/add-a-vm-host] page of the MAAS documentation.
+- Configure the server as a KVM host by following the [Adding a VM host](https://maas.io/docs/add-a-vm-host) page of the MAAS documentation.
 
 Then proceed with any required MAAS configuration as normal.
