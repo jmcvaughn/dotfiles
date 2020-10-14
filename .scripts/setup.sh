@@ -12,6 +12,7 @@ packages=(
 	ipmitool
 	jq
 	language-pack-en
+	libosinfo-bin
 	libvirt-clients
 	libvirt-daemon-system
 	neovim
