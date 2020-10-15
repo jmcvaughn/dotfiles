@@ -1,0 +1,8 @@
+#!/bin/sh
+
+for vm in "$@"; do
+	system_id=$(maas "$(hostname -s)" machines read hostname="$vm" | jq -r '.[].system_id')
+	maas "$(hostname -s)" machine delete "$system_id"
+	virsh --connect qemu:///system destroy "$vm"
+	virsh --connect qemu:///system undefine --remove-all-storage "$vm"
+done
