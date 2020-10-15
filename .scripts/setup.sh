@@ -11,6 +11,7 @@ packages=(
 	genisoimage
 	ipmitool
 	jq
+	ksmtuned
 	language-pack-en
 	libosinfo-bin
 	libvirt-clients
