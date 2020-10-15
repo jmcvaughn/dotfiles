@@ -23,6 +23,7 @@ packages=(
 	smartmontools
 	source-highlight
 	tree
+	xkcdpass
 	zfsutils-linux
 	zip
 	znc
@@ -63,8 +64,5 @@ sudo aa-complain /usr/sbin/libvirtd
 sudo virsh net-define "$(dirname "$0")"/maas0.xml
 sudo virsh net-autostart maas0
 sudo virsh net-start maas0
-
-# Add maas user for virsh
-sudo useradd -mG libvirt maas
 
 sudo systemctl enable --now {docker,znc}.service

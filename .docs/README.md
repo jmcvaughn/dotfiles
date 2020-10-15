@@ -8,7 +8,7 @@ For my configuration, most working data is stored in separate ZFS file systems. 
 
 As of Subiquity 20.04.2, the creation of multiple ESPs is supported. However, this functionality is only supported if booting newer installers; updating doesn't work. Therefore, you must use the Ubuntu Server 20.04.1 LTS live disk image or newer. To set up multiple ESPs, at the *Guided storage configuration* page, select *Custom storage layout*. Under the *Storage configuration* page, select *Use As Boot Device* and *Add As Another Boot Device* for your primary and backup devices respectively.
 
-At the *SSH Setup* screen, remember to select *Install OpenSSH server* and *Allow password authentication over SSH* (this is required by MAAS to reach libvirt).
+At the *SSH Setup* screen, remember to select *Install OpenSSH server*.
 
 There is no requirement to install any snaps at the *Featured Server Snaps* screen; those required are installed by the scripts in this repository.
 
@@ -34,11 +34,7 @@ After running `setup.sh`, enable [Canonical Livepatch](https://ubuntu.com/livepa
 
 ## MAAS and KVM
 
-All virtualisation requirements are met by MAAS and KVM. Before setting up MAAS, set a password for the `maas` user, which will be used by MAAS to connect to libvirt:
-
-```shell
-sudo passwd maas
-```
+All virtualisation requirements are met by MAAS and KVM. However, as MAAS KVM pods do not allow the oversubscription of storage, virtual machines are instead managed using the [`newvm`](../bin/newvm) and [`rmvm`](../bin/rmvm) scripts. [KSM](https://www.kernel.org/doc/html/latest/admin-guide/mm/ksm.html) and [ksmtuned](https://github.com/ksmtuned/ksmtuned) is used to de-duplicate virtual machine pages in memory.
 
 `setup.sh` installs the `maas` and `maas-test-db` snap packages. To set up MAAS:
 
@@ -61,11 +57,16 @@ Settings:
   Configuration:
     General:
       Enable analytics to shape improvements to user experience: False
+    Kernel parameters: console=ttyS0
   Network:
     Network discovery:
       Network discovery: False
 ```
 
-- Configure the server as a KVM host by following the [Adding a VM host](https://maas.io/docs/add-a-vm-host) page of the MAAS documentation.
+- Configure MAAS's CLI access by following the [MAAS CLI page of the MAAS documentation](https://maas.io/docs/maas-cli), setting `$PROFILE` as the output of `hostname -s` (this is required by the `newvm` and `rmvm` scripts in ~/bin/):
+
+```shell
+PROFILE=$(hostname -s)
+```
 
 Then proceed with any required MAAS configuration as normal.

@@ -1,0 +1,24 @@
+#!/bin/bash
+
+name=$(xkcdpass --numwords 2 --delimiter '-')
+mac=$(printf '52:54:00:%02x:%02x:%02x\n' "$((RANDOM%256))" "$((RANDOM%256))" "$((RANDOM%256))")
+
+virt-install --connect qemu:///system \
+	--name "$name" \
+	--memory 4096 \
+	--events on_crash=restart \
+	--vcpus 4 \
+	--boot network,hd \
+	--controller type=scsi,model=virtio-scsi \
+	--disk size=50,target.bus=scsi \
+	--disk size=50,target.bus=scsi \
+	--disk size=50,target.bus=scsi \
+	--disk size=50,target.bus=scsi \
+	--network bridge=maasbr0,mac="$mac" \
+	--noautoconsole
+
+if [ "$?" -eq 0 ]; then
+	maas "$(hostname -s)" machines create hostname="$name" mac_addresses="$mac" architecture=amd64 power_type=manual
+fi
+
+printf "\n$name\n"
