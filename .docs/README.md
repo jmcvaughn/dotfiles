@@ -32,6 +32,14 @@ zpool import -af
 
 After running `setup.sh`, enable [Canonical Livepatch](https://ubuntu.com/livepatch).
 
+If using an Intel server board, consider installing Intel's One Boot Flash Update (OFU) utility to update firmware from the operating system by downloading it from https://downloadcenter.intel.com and installing the include deb package:
+
+```shell
+sudo apt-get update && sudo apt-get -y install /path/to/flashupdt
+```
+
+As Intel incorrectly installs this to /usr/local/flashupdt/flashupdt (i.e. outside of `$PATH`), a symlink in /usr/local/sbin/ is created by `setup.sh`.
+
 ## MAAS and KVM
 
 All virtualisation requirements are met by MAAS and KVM. However, as MAAS KVM pods do not allow the oversubscription of storage, virtual machines are instead managed using the [`newvm`](../bin/newvm) and [`rmvm`](../bin/rmvm) scripts. [KSM](https://www.kernel.org/doc/html/latest/admin-guide/mm/ksm.html) and [ksmtuned](https://github.com/ksmtuned/ksmtuned) is used to de-duplicate virtual machine pages in memory.
