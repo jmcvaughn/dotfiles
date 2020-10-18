@@ -49,6 +49,9 @@ sudo snap install canonical-livepatch cmadison maas maas-test-db
 sudo snap install openstackclients --channel latest/candidate
 sudo snap install juju --classic
 
+# Create Intel One Boot Flash Update (OFU) symlink
+sudo ln -s /usr/bin/flashupdt/flashupdt /usr/local/sbin/
+
 # Set locale
 sudo update-locale LANG=en_GB.UTF-8
 
