@@ -1,0 +1,12 @@
+#!/bin/sh
+
+vms=$(maas "$(hostname -s)" machines read status=ready | jq -r '.[].hostname')
+powered_on_vms=$(mktemp)
+virsh -c qemu:///system list --name --state-running > "$powered_on_vms"
+
+# For each VM that is both in "ready" state and powered-on, destroy
+for vm in $(echo "$vms" | grep -of "$powered_on_vms"); do
+	virsh -c qemu:///system destroy "$vm"
+done
+
+rm "$powered_on_vms"

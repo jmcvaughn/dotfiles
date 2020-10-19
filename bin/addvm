@@ -14,11 +14,13 @@ virt-install --connect qemu:///system \
 	--disk size=50,target.bus=scsi \
 	--disk size=50,target.bus=scsi \
 	--disk size=50,target.bus=scsi \
-	--network bridge=maasbr0,mac="$mac" \
+	--network bridge=maasbr0,model=virtio,mac="$mac" \
 	--noautoconsole
 
 if [ "$?" -eq 0 ]; then
 	maas "$(hostname -s)" machines create hostname="$name" mac_addresses="$mac" architecture=amd64 power_type=manual
 fi
 
-printf "\n$name\n"
+if [ "$?" -eq 0 ]; then
+	printf "\n$name\n"
+fi
