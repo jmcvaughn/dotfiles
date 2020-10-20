@@ -68,4 +68,10 @@ sudo virsh net-define "$(dirname "$0")"/maas0.xml
 sudo virsh net-autostart maas0
 sudo virsh net-start maas0
 
+# Configure libvirt-guests
+if ! grep -qE '^ON_BOOT=start$' /etc/default/libvirt-guests; then
+	sudo sed -i '/^#ON_BOOT=ignore$/ a ON_BOOT=start' /etc/default/libvirt-guests
+	sudo systemctl restart libvirt-guests.service
+fi
+
 sudo systemctl enable --now {docker,znc}.service
