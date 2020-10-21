@@ -72,7 +72,9 @@ sudo virsh net-start maas0
 # Configure libvirt-guests
 if ! grep -qE '^ON_BOOT=start$' /etc/default/libvirt-guests; then
 	sudo sed -i '/^#ON_BOOT=ignore$/ a ON_BOOT=start' /etc/default/libvirt-guests
-	sudo systemctl restart libvirt-guests.service
+fi
+if ! grep -qE '^ON_SHUTDOWN=suspend$' /etc/default/libvirt-guests; then
+	sudo sed -i '/^#ON_SHUTDOWN=shutdown$/ a ON_SHUTDOWN=suspend' /etc/default/libvirt-guests
 fi
 
 sudo systemctl enable --now {docker,znc}.service
