@@ -10,10 +10,10 @@ virt-install --connect qemu:///system \
 	--vcpus 4 \
 	--boot network,hd \
 	--controller type=scsi,model=virtio-scsi \
-	--disk size=50,target.bus=scsi \
-	--disk size=50,target.bus=scsi \
-	--disk size=50,target.bus=scsi \
-	--disk size=50,target.bus=scsi \
+	--disk size=50,target.bus=scsi,cache=none \
+	--disk size=50,target.bus=scsi,cache=none \
+	--disk size=50,target.bus=scsi,cache=none \
+	--disk size=50,target.bus=scsi,cache=none \
 	--network bridge=maasbr0,model=virtio,mac="$mac" \
 	--noautoconsole
 
