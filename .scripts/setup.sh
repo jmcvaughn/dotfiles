@@ -8,6 +8,7 @@ packages=(
 	devscripts
 	docker
 	docker-compose
+	fio
 	genisoimage
 	ipmitool
 	jq
@@ -20,6 +21,7 @@ packages=(
 	neovim
 	nfs-kernel-server
 	ovmf
+	python-six
 	qemu-kvm
 	smartmontools
 	source-highlight
@@ -44,7 +46,7 @@ fi
 sudo apt-get update
 sudo add-apt-repository -y ppa:neovim-ppa/unstable
 sudo apt-get update
-sudo apt-get -y install --no-install-recommends virtinst
+sudo apt-get -y install --no-install-recommends gnuplot virtinst
 sudo apt-get -y install ${packages[@]}
 sudo snap install canonical-livepatch cmadison maas maas-test-db
 sudo snap install openstackclients --channel latest/candidate
