@@ -71,6 +71,8 @@ Settings:
       Network discovery: False
 ```
 
+- Create the "maas0" space and add the 10.188.0.0/16 fabric
+
 - Configure MAAS's CLI access by following the [MAAS CLI page of the MAAS documentation](https://maas.io/docs/maas-cli), setting `$PROFILE` as the output of `hostname -s` (this is required by the `newvm` and `rmvm` scripts in ~/bin/):
 
 ```shell
