@@ -42,7 +42,7 @@ As Intel incorrectly installs this to /usr/local/flashupdt/flashupdt (i.e. outsi
 
 ## MAAS and KVM
 
-All virtualisation requirements are met by MAAS and KVM. However, as MAAS KVM pods do not allow the oversubscription of storage, virtual machines are instead managed using the [`newvm`](../bin/newvm) and [`rmvm`](../bin/rmvm) scripts. [KSM](https://www.kernel.org/doc/html/latest/admin-guide/mm/ksm.html) and [ksmtuned](https://github.com/ksmtuned/ksmtuned) is used to de-duplicate virtual machine pages in memory.
+All virtualisation requirements are met by MAAS and KVM. However, as MAAS KVM pods do not allow the oversubscription of storage, virtual machines are instead managed using the [`addvm`](../bin/addvm) and [`rmvm`](../bin/rmvm) scripts for virtual machine creation and deletion respectively, the [`release`](../bin/release) script to power off virtual machines in the "Ready" state and the [`deploy`](../bin/deploy) script to power on machines that are in a "Deploying" state. [KSM](https://www.kernel.org/doc/html/latest/admin-guide/mm/ksm.html) and [ksmtuned](https://github.com/ksmtuned/ksmtuned) is used to de-duplicate virtual machine pages in memory.
 
 `setup.sh` installs the `maas` and `maas-test-db` snap packages. To set up MAAS:
 
