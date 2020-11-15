@@ -22,6 +22,8 @@ packages=(
 	nfs-kernel-server
 	ovmf
 	python-six
+	python3-neutronclient
+	python3-openstackclient
 	qemu-kvm
 	smartmontools
 	source-highlight
@@ -49,7 +51,6 @@ sudo apt-get update
 sudo apt-get -y install --no-install-recommends gnuplot virtinst
 sudo apt-get -y install ${packages[@]}
 sudo snap install canonical-livepatch cmadison maas maas-test-db
-sudo snap install openstackclients --channel latest/candidate
 sudo snap install juju --classic
 
 # Create Intel One Boot Flash Update (OFU) symlink
