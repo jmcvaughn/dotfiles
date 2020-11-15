@@ -83,6 +83,9 @@ setopt interactive_comments
 # Prompting
 setopt prompt_subst
 
+# Shell Emulation
+setopt sh_word_split
+
 # ZLE
 unsetopt beep
 # }}}
