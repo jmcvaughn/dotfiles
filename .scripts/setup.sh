@@ -93,4 +93,12 @@ if ! swapon -s | grep -q '/swap2.img'; then
 	fi
 fi
 
+# Disable password authentication for SSH
+if [ ! -f /etc/ssh/sshd_config.d/password_auth.conf ]; then
+	cat <<- 'EOF' | sudo tee /etc/ssh/sshd_config.d/password_auth.conf
+	PasswordAuthentication no
+	EOF
+	sudo systemctl restart sshd.service
+fi
+
 sudo systemctl enable --now {docker,znc}.service
