@@ -327,6 +327,10 @@ bindkey -M main '^[[1;2C' vi-forward-word  # Shift-Right
 bindkey -M main '^[[1;5C' vi-forward-word  # Ctrl-Right
 bindkey -M main '^[[H' vi-digit-or-beginning-of-line  # Home
 bindkey -M main '^[[F' vi-end-of-line  # End
+bindkey -M main '^a' beginning-of-line
+bindkey -M main '^e' end-of-line
+bindkey -M vicmd '^a' beginning-of-line
+bindkey -M vicmd '^e' end-of-line
 ## Modifying Text
 bindkey -M main '^?' backward-delete-char  # Backspace
 bindkey -M main '^[[3~' delete-char  # Delete
