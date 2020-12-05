@@ -13,12 +13,13 @@ sudo add-apt-repository -y ppa:neovim-ppa/unstable
 
 sudo apt-get update
 sudo apt-get -y install --no-install-recommends ubuntu-desktop
-sudo apt-get -y install apt-file devscripts jq language-pack-en neovim nfs-common source-highlight ssh-askpass-gnome tree virt-manager virt-what zip zsh
+sudo apt-get -y install apt-file devscripts jq language-pack-en neovim nfs-common ssh-askpass-gnome tree virt-manager virt-what zip zsh
 hypervisor=$(sudo virt-what | head -n 1)
 case $hypervisor in
 	'vmware') sudo apt-get -y install open-vm-tools-desktop ;;
 	'virtualbox') sudo apt-get -y install virtualbox-guest-dkms ;;
 esac
+sudo snap install batcat --classic
 
 sudo update-locale LANG=en_GB.UTF-8
 
