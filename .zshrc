@@ -157,7 +157,11 @@ else
 fi
 
 # Pager
-export LESS='--ignore-case --RAW-CONTROL-CHARS --chop-long-lines --hilite-unread --no-init --mouse'
+export LESS='--ignore-case --RAW-CONTROL-CHARS --chop-long-lines --hilite-unread --no-init'
+# Mouse support is in v551 man page but doesn't seem to be implemented
+if [[ "$(less --version | awk '{ print $2; exit }')" > 551 ]]; then
+	export LESS="$LESS --mouse"
+fi
 export BAT_CONFIG_PATH="$HOME/.config/bat/config"  # Mainly for Snap
 
 if [[ $os == 'Darwin' ]]; then
