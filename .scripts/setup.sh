@@ -26,7 +26,6 @@ packages=(
 	python3-openstackclient
 	qemu-kvm
 	smartmontools
-	source-highlight
 	tree
 	xkcdpass
 	zfsutils-linux
@@ -51,7 +50,7 @@ sudo apt-get update
 sudo apt-get -y install --no-install-recommends gnuplot virtinst
 sudo apt-get -y install ${packages[@]}
 sudo snap install canonical-livepatch cmadison maas maas-test-db
-sudo snap install juju --classic
+sudo snap install batcat juju --classic
 
 # Create Intel One Boot Flash Update (OFU) symlink
 sudo ln -s /usr/bin/flashupdt/flashupdt /usr/local/sbin/
