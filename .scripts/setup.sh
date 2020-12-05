@@ -17,7 +17,8 @@ if grep -q 'vmx' /proc/cpuinfo; then
 	libvirt_pkgs='libvirt-clients libvirt-daemon-system ovmf qemu-kvm'
 	[ "$DISTRIB_RELEASE" = '16.04' ] && libvirt_pkgs='libvirt-bin ovmf qemu-kvm'
 fi
-sudo apt-get -y install apt-file bridge-utils devscripts jq language-pack-en $libvirt_pkgs neovim nfs-common source-highlight tree zip zsh
+sudo apt-get -y install apt-file bridge-utils devscripts jq language-pack-en $libvirt_pkgs neovim nfs-common tree zip zsh
+sudo snap install batcat --classic
 
 sudo update-locale LANG=en_GB.UTF-8
 
