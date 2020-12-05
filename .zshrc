@@ -156,13 +156,9 @@ else
 	export EDITOR='vi'
 fi
 
-# less
-export LESS='--ignore-case --RAW-CONTROL-CHARS --chop-long-lines --hilite-unread --no-init'
-## Set LESSOPEN if source-highlight is found
-if src_hilite_path=$(whence -p src-hilite-lesspipe.sh 2> /dev/null); then
-	export LESSOPEN="| $src_hilite_path %s"
-fi
-unset src_hilite_path
+# Pager
+export LESS='--ignore-case --RAW-CONTROL-CHARS --chop-long-lines --hilite-unread --no-init --mouse'
+export BAT_CONFIG_PATH="$HOME/.config/bat/config"  # Mainly for Snap
 
 if [[ $os == 'Darwin' ]]; then
 	# Homebrew
@@ -272,6 +268,10 @@ tm() {
 
 # Miscellaneous
 alias aria2c='aria2c --seed-time=0'
+whence -p batcat &> /dev/null && alias bat='batcat'
+alias b='bat'
+alias bp='bat -p'
+alias bpp='bat -pp'
 alias ddi='sudo dd bs=16K conv=fsync status=progress'
 alias jj='juju'
 alias oc='openstack --os-cloud'
