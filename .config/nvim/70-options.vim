@@ -11,7 +11,9 @@ set colorcolumn=+1
 set cursorline  " Highlight the screen line of the cursor
 set guicursor=
 set number
-set signcolumn=number
+if has('nvim-0.5')
+  set signcolumn=number
+endif
 set relativenumber
 set noruler  " More detail in Ctrl-G with both this and statusline set
 
@@ -30,8 +32,10 @@ set showmatch
 set smartcase
 
 " Interface behaviour
+set cmdheight=2
 set mouse=a
 set scrolloff=15
+set shortmess+=c
 set noshowmode
 set splitbelow
 set splitright
@@ -41,13 +45,3 @@ set path+=**  " Add recursive directory searching
 
 " Wrapping and side scrolling
 set sidescroll=10
-
-" Status line
-set statusline=Col:\ %v  " Column
-set statusline+=\ \   " 2 spaces
-set statusline+=Mode:\ %{mode()}  " Mode
-set statusline+=%=  " Right-justify
-set statusline+=%.40f\   " Relative path
-set statusline+=%m  " Modified flag: [+], [-]
-set statusline+=%r  " Read-only flag: [RO]
-set statusline+=%y  " Filetype: [filetype]
