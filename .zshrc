@@ -340,6 +340,7 @@ bindkey -M main '^?' backward-delete-char  # Backspace
 bindkey -M main '^[[3~' delete-char  # Delete
 bindkey -M vicmd '^[[3~' delete-char  # Delete
 bindkey -M main '^[^?' backward-delete-word  # Meta-Backspace (Emacs)
+bindkey -M vicmd '^w' backward-delete-word
 ## Completion
 bindkey -M main ' ' magic-space  # History expansion on space
 bindkey -M main '^[[Z' reverse-menu-complete  # Shift-Tab
