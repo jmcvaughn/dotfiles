@@ -7,17 +7,27 @@ user_home=$(getent passwd 1000 | cut -d ':' -f 6)
 
 sudo timedatectl set-timezone Europe/London
 
-# Neovim
 sudo apt-get update
-sudo add-apt-repository -y ppa:neovim-ppa/unstable
 
+# Add repositories
+## Neovim
+sudo add-apt-repository -y ppa:neovim-ppa/unstable
+## Node.js and Yarn
+if [ "${DISTRIB_RELEASE%.*}" -le 18 ]; then
+	curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+	curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+	echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+fi
+
+# Install packages
 sudo apt-get update
 if grep -q 'vmx' /proc/cpuinfo; then
 	sudo apt-get -y install --no-install-recommends virtinst
 	libvirt_pkgs='libvirt-clients libvirt-daemon-system ovmf qemu-kvm'
 	[ "$DISTRIB_RELEASE" = '16.04' ] && libvirt_pkgs='libvirt-bin ovmf qemu-kvm'
 fi
-sudo apt-get -y install apt-file bridge-utils devscripts jq language-pack-en $libvirt_pkgs neovim nfs-common tree zip zsh
+[ "${DISTRIB_RELEASE%.*}" -ge 20 ] && yarn_pkg='yarnpkg' || yarn_pkg='yarn'
+sudo apt-get -y install apt-file bridge-utils default-jre-headless devscripts jq language-pack-en $libvirt_pkgs neovim nfs-common nodejs tree "$yarn_pkg" zip zsh
 sudo snap install batcat --classic
 
 sudo update-locale LANG=en_GB.UTF-8
@@ -47,3 +57,5 @@ fi
 
 # Generate SSH key pair
 sudo -u "$user" ssh-keygen -b 4096 -t rsa -N '' -f "$user_home"/.ssh/id_rsa
+
+echo 'Optional: run ~/.scripts/nvim.sh to generate helptags'
