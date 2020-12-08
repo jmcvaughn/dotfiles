@@ -5,6 +5,7 @@ packages=(
 	apt-file
 	aria2
 	certbot
+	default-jre-headless
 	devscripts
 	docker
 	docker-compose
@@ -20,6 +21,7 @@ packages=(
 	mongo-tools
 	neovim
 	nfs-kernel-server
+	nodejs
 	ovmf
 	python-six
 	python3-neutronclient
@@ -28,6 +30,7 @@ packages=(
 	smartmontools
 	tree
 	xkcdpass
+	yarnpkg
 	zfsutils-linux
 	zip
 	znc
