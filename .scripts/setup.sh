@@ -7,13 +7,22 @@ user_home=$(getent passwd 1000 | cut -d ':' -f 6)
 
 sudo timedatectl set-timezone Europe/London
 
-# Neovim
 sudo apt-get update
+
+# Add repositories
+## Neovim
 sudo add-apt-repository -y ppa:neovim-ppa/unstable
+## Node.js and Yarn
+if [ "${DISTRIB_RELEASE%.*}" -le 18 ]; then
+	curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+	curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+	echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+fi
 
 sudo apt-get update
 sudo apt-get -y install --no-install-recommends ubuntu-desktop
-sudo apt-get -y install apt-file devscripts jq language-pack-en neovim nfs-common ssh-askpass-gnome tree virt-manager virt-what zip zsh
+[ "${DISTRIB_RELEASE%.*}" -ge 20 ] && yarn_pkg='yarnpkg' || yarn_pkg='yarn'
+sudo apt-get -y install apt-file default-jre-headless devscripts jq language-pack-en neovim nfs-common nodejs ssh-askpass-gnome tree virt-manager virt-what "$yarn_pkg" zip zsh
 hypervisor=$(sudo virt-what | head -n 1)
 case $hypervisor in
 	'vmware') sudo apt-get -y install open-vm-tools-desktop ;;
@@ -51,3 +60,5 @@ cat << EOF | sudo tee /etc/gdm3/custom.conf
 AutomaticLoginEnable = true
 AutomaticLogin = $user
 EOF
+
+echo 'Optional: run ~/.scripts/nvim.sh to generate helptags'
