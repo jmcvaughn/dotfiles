@@ -73,6 +73,9 @@ Vagrant.configure("2") do |config|
     # v.vmx["chipset.useAcpiBattery"] = "TRUE"
     # v.vmx["chipset.useApmBattery"] = "TRUE"
 
+    # Advanced > Disable Side Channel Mitigations: True
+    # v.vmx["ulm.disableMitigations"] = "TRUE"
+
     # Other
     ## Hard-set to avoid issues with `vagrant reload`
     v.vmx["ethernet0.pcislotnumber"] = "32"
