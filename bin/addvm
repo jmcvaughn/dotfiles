@@ -1,7 +1,11 @@
 #!/bin/bash
 
+generate_mac() {
+	printf '52:54:00:%02x:%02x:%02x\n' "$((RANDOM%256))" "$((RANDOM%256))" "$((RANDOM%256))"
+}
+
 name=$(xkcdpass --numwords 2 --delimiter '-')
-mac=$(printf '52:54:00:%02x:%02x:%02x\n' "$((RANDOM%256))" "$((RANDOM%256))" "$((RANDOM%256))")
+mac=$(generate_mac)
 
 virt-install --connect qemu:///system \
 	--name "$name" \
@@ -15,6 +19,7 @@ virt-install --connect qemu:///system \
 	--disk size=50,target.bus=scsi,cache=none \
 	--disk size=50,target.bus=scsi,cache=none \
 	--network bridge=maasbr0,model=virtio,mac="$mac" \
+	--network bridge=maasbr0,model=virtio,mac="$(generate_mac)" \
 	--noautoconsole
 
 if [ "$?" -eq 0 ]; then
