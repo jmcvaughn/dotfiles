@@ -11,6 +11,7 @@ packages=(
 	docker-compose
 	fio
 	genisoimage
+	iotop
 	ipmitool
 	jq
 	ksmtuned
