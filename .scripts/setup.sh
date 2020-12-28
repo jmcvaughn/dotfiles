@@ -53,7 +53,7 @@ sudo add-apt-repository -y ppa:neovim-ppa/unstable
 sudo apt-get update
 sudo apt-get -y install --no-install-recommends gnuplot virtinst
 sudo apt-get -y install ${packages[@]}
-sudo snap install canonical-livepatch cmadison maas maas-test-db
+sudo snap install canonical-livepatch cmadison maas maas-test-db vault
 sudo snap install batcat juju --classic
 
 # Create Intel One Boot Flash Update (OFU) symlink
