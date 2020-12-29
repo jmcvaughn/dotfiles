@@ -30,6 +30,8 @@ rm -r ~jamesvaughn/{,.}*
 zpool import -af
 ```
 
+Remember to set `ashift` to an appropriate value for your disks. If creating a dataset to host VM images, remember to set `recordsize` to match the disk block size to minimise write amplification. For SSD pools, enable `autotrim` with `sudo zpool set autotrim=on <POOL>`. A period manual TRIM or externally-scheduled TRIM (e.g. cron or systemd timer) is recommended as automatic TRIM skips small ranges.
+
 After running `setup.sh`, enable [Canonical Livepatch](https://ubuntu.com/livepatch).
 
 If using an Intel server board, consider installing Intel's One Boot Flash Update (OFU) utility to update firmware from the operating system by downloading it from https://downloadcenter.intel.com and installing the include deb package:
