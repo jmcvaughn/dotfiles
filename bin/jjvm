@@ -1,0 +1,30 @@
+#!/bin/bash
+
+generate_mac() {
+	printf '52:54:00:%02x:%02x:%02x\n' "$((RANDOM%256))" "$((RANDOM%256))" "$((RANDOM%256))"
+}
+
+maas "$(hostname -s)" tags create name=juju
+
+name="juju$(($(sudo virsh list --all --name | grep juju | wc -l) + 1))"
+mac=$(generate_mac)
+
+virt-install --connect qemu:///system \
+	--name "$name" \
+	--memory 4096 \
+	--events on_crash=restart \
+	--vcpus 4 \
+	--boot network,hd \
+	--controller type=scsi,model=virtio-scsi \
+	--disk pool=srv-libvirt-images,size=50,format=raw,target.bus=scsi,cache=none,driver.io=native \
+	--network bridge=maasbr0,model=virtio,mac="$mac" \
+	--noautoconsole
+
+if [ "$?" -eq 0 ]; then
+	system_id=$(maas "$(hostname -s)" machines create hostname="$name" mac_addresses="$mac" architecture=amd64 power_type=manual | awk -F '"' '/system_id/ { print $4; exit }')
+fi
+
+if [ "$?" -eq 0 ]; then
+	maas "$(hostname -s)" tag update-nodes juju add="$system_id"
+	printf "\n$name\n"
+fi
