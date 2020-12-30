@@ -30,7 +30,7 @@ rm -r ~jamesvaughn/{,.}*
 zpool import -af
 ```
 
-Remember to set `ashift` to an appropriate value for your disks. If creating a dataset to host VM images, remember to set `recordsize` to match the disk block size to minimise write amplification. For SSD pools, enable `autotrim` with `sudo zpool set autotrim=on <POOL>`. A period manual TRIM or externally-scheduled TRIM (e.g. cron or systemd timer) is recommended as automatic TRIM skips small ranges.
+Remember to set `ashift` to an appropriate value for your disks. If creating a dataset to host VM images, remember to set `recordsize` to match the disk block size to minimise write amplification. For SSD pools, enable `autotrim` with `sudo zpool set autotrim=on <POOL>`. A period manual TRIM or externally-scheduled TRIM (e.g. cron or systemd timer) is recommended as automatic TRIM skips small ranges. `setup.sh` adds a script, systemd service and timer to do this daily for all pools with `autotrim` enabled.
 
 After running `setup.sh`, enable [Canonical Livepatch](https://ubuntu.com/livepatch).
 

@@ -2,11 +2,11 @@
 
 vms=$(maas "$(hostname -s)" machines read status=deploying | jq -r '.[].hostname')
 powered_off_vms=$(mktemp)
-virsh -c qemu:///system list --name --state-shutoff > "$powered_off_vms"
+virsh --connect qemu:///system list --name --state-shutoff > "$powered_off_vms"
 
 # For each VM that is both in "deploying" state and powered-off, start
 for vm in $(echo "$vms" | grep -of "$powered_off_vms"); do
-	virsh -c qemu:///system start "$vm"
+	virsh --connect qemu:///system start "$vm"
 done
 
 rm "$powered_off_vms"
