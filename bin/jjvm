@@ -6,7 +6,7 @@ generate_mac() {
 
 maas "$(hostname -s)" tags create name=juju
 
-name="juju$(($(sudo virsh list --all --name | grep juju | wc -l) + 1))"
+name="juju$(($(virsh --connect qemu:///system list --all --name | grep juju | wc -l) + 1))"
 mac=$(generate_mac)
 
 virt-install --connect qemu:///system \
