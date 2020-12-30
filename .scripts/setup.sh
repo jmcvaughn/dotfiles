@@ -117,4 +117,58 @@ if [ ! -f /etc/ssh/sshd_config.d/password_auth.conf ]; then
 	sudo systemctl restart sshd.service
 fi
 
-sudo systemctl enable --now {docker,znc}.service
+# Create ZFS TRIM script
+[ ! -f /usr/local/sbin/zfs-trim ] && sudo tee /usr/local/sbin/zfs-trim << 'EOF'
+#!/bin/sh
+
+# Will TRIM all pools, with those that don't support TRIM being silently
+# ignored by ZFS. Otherwise, only TRIM pools with autotrim enabled.
+trim_all_pools=1
+
+zpools=$(zpool list -Ho name)
+if [ "${trim_all_pools:-0}" -eq 1 ]; then
+	for zpool in $zpools; do
+		zpool trim "$zpool"
+	done
+else
+	for zpool in $zpools; do
+		[ "$(zpool get -Ho value autotrim "$zpool")" = 'on' ] && zpool trim "$zpool"
+	done
+fi
+EOF
+sudo chmod 0755 /usr/local/sbin/zfs-trim
+
+# Service to run the above script
+if [ ! -f /etc/systemd/system/zfs-trim.service ]; then
+	sudo tee /etc/systemd/system/zfs-trim.service <<- 'EOF'
+	[Unit]
+	Description=Trim ZFS pools
+	Requisite=zfs.target
+	After=zfs.target
+
+	[Service]
+	Type=oneshot
+	ExecStart=/usr/local/sbin/zfs-trim
+	EOF
+	systemd_reload=1
+fi
+
+# Timer to run the above service every Sunday at 3:30am
+if [ ! -f /etc/systemd/system/zfs-trim.timer ]; then
+	sudo tee /etc/systemd/system/zfs-trim.timer <<- 'EOF'
+	[Unit]
+	Description=Trim ZFS pools periodically
+
+	[Timer]
+	OnCalendar=Sun *-*-* 03:30:00
+	Unit=zfs-trim.service
+	Persistent=true
+
+	[Install]
+	WantedBy=timers.target
+	EOF
+	systemd_reload=1
+fi
+
+[ "${systemd_reload:-0}" -eq 1 ] && sudo systemctl daemon-reload
+sudo systemctl enable --now {docker,znc}.service zfs-trim.timer

@@ -1,12 +1,18 @@
-#!/bin/sh
+#!/bin/bash
 
 vms=$(maas "$(hostname -s)" machines read status=ready | jq -r '.[].hostname')
 powered_on_vms=$(mktemp)
-virsh -c qemu:///system list --name --state-running > "$powered_on_vms"
+virsh --connect qemu:///system list --name --state-running > "$powered_on_vms"
 
-# For each VM that is both in "ready" state and powered-on, destroy
+# For each VM that is both in "ready" state and powered-on:
+# - Destroy
+# - Recreate their images
 for vm in $(echo "$vms" | grep -of "$powered_on_vms"); do
-	virsh -c qemu:///system destroy "$vm"
+	virsh --connect qemu:///system destroy "$vm"
+	for i in '' -{1..6}; do
+		virsh --connect qemu:///system vol-delete "$vm$i".img --pool default
+		virsh --connect qemu:///system vol-create-as default "$vm$i".img 50G --allocation 0 --format raw
+	done
 done
 
 rm "$powered_on_vms"
