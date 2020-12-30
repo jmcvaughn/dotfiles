@@ -29,6 +29,7 @@ packages=(
 	python3-openstackclient
 	qemu-kvm
 	smartmontools
+	sysstat
 	tree
 	xkcdpass
 	yarnpkg
