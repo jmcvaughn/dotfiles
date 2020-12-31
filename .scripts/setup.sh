@@ -27,6 +27,7 @@ packages=(
 	python-six
 	python3-neutronclient
 	python3-openstackclient
+	python3-swiftclient
 	qemu-kvm
 	samba
 	smartmontools
