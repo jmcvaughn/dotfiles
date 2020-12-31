@@ -28,6 +28,7 @@ packages=(
 	python3-neutronclient
 	python3-openstackclient
 	qemu-kvm
+	samba
 	smartmontools
 	sysstat
 	tree
@@ -170,5 +171,9 @@ if [ ! -f /etc/systemd/system/zfs-trim.timer ]; then
 	systemd_reload=1
 fi
 
+# Set Samba password for current user
+sudo mkdir /var/lib/samba/private/
+[ ! -f /var/lib/samba/private/passdb.tdb ] && sudo smbpasswd -a "$USER"
+
 [ "${systemd_reload:-0}" -eq 1 ] && sudo systemctl daemon-reload
-sudo systemctl enable --now {docker,znc}.service zfs-trim.timer
+sudo systemctl enable --now {docker,smbd,znc}.service zfs-trim.timer
