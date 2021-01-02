@@ -37,6 +37,13 @@ packages=(
 
 sudo systemctl disable --now {systemd-resolved,ufw}.service
 
+# Enable discard for the root ('/') file system, remount
+rootfs_uuid=$(lsblk -lno mountpoint,uuid | awk '$1 == "/" { print $2 }')
+if ! grep -E "^[^#].*$rootfs_uuid.+discard" /etc/fstab; then
+	sudo sed -i "/$rootfs_uuid/ s/defaults/defaults,discard/" /etc/fstab
+	sudo mount -o remount /
+fi
+
 # Ensure interface is up and with correct MTU
 if [ ! -f /etc/netplan/10-"$wan_interface".yaml ]; then
 	if [ "${pppoe_jumbo:-0}" = 1 ]; then
