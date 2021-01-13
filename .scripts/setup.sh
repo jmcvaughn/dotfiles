@@ -25,6 +25,7 @@ packages=(
 	nodejs
 	ovmf
 	python-six
+	python3-heatclient
 	python3-neutronclient
 	python3-openstackclient
 	python3-swiftclient
