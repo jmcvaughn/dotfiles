@@ -313,6 +313,9 @@ fi
 # }}}
 
 
+# command-not-found - shows which missing package provides command
+[[ $PRETTY_NAME == 'Ubuntu'* ]] && source /etc/zsh_command_not_found
+
 # pkgfile - shows which missing package provides command
 [[ $PRETTY_NAME == 'Arch Linux' ]] && source /usr/share/doc/pkgfile/command-not-found.zsh
 
