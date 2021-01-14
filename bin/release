@@ -11,7 +11,7 @@ for vm in $(echo "$vms" | grep -of "$powered_on_vms"); do
 	virsh --connect qemu:///system destroy "$vm"
 	for i in '' -{1..6}; do
 		virsh --connect qemu:///system vol-delete "$vm$i".img --pool default
-		virsh --connect qemu:///system vol-create-as default "$vm$i".img 50G --allocation 0 --format raw
+		virsh --connect qemu:///system vol-create-as default "$vm$i".img 200G --allocation 0 --format raw
 	done
 done
 
