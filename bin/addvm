@@ -14,13 +14,13 @@ virt-install --connect qemu:///system \
 	--vcpus 8 \
 	--boot network,hd \
 	--controller type=scsi,model=virtio-scsi \
-	--disk size=50,format=raw,target.bus=scsi,cache=none,driver.io=native \
-	--disk size=50,format=raw,target.bus=scsi,cache=none,driver.io=native \
-	--disk size=50,format=raw,target.bus=scsi,cache=none,driver.io=native \
-	--disk size=50,format=raw,target.bus=scsi,cache=none,driver.io=native \
-	--disk size=50,format=raw,target.bus=scsi,cache=none,driver.io=native \
-	--disk size=50,format=raw,target.bus=scsi,cache=none,driver.io=native \
-	--disk size=50,format=raw,target.bus=scsi,cache=none,driver.io=native \
+	--disk size=200,format=raw,target.bus=scsi,cache=none,driver.io=native \
+	--disk size=200,format=raw,target.bus=scsi,cache=none,driver.io=native \
+	--disk size=200,format=raw,target.bus=scsi,cache=none,driver.io=native \
+	--disk size=200,format=raw,target.bus=scsi,cache=none,driver.io=native \
+	--disk size=200,format=raw,target.bus=scsi,cache=none,driver.io=native \
+	--disk size=200,format=raw,target.bus=scsi,cache=none,driver.io=native \
+	--disk size=200,format=raw,target.bus=scsi,cache=none,driver.io=native \
 	--network bridge=maasbr0,model=virtio,mac="$mac" \
 	--network bridge=maasbr0,model=virtio,mac="$(generate_mac)" \
 	--noautoconsole
