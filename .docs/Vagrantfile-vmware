@@ -21,6 +21,7 @@ Vagrant.configure("2") do |config|
     # Provider settings
     #---------------------------------------------------------------------------
 
+    # v.linked_clone = false  # Must be disabled to add additional disks
     v.nat_device = "vmnet8"
     v.ssh_info_public = true
 
