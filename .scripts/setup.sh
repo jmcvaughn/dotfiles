@@ -176,6 +176,14 @@ if [ ! -f /etc/systemd/system/zfs-trim.timer ]; then
 	systemd_reload=1
 fi
 
+# Disable I/O scheduler for ZFS vdevs
+if [ ! -f /etc/udev/rules.d/95-zfs-none-scheduler.rules ]; then
+	sudo tee /etc/udev/rules.d/95-zfs-none-scheduler.rules <<- 'EOF'
+	ENV{ID_FS_TYPE}=="zfs_member", ATTR{../queue/scheduler}="none"
+	EOF
+	sudo udevadm trigger
+fi
+
 # Set Samba password for current user
 sudo mkdir /var/lib/samba/private/
 [ ! -f /var/lib/samba/private/passdb.tdb ] && sudo smbpasswd -a "$USER"
