@@ -4,6 +4,7 @@ packages=(
 	apparmor-utils
 	apt-file
 	aria2
+	ceph-base
 	certbot
 	default-jre-headless
 	devscripts
