@@ -25,6 +25,7 @@ packages=(
 	nfs-kernel-server
 	nodejs
 	ovmf
+	pylint
 	python-six
 	python3-gnocchiclient
 	python3-heatclient
@@ -35,6 +36,7 @@ packages=(
 	samba
 	smartmontools
 	sysstat
+	tox
 	tree
 	xkcdpass
 	yarnpkg
