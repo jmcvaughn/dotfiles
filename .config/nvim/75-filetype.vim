@@ -19,5 +19,5 @@ autocmd FileType bib,tex set expandtab shiftwidth=0 tabstop=2 spell
 
 " Other written language
 autocmd FileType gitcommit set expandtab shiftwidth=0 tabstop=2 spell
-autocmd FileType markdown set expandtab shiftwidth=0 tabstop=4 spell
+autocmd FileType markdown set expandtab shiftwidth=0 tabstop=2 spell
 autocmd FileType text set expandtab shiftwidth=0 tabstop=2 spell
