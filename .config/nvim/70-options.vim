@@ -13,6 +13,8 @@ set guicursor=
 set number
 if has('nvim-0.5')
   set signcolumn=number
+else
+  set signcolumn=yes
 endif
 set relativenumber
 set noruler  " More detail in Ctrl-G with both this and statusline set
