@@ -12,6 +12,7 @@ packages=(
 	docker-compose
 	fio
 	genisoimage
+	git-review
 	iotop
 	ipmitool
 	jq
