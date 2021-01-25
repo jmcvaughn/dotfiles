@@ -13,3 +13,5 @@
 	excludesFile = ~/.config/git/ignore
 [pager]
 	status = true
+[gitreview]
+	username = jmcvaughn
