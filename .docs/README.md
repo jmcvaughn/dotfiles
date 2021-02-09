@@ -75,7 +75,9 @@ Settings:
 
 - Create the "maas0" space and add the 10.188.0.0/16 fabric
 
-- Set a reserved range for OpenStack floating IPs as per [FIP range in my stsstack-bundles fork](https://git.launchpad.net/~jmcvaughn/stsstack-bundles/tree/openstack/profiles/jvaughnserver?h=jvaughnserver)
+- Set a reserved range for VIPs as per [`VIP_ADDR_START` in my stsstack-bundles fork](https://git.launchpad.net/~jmcvaughn/stsstack-bundles/tree/common/helpers?h=jvaughnserver#n11)
+
+- Set a reserved range for OpenStack floating IPs as per [`FIP_RANGE` in my stsstack-bundles fork](https://git.launchpad.net/~jmcvaughn/stsstack-bundles/tree/openstack/profiles/jvaughnserver?h=jvaughnserver#n6)
 
 - Configure MAAS's CLI access by following the [MAAS CLI page of the MAAS documentation](https://maas.io/docs/maas-cli), setting `$PROFILE` as the output of `hostname -s` (this is required by the `newvm` and `rmvm` scripts in ~/bin/):
 
