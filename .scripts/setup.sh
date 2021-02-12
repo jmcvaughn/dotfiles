@@ -32,6 +32,7 @@ packages=(
 	python3-gnocchiclient
 	python3-heatclient
 	python3-neutronclient
+	python3-octaviaclient
 	python3-openstackclient
 	python3-swiftclient
 	qemu-kvm
