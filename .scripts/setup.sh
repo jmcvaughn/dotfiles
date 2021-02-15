@@ -19,7 +19,7 @@ fi
 
 sudo apt-get update
 [ "${DISTRIB_RELEASE%.*}" -ge 20 ] && yarn_pkg='yarnpkg' || yarn_pkg='yarn'
-sudo apt-get -y install apt-file default-jre-headless devscripts jq language-pack-en neovim nfs-common nodejs ssh-askpass-gnome tree virt-manager virt-what "$yarn_pkg" zip zsh
+sudo apt-get -y install apt-file default-jre-headless devscripts jq language-pack-en neovim nfs-common nodejs openssh-server ssh-askpass-gnome tree virt-manager virt-what "$yarn_pkg" zip zsh
 hypervisor=$(sudo virt-what | head -n 1)
 case $hypervisor in
 	'vmware') sudo apt-get -y install open-vm-tools-desktop ;;
