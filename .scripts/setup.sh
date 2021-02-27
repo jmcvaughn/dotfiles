@@ -65,7 +65,7 @@ sudo apt-get update
 sudo apt-get -y install --no-install-recommends gnuplot virtinst
 sudo apt-get -y install ${packages[@]}
 sudo snap install canonical-livepatch cmadison maas maas-test-db vault
-for i in batcat juju; do
+for i in batcat charm juju; do
 	sudo snap install "$i" --classic
 done
 
