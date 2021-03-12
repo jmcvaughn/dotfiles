@@ -34,6 +34,7 @@ packages=(
 	python3-neutronclient
 	python3-octaviaclient
 	python3-openstackclient
+	python3-osc-placement
 	python3-swiftclient
 	qemu-kvm
 	samba
