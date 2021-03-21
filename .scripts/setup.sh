@@ -31,6 +31,7 @@ packages=(
 	smartmontools
 	speedtest-cli
 	tree
+	wireguard
 	yarnpkg
 	zip
 	zsh
@@ -136,7 +137,7 @@ sudo apt-get update
 sudo add-apt-repository -y ppa:neovim-ppa/unstable
 sudo apt-get update
 sudo apt-get -y install ${packages[@]}
-sudo snap install canonical-livepatch
+# sudo snap install canonical-livepatch  # Uncomment if running LTS release
 sudo snap install batcat --classic
 
 # Set locale
