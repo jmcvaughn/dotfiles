@@ -8,6 +8,8 @@ subnets=''
 search=''
 pppoe_user=''
 pppoe_password=''
+wg0_port=''
+wg0_address=''  # Without subnet mask or CIDR
 
 packages=(
 	apparmor-utils
@@ -172,15 +174,19 @@ if [ ! -f /etc/ssh/sshd_config.d/password_auth.conf ]; then
 	sudo systemctl restart sshd.service
 fi
 
-# Modify Docker service to restart whenever iptables service is restarted
-if [ ! -f /etc/systemd/system/docker.service.d/override.conf ]; then
-	sudo mkdir /etc/systemd/system/docker.service.d 2> /dev/null
-	sudo tee /etc/systemd/system/docker.service.d/override.conf <<- 'EOF' 
-	[Unit]
-	PartOf=iptables.service
-	EOF
-	sudo systemctl daemon-reload
-fi
+# Modify Docker and WireGuard services to restart whenever iptables service is
+# restarted, as these add their own rules
+for service in 'docker' 'wg-quick@'; do
+	if [ ! -f /etc/systemd/system/"$service".service.d/override.conf ]; then
+		sudo mkdir /etc/systemd/system/"$service".service.d/ 2> /dev/null
+		sudo tee /etc/systemd/system/"$service".service.d/override.conf <<- 'EOF'
+		[Unit]
+		PartOf=iptables.service
+		EOF
+		systemd_reload=1
+	fi
+done
+[ "${systemd_reload:-0}" = 1 ] && sudo systemctl daemon-reload
 
 # Add basic configuration
 if [ ! -f /etc/iptables/rules.v4 ]; then
@@ -231,6 +237,25 @@ if [ -n "$hosts" ]; then
 	systemctl restart dnsmasq.service
 	EOF
 	sudo chmod +x /usr/local/sbin/update-hosts
+fi
+
+# Configure WireGuard
+if ! sudo ls /etc/wireguard/wg0.conf > /dev/null 2>&1; then
+	cat <<- EOF | sudo tee /etc/wireguard/wg0.conf
+	[Interface]
+	PrivateKey = $(wg genkey)
+	ListenPort = $wg0_port
+	Address = $wg0_address/32
+
+	PostUp = iptables --insert INPUT 3 --in-interface %i --jump ACCEPT --match comment --comment 'WireGuard %i'
+	PostUp = iptables --insert INPUT 4 --protocol udp --dport $wg0_port --match conntrack --ctstate NEW --jump ACCEPT --match comment --comment 'WireGuard %i'
+	PostUp = iptables --insert FORWARD 3 --in-interface %i --jump ACCEPT --match comment --comment 'WireGuard %i'
+
+	PostDown = iptables --delete INPUT --in-interface %i --jump ACCEPT --match comment --comment 'WireGuard %i'
+	PostDown = iptables --delete INPUT --protocol udp --dport $wg0_port --match conntrack --ctstate NEW --jump ACCEPT --match comment --comment 'WireGuard %i'
+	PostDown = iptables --delete FORWARD --in-interface %i --jump ACCEPT --match comment --comment 'WireGuard %i'
+	EOF
+	sudo systemctl enable --now wg-quick@wg0.service
 fi
 
 # Clone dotfiles
