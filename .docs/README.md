@@ -30,13 +30,15 @@ As there won't be any, select *No* for both IPv4 and IPv6.
 
 ## Post-install setup
 
-There are three main tasks to make turn this into a fully-fledged home gateway/router:
+There are three main tasks to make turn this into a fully-fledged home gateway/router/VPN server:
 
 - Add any DHCP/DNS configuration in dnsmasq
 
 - Add any custom rules in iptables
 
 - Add any static routes in netplan
+
+- Add any peers to WireGuard's wg0 configuration.
 
 ### dnsmasq
 
@@ -92,3 +94,82 @@ To use the same internal port but expose a different port externally, add the fo
 --append PREROUTING --protocol tcp --dport 65535 --jump REDIRECT --to-port 22  # Port redirection example (i.e. for this machine)
 COMMIT
 ```
+
+### WireGuard
+
+Note that more complicated configurations are possible, but the configuration here is suitable for my requirements.
+
+`setup.sh` creates a base configuration for WireGuard at /etc/wireguard/wg0.conf and enables and starts `wg-quick@wg0.service`.
+
+WireGuard doesn't have the notion of servers and clients; it instead only considers *peers*.
+However, for the sake of this configuration, we will incorrectly continue to refer to them as servers (referring to this router) and clients (referring to any device that connects to the server).
+The main difference with a WireGuard server is that it will have a network port statically configured.
+
+In the example below, the following presumptions are being made:
+
+- Server keys:
+  - Private: `oERMfmf7pLKGyu2QPHGxplHDfvjmr9i708FBRntZ+Wc=`
+  - Public: `iIZGD3FKP6eodx2eECzHVU3Xxl6+v+yYV2fCy2DRQDA=`
+- Client keys:
+  - Private: `yMTnHXZzk93xTzBfaTnQwqRDt4xKl0dHsK8YhUHbQm8=`
+  - Public: `xxqNbZzNFIwARPrmihyCoc/acexfwyVnI9/sAUExAi4=`
+- WireGuard subnet: 192.168.10.0/24 (this would be configured at the top of `setup.sh`)
+- WireGuard port: 56789 (this would be configured at the top of `setup.sh`)
+- WireGuard client IP: 192.168.10.10/32
+- Home subnet: 192.168.1.0/24
+- Home DNS: 192.168.1.1/24
+- Home domain: example.com
+- Home public IP address: 93.184.216.34 (the IP address of example.com at the time of writing)
+
+To add a client:
+
+- Derive the server's public key from its private key (which can be found in /etc/wireguard/wg0.conf):
+
+  ```shell
+  $ echo oERMfmf7pLKGyu2QPHGxplHDfvjmr9i708FBRntZ+Wc= | wg pubkey
+  iIZGD3FKP6eodx2eECzHVU3Xxl6+v+yYV2fCy2DRQDA=
+  ```
+
+- Generate a keypair for the client by following the wg(8) man page's guidance, ideally on the client if the `wg` utility is available:
+
+  > A private key and a corresponding public key may be generated at once by calling:
+  >
+  >   ```shell
+  >   $ umask 077
+  >   $ wg genkey | tee private.key | wg pubkey > public.key
+  >   ```
+
+  Alternatively, a GUI client can generate these keys for you.
+
+- On the server, add a `[Peer]` entry as follows to /etc/wireguard/wg0.conf:
+
+  ```text
+  [Peer]
+  PublicKey = xxqNbZzNFIwARPrmihyCoc/acexfwyVnI9/sAUExAi4=
+  AllowedIPs = 192.168.10.10/32
+  ```
+
+  Where `PublicKey` is the client's public key that was just generated, and `AllowedIPs` is the IP address for the WireGuard interface on the client.
+
+- Restart the service to apply the configuration:
+
+  ```shell
+  sudo systemctl systemctl restart wg-quick@wg0.service
+  ```
+
+- On the client, add a new tunnel configuration as follows:
+
+  ```text
+  [Interface]
+  PrivateKey = yMTnHXZzk93xTzBfaTnQwqRDt4xKl0dHsK8YhUHbQm8=
+  Address = 192.168.10.10/32
+  DNS = 192.168.1.1, example.com
+
+  [Peer]
+  PublicKey = iIZGD3FKP6eodx2eECzHVU3Xxl6+v+yYV2fCy2DRQDA=
+  AllowedIPs = 0.0.0.0/0
+  Endpoint = 93.184.216.34:56789
+  ```
+
+  This will route all traffic via WireGuard; change `AllowedIPs` to specific subnets to only route those subnets via the tunnel.
+  Note that on macOS clients, due to an Apple bug (see point 9 of section D of [this link](https://docs.google.com/document/d/1BnzImOF8CkungFnuRlWhnEpY2OmEHSckat62aZ6LYGY/edit)), search domains won't be set unless `AllowedIPs` is set to `0.0.0.0/0`.
