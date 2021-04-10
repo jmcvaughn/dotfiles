@@ -86,7 +86,7 @@ This can be done by adding a rule to the `INPUT` chain of the `filter` table:
 COMMIT
 ```
 
-However, exposing a registered or dynamic port is recommended instead.
+However, exposing a unregistered or dynamic port is recommended instead.
 To use the same internal port but expose a different port externally, add the following rules:
 
 ```shell
