@@ -3,7 +3,6 @@
 wan_interface=enp2s0
 lan_interface=eno1
 pppoe_jumbo=1
-hosts=''  # Raw hosts URL, https://github.com/StevenBlack/hosts recommended
 subnets=''
 search=''
 pppoe_user=''
@@ -224,20 +223,6 @@ if [ ! -f /etc/iptables/rules.v4 ]; then
 fi
 
 sudo systemctl enable --now {docker,iptables}.service
-
-# Create script for blocking hosts file
-if [ -n "$hosts" ]; then
-	cat <<- EOF | sudo tee /usr/local/sbin/update-hosts
-	#!/bin/bash
-
-	[ ! -f /etc/hosts.bak ] && mv /etc/hosts /etc/hosts.bak
-	curl -L $hosts > /etc/hosts
-
-	# To clear cache
-	systemctl restart dnsmasq.service
-	EOF
-	sudo chmod +x /usr/local/sbin/update-hosts
-fi
 
 # Configure WireGuard
 if ! sudo ls /etc/wireguard/wg0.conf > /dev/null 2>&1; then
