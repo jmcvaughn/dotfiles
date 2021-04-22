@@ -30,6 +30,7 @@ packages=(
 	pylint
 	python-six
 	python3-dev
+	python3-glanceclient
 	python3-gnocchiclient
 	python3-heatclient
 	python3-neutronclient
