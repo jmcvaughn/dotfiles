@@ -21,6 +21,7 @@ packages=(
 	libosinfo-bin
 	libvirt-clients
 	libvirt-daemon-system
+	lnav
 	mongo-tools
 	neovim
 	nfs-kernel-server
