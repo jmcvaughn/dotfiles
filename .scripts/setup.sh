@@ -151,7 +151,9 @@ if [ ! -f /etc/dnsmasq.d/jmcvaughn-dotfiles ]; then
 	listen-address = 127.0.0.1  # Required as dnscrypt-proxy also listens on lo
 	no-resolv
 	server = 127.0.2.1
-	proxy-dnssec
+	cache-size = 0  # dnscrypt-proxy caches
+	dnssec
+	conf-file = /usr/share/dnsmasq-base/trust-anchors.conf
 	EOF
 	sudo systemctl restart dnsmasq.service
 fi
