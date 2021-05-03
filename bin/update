@@ -1,0 +1,257 @@
+#!/usr/bin/env python3
+
+import argparse
+import json
+import os
+import subprocess
+import sys
+import re
+
+import repolists
+
+def apt_packages():
+    try:
+        subprocess.run(['sudo', 'apt-get', 'update'], check=True,
+                capture_output=True, text=True)
+    except subprocess.CalledProcessError as e:
+        print('Error running `sudo apt-get update`:\n' + e.stderr)
+        sys.exit(1)
+
+    try:
+        subprocess.run(['sudo', 'apt-get', '--yes', 'dist-upgrade'],
+                check=True)
+    except subprocess.CalledProcessError as e:
+        sys.exit(1)
+
+def homebrew_packages():
+    try:
+        subprocess.run(['brew', 'update'], check=True, capture_output=True,
+                text=True)
+    except subprocess.CalledProcessError as e:
+        sys.exit('Error running `brew update`:\n' + e.stderr)
+
+    try:
+        cmd = subprocess.run(['brew', 'outdated', '--json'], check=True,
+                capture_output=True, text=True) 
+    except subprocess.CalledProcessError as e:
+        sys.exit('Error checking outdated packages using `brew outdated`:\n'
+                + e.stderr)
+
+    outdated = json.loads(cmd.stdout)
+
+    formulae = []
+    for formula in outdated['formulae']:
+        formulae.append(
+                formula['name'] + ' (' + formula['current_version'] + ')')
+    if formulae:
+        print('The following formulae will be updated:')
+        print('\n'.join(formulae))
+
+    casks = []
+    for cask in outdated['casks']:
+        casks.append(
+                cask['name'] + ' (' + cask['current_version'] + ')')
+    if casks:
+        print('The following casks will be updated:')
+        print('\n'.join(casks))
+
+    try:
+        subprocess.run(['brew', 'upgrade'], check=True)
+    except subprocess.CalledProcessError:
+        sys.exit(1)
+
+def packages():
+    if sys.platform.startswith('darwin'):
+        homebrew_packages()
+    elif sys.platform.startswith('linux'):
+        with open('/etc/os-release') as f:
+            lines = f.readlines()
+        if 'Ubuntu' or 'Debian' in lines[0]:
+            apt_packages()
+        else:
+            print('Unsupported Linux distribution, not updating packages',
+                    file=sys.stderr)
+            return 1
+    else:
+        print('Unsupported platform, not updating packages', file=sys.stderr)
+        return 1
+
+class GitRepo(object):
+    def __init__(self, url, branch='master', directory=None):
+        self.url = re.sub('\.git$', '', url)
+        self.branch = branch
+        if directory is None:
+            self.directory = os.path.expanduser('~/git/') + re.sub('\.git$',
+                    '', url).split('/')[-1]
+        else:
+            self.directory = os.path.expanduser(directory)
+
+    def checkout(self):
+        try:
+            subprocess.run(['git', '-C', self.directory, 'checkout',
+                self.branch], check=True, capture_output=True, text=True)
+        except subprocess.CalledProcessError as e:
+            sys.exit(e.stderr)
+        return 0
+
+    def clone(self):
+        try:
+            subprocess.run(['git', 'clone', self.url, self.directory],
+                    check=True)
+        except subprocess.CalledProcessError as e:
+            sys.exit(e.stderr)
+        return 0
+
+    def pull(self):
+        try:
+            subprocess.run(['git', '-C', self.directory, 'checkout',
+                self.branch], check=True, capture_output=True, text=True)
+        except subprocess.CalledProcessError as e:
+            sys.exit(e.stderr)
+
+        try:
+            subprocess.run(['git', '-C', self.directory, 'pull'], check=True,
+                    capture_output=True, text=True)
+        except subprocess.CalledProcessError as e:
+            sys.exit(e.stderr)
+
+    def is_present(self):
+        try:
+            cmd = subprocess.run(['git', '-C', self.directory, 'remote',
+                'get-url', 'origin'], check=True, capture_output=True,
+                text=True)
+        except subprocess.CalledProcessError as e:
+            stderr = e.stderr.strip()
+            if stderr.endswith('No such file or directory'):
+                return False
+            elif stderr.startswith('fatal: not a git repository'):
+                sys.exit('Error: ' + self.directory
+                        + ' already exists but is not a git repository')
+            else:
+                sys.exit(e.stderr)
+        if cmd.stdout.strip() != self.url:
+            sys.exit('Error: ' + self.directory
+                    + ' already exists but configured remote does not match '
+                    + self.url)
+        return True
+
+    def stash(self):
+        try:
+            cmd = subprocess.run(['git', '-C', self.directory, 'stash'],
+                    check=True, capture_output=True, text=True)
+        except subprocess.CalledProcessError as e:
+            sys.exit(e.stderr)
+        if cmd.stdout.strip() != 'No local changes to save':
+            print(self.directory + ':\n' + cmd.stdout)
+        return 0
+
+class NeovimPlugin(GitRepo):
+    def __init__(self, url, branch='master'):
+        directory = (os.path.expanduser(
+            '~/.local/share/nvim/site/pack/plugins/start/') + re.sub('\.git$',
+                '', url).split('/')[-1])
+        super().__init__(url, branch, directory)
+
+class ZshPlugin(GitRepo):
+    def __init__(self, url, branch='master'):
+        directory = (os.path.expanduser( '~/.zsh/') + re.sub('\.git$', '',
+            url).split('/')[-1])
+        super().__init__(url, branch, directory)
+
+def pull_or_clone_git_repos(repos):
+    try:
+        os.mkdir(os.path.expanduser('~/git/'))
+    except OSError as e:
+        if e.strerror != 'File exists':
+            sys.exit(e.strerror)
+
+    for url, branch, directory in repos:
+        repo = GitRepo(url, branch, directory)
+        if repo.is_present():
+            repo.stash()
+            repo.checkout()
+            repo.pull()
+        else:
+            repo.clone()
+
+def pull_or_clone_neovim_plugins(plugins):
+    try:
+        os.mkdir(os.path.expanduser(
+            '~/.local/share/nvim/site/pack/plugins/start/'))
+    except OSError as e:
+        if e.strerror != 'File exists':
+            sys.exit(e.strerror)
+
+    for url, branch in plugins:
+        plugin = NeovimPlugin(url, branch)
+        if plugin.is_present():
+            plugin.stash()
+            plugin.checkout()
+            plugin.pull()
+        else:
+            plugin.clone()
+
+def pull_or_clone_zsh_plugins(plugins):
+    try:
+        os.mkdir(os.path.expanduser('~/.zsh/'))
+    except OSError as e:
+        if e.strerror != 'File exists':
+            sys.exit(e.strerror)
+
+    for url, branch in plugins:
+        plugin = ZshPlugin(url, branch)
+        if plugin.is_present():
+            plugin.stash()
+            plugin.checkout()
+            plugin.pull()
+        else:
+            plugin.clone()
+
+    try:
+        subprocess.run(['curl', '-L',
+            'https://iterm2.com/shell_integration/zsh', '-o',
+            os.path.expanduser('~/.zsh/iterm2_shell_integration.zsh')],
+            check=True, capture_output=True, text=True)
+    except subprocess.CalledProcessError as e:
+        print('Failed to download iTerm2 integration script:\n' + e.stderr,
+                file=sys.stderr)
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-g', '--git',
+            help='pull, or clone if not present, Git repositories',
+            action='store_true')
+    parser.add_argument('-n', '--neovim',
+            help='pull, or clone if not present, Neovim plugins',
+            action='store_true')
+    parser.add_argument('-p', '--packages',
+            help='update packages (Homebrew for Mac, apt for Debian/Ubuntu)',
+            action='store_true')
+    parser.add_argument('-v', '--vagrant', help='update Vagrant boxes',
+            action='store_true')
+    parser.add_argument('-z', '--zsh', help='update Zsh plugins',
+            action='store_true')
+    args = parser.parse_args()
+
+    # If not arguments specified, run everything
+    if True not in vars(args).values():
+        if 'git' in vars(repolists):
+            pull_or_clone_git_repos(repolists.git)
+        if 'neovim' in vars(repolists):
+            pull_or_clone_neovim_plugins(repolists.neovim)
+        if 'zsh' in vars(repolists):
+            pull_or_clone_zsh_plugins(repolists.zsh)
+        packages()
+
+    else:
+        if args.git is True and 'git' in vars(repolists):
+            pull_or_clone_git_repos(repolists.git)
+        if args.neovim is True and 'neovim' in vars(repolists):
+            pull_or_clone_neovim_plugins(repolists.neovim)
+        if args.zsh is True and 'zsh' in vars(repolists):
+            pull_or_clone_zsh_plugins(repolists.zsh)
+        if args.packages is True:
+            packages()
+
+if __name__ == "__main__":
+    main()

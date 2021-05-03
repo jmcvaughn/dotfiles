@@ -225,14 +225,6 @@ alias lesn='less --LINE-NUMBERS'
 alias gz='gzip'
 alias zc='zcat'
 
-# Package updates
-[[ $PRETTY_NAME == 'Arch Linux' ]] && ud() {
-	sudo pacman -Syu $@ && sudo pacman -Rsn --noconfirm $(pacman -Qdtq) 2> /dev/null
-}
-if [[ $PRETTY_NAME == 'Ubuntu'* ]]; then
-	alias ud='sudo apt-get update && sudo apt-get dist-upgrade'
-fi
-
 # Shell built-ins
 alias .='source'
 alias history='fc -liD 0'

@@ -2,10 +2,7 @@
 dotfiles and configuration scripts for all my systems
 
 ## Overview
-This project is inspired by [StreakyCobra's post on HackerNews](https://news.ycombinator.com/item?id=11071754) and [durdn's tutorial](https://www.atlassian.com/git/tutorials/dotfiles) further outlining the method, with some additions:
-
-- The use of Git submodules for plugins for various applications, negating the need for plugin managers or frameworks
-- The use of Git sparse clones to exclude this README from home directories while still keeping it visible on GitHub
+This project is inspired by [StreakyCobra's post on HackerNews](https://news.ycombinator.com/item?id=11071754) and [durdn's tutorial](https://www.atlassian.com/git/tutorials/dotfiles) further outlining the method. The only change is the use of Git sparse clones to exclude this README from home directories while still keeping it visible on GitHub.
 
 ## Layout and branches
 - The root of every branch maps to the home directory.
@@ -34,10 +31,9 @@ $ printf '/*\n!/README.md\n' > $HOME/.dotfiles/info/sparse-checkout
 $ dotfiles read-tree -mu HEAD
 ```
 
-- Checkout the desired branch and clone the submodules
+- Checkout the desired branch
 ```
 $ dotfiles checkout mac
-$ dotfiles submodule update --init --recursive --jobs 4
 ```
 
 To checkout README.md to modify it:
