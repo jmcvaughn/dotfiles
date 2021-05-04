@@ -1,6 +1,11 @@
 # git: list of 3-tuples of URL, branch, directory
 # neovim: list of 3-tuples of url, branch, and whether `yarn install` required
 # zsh: list of 2-tuples of URL and branch
+git = [
+        ('https://github.com/DNSCrypt/dnscrypt-proxy', 'master',
+            '~/git/dnscrypt-proxy/')
+]
+
 neovim = [
         ('https://github.com/neoclide/coc.nvim', 'release', False),
         ('https://github.com/morhetz/gruvbox', 'master', False),
