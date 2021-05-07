@@ -1,3 +1,5 @@
+pylint
+
 # QMK
 appdirs
 argcomplete
