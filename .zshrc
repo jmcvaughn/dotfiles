@@ -129,10 +129,6 @@ autoload -Uz compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 ## Unconditional menu completion
 zstyle ':completion:*' menu select
-
-## Mac: Disable hosts file completion; only used for blocking, not manual hosts
-## entries
-[[ $os == 'Darwin' ]] && zstyle ':completion:*' hosts false
 # }}}
 
 
