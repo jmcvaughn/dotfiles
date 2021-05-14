@@ -362,6 +362,8 @@
 	<string>B0899A5F-8F78-47E9-AE7B-228A7E1D42E1</string>
 	<key>DimInactiveSplitPanes</key>
 	<false/>
+	<key>DisableMetalWhenIdle</key>
+	<true/>
 	<key>DoubleClickPerformsSmartSelection</key>
 	<false/>
 	<key>EnableDivisionView</key>
@@ -477,6 +479,8 @@
 	<true/>
 	<key>IRMemory</key>
 	<integer>4</integer>
+	<key>MetalRedrawPeriod</key>
+	<real>86400</real>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
