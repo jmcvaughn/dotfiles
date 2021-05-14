@@ -76,6 +76,10 @@ Keys:
   Ctrl + Tab: Next Tab
 
 Advanced:
+  Drawing:
+    GPU renderer redraws at least this often, in seconds: 86400  # Set this to 1 day just as a nice number
+  Experimental Features:
+    Disable Metal renderer when idle to save CPU utilisation: True
   General:
     Suppress confirmation of terminal-initiated downloads: True
     Swap Find Next and Find Previous: False
