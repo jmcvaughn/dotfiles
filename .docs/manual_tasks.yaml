@@ -9,7 +9,6 @@ App Store:
     Linn Kazoo: https://apps.apple.com/gb/app/linn-kazoo/id848937349
     Numbers: https://apps.apple.com/gb/app/numbers/id409203825
     Pages: https://apps.apple.com/gb/app/pages/id409201541
-    Tampermonkey: https://apps.apple.com/gb/app/tampermonkey/id1482490089
     WireGuard: https://apps.apple.com/gb/app/wireguard/id1451685025
 
 System Preferences:
@@ -206,14 +205,8 @@ Applications:
         - AdGuard Security
         - AdGuard Social
         - Bitwarden
-        - Tampermonkey
       Advanced:
         Show Develop menu in menu bar: True
-    Extensions:
-      Tampermonkey:
-        Installed userscripts:
-          - https://greasyfork.org/en/scripts/10523-youtube-always-theater-mode
-          - https://greasyfork.org/en/scripts/40897-old-reddit-please
 
   AdGuard for Safari:
     General:
