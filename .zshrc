@@ -124,6 +124,15 @@ precmd() {
 autoload -Uz compinit
 [[ $os == 'Darwin' ]] && compinit -u || compinit
 
+# Load Juju completion
+if [[ $PRETTY_NAME == 'Ubuntu'* ]]; then
+	autoload -Uz bashcompinit
+	bashcompinit
+	if [ -f /usr/share/bash-completion/completions/juju ]; then
+		source /usr/share/bash-completion/completions/juju
+	fi
+fi
+
 # Completion system configuration
 ## Case-insensitive matching for lowercase only
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
