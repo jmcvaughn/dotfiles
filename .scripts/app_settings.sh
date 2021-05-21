@@ -244,7 +244,7 @@ safari() {
 	defaults write com.apple.Safari ShowSidebarInTopSites -bool true
 
 	# Other
-	## Toolbar: Sidebar, Back/Forward, Flexible Space, Bitwarden, Address and Search, Privacy Report, AdGuard for Safari, Tampermonkey, Flexible Space, Share
+	## Toolbar: Sidebar, Back/Forward, Flexible Space, Bitwarden, Address and Search, Privacy Report, AdGuard for Safari, Flexible Space, Share
 	defaults write com.apple.Safari 'NSToolbar Configuration BrowserToolbarIdentifier-v3.1' -dict 'TB Item Identifiers' '(
 		SidebarToolbarIdentifier,
 		BackForwardToolbarIdentifier,
@@ -253,7 +253,6 @@ safari() {
 		InputFieldsToolbarIdentifier,
 		PrivacyReportToolbarIdentifier,
 		"com.adguard.safari.AdGuard.Extension (TC3Q7MAJXF) Button",
-		"net.tampermonkey.SafariApp.Extension (G3XV72R5TC) options",
 		NSToolbarFlexibleSpaceItem,
 		ShareToolbarIdentifier
 	)'
@@ -265,7 +264,6 @@ safari() {
 		'InputFieldsToolbarIdentifier' \
 		'PrivacyReportToolbarIdentifier' \
 		"'com.adguard.safari.AdGuard.Extension (TC3Q7MAJXF) Button'" \
-		"'net.tampermonkey.SafariApp.Extension (G3XV72R5TC) options'" \
 		'NSToolbarFlexibleSpaceItem' \
 		'ShareToolbarIdentifier'
 }
