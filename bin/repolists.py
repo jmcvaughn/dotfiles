@@ -4,13 +4,14 @@
 # yarn: list of packages
 # zsh: list of 2-tuples of URL and branch
 git = [
-        ('https://github.com/bswinnerton/launchbar-github', 'master',
+    ('https://github.com/bswinnerton/launchbar-github', 'master',
         '~/Library/Application Support/LaunchBar/Actions/github.lbaction'),
-        ('https://github.com/jmcvaughn/less_app', 'master', '~/git/less_app/')
+    ('https://github.com/jmcvaughn/less_app', 'master', '~/git/less_app/')
 ]
 
 neovim = [
     ('https://github.com/morhetz/gruvbox', 'master', False),
+    ('https://github.com/iamcco/markdown-preview.nvim', 'master', True),
     ('https://github.com/neovim/nvim-lspconfig.git', 'master', False),
     ('https://github.com/godlygeek/tabular', 'master', False),
     ('https://github.com/tomtom/tcomment_vim', 'master', False),
