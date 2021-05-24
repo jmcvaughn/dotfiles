@@ -146,11 +146,22 @@ class GitRepo(object):
         return 0
 
 class NeovimPlugin(GitRepo):
-    def __init__(self, url, branch='master'):
-        directory = (os.path.expanduser(
+    def __init__(self, url, branch='master', yarn_install_required=False):
+        self.directory = (os.path.expanduser(
             '~/.local/share/nvim/site/pack/plugins/start/') + re.sub('\.git$',
                 '', url).split('/')[-1])
-        super().__init__(url, branch, directory)
+        self.yarn_install_required = yarn_install_required
+        super().__init__(url, branch, self.directory)
+
+    def requires_yarn_install(self):
+        return self.yarn_install_required
+
+    def yarn_install(self):
+        try:
+            subprocess.run(['yarn', 'install'], check=True,
+                    capture_output=True, cwd=self.directory, text=True)
+        except subprocess.CalledProcessError as e:
+            sys.exit(e.stderr)
 
 class ZshPlugin(GitRepo):
     def __init__(self, url, branch='master'):
@@ -160,10 +171,9 @@ class ZshPlugin(GitRepo):
 
 def pull_or_clone_git_repos(repos):
     try:
-        os.mkdir(os.path.expanduser('~/git/'))
-    except OSError as e:
-        if e.strerror != 'File exists':
-            sys.exit(e.strerror)
+        os.makedirs(os.path.expanduser('~/git/'), exist_ok=True)
+    except:
+        sys.exit(1)
 
     for url, branch, directory in repos:
         repo = GitRepo(url, branch, directory)
@@ -176,27 +186,27 @@ def pull_or_clone_git_repos(repos):
 
 def pull_or_clone_neovim_plugins(plugins):
     try:
-        os.mkdir(os.path.expanduser(
-            '~/.local/share/nvim/site/pack/plugins/start/'))
-    except OSError as e:
-        if e.strerror != 'File exists':
-            sys.exit(e.strerror)
+        os.makedirs(os.path.expanduser(
+            '~/.local/share/nvim/site/pack/plugins/start/'), exist_ok=True)
+    except:
+        sys.exit(1)
 
-    for url, branch in plugins:
-        plugin = NeovimPlugin(url, branch)
+    for url, branch, yarn_install_required in plugins:
+        plugin = NeovimPlugin(url, branch, yarn_install_required)
         if plugin.is_present():
             plugin.stash()
             plugin.checkout()
             plugin.pull()
         else:
             plugin.clone()
+        if plugin.requires_yarn_install():
+            plugin.yarn_install()
 
 def pull_or_clone_zsh_plugins(plugins):
     try:
-        os.mkdir(os.path.expanduser('~/.zsh/'))
-    except OSError as e:
-        if e.strerror != 'File exists':
-            sys.exit(e.strerror)
+        os.makedirs(os.path.expanduser('~/.zsh/'), exist_ok=True)
+    except:
+        sys.exit(1)
 
     for url, branch in plugins:
         plugin = ZshPlugin(url, branch)
