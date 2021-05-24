@@ -10,6 +10,7 @@ git = [
 neovim = [
         ('https://github.com/neoclide/coc.nvim', 'release', False),
         ('https://github.com/morhetz/gruvbox', 'master', False),
+        ('https://github.com/iamcco/markdown-preview.nvim', 'master', True),
         ('https://github.com/tomtom/tcomment_vim', 'master', False),
         ('https://github.com/rbong/vim-crystalline', 'master', False),
         ('https://github.com/tpope/vim-fugitive', 'master', False),
