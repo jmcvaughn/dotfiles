@@ -35,7 +35,6 @@ cask 'vmware-fusion'
 cask 'webex-meetings'
 cask 'whatsapp'
 cask 'xquartz'
-cask 'osxfuse'  # Required by sshfs
 cask 'wkhtmltopdf'  # Used by pandoc to create files
 cask 'zoom'
 
@@ -118,9 +117,6 @@ brew 'skhd'
 # MongoDB
 tap 'mongodb/brew'
 brew 'mongodb-database-tools'
-
-# Utilities with Cask dependencies
-brew 'sshfs'
 
 
 #-------------------------------------------------------------------------------
