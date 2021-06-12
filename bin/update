@@ -266,6 +266,8 @@ def sshebang():
 
 def main():
     parser = argparse.ArgumentParser()
+
+    # Only first long option is used as in args
     parser.add_argument('-g', '--git',
             help='pull, or clone if not present, Git repositories',
             action='store_true')
@@ -275,7 +277,7 @@ def main():
     parser.add_argument('-p', '--packages',
             help='update packages (Homebrew for Mac, apt for Debian/Ubuntu)',
             action='store_true')
-    parser.add_argument('-s', '--ssh', '--sshebang',
+    parser.add_argument('-s', '--sshebang', '--ssh',
             help='update SSH configuration (Canonical sshebang)',
             action='store_true')
     parser.add_argument('-v', '--vagrant', help='update Vagrant boxes',
@@ -290,10 +292,10 @@ def main():
             pull_or_clone_git_repos(repolists.git)
         if 'neovim' in vars(repolists):
             pull_or_clone_neovim_plugins(repolists.neovim)
-        if 'zsh' in vars(repolists):
-            pull_or_clone_zsh_plugins(repolists.zsh)
         if sys.platform.startswith('darwin'):
             sshebang()
+        if 'zsh' in vars(repolists):
+            pull_or_clone_zsh_plugins(repolists.zsh)
         packages()
 
     else:
@@ -301,11 +303,10 @@ def main():
             pull_or_clone_git_repos(repolists.git)
         if args.neovim is True and 'neovim' in vars(repolists):
             pull_or_clone_neovim_plugins(repolists.neovim)
+        if args.sshebang is True and sys.platform.startswith('darwin'):
+            sshebang()
         if args.zsh is True and 'zsh' in vars(repolists):
             pull_or_clone_zsh_plugins(repolists.zsh)
-        if ((args.ssh is True or args.sshebang is True) and
-                sys.platform.startswith('darwin')):
-            sshebang()
         if args.packages is True:
             packages()
 
