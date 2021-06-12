@@ -352,13 +352,7 @@ bindkey -M main '^[[Z' reverse-menu-complete  # Shift-Tab
 
 # User-defined/external widgets
 ## zsh-autosuggestions
-autosuggest-accept-space() {
-	zle autosuggest-accept
-	# Using magic-space as it doesn't print '^@'. Ideally wouldn't use this.
-	zle magic-space
-}
-zle -N autosuggest-accept-space
-bindkey -M main '^ ' autosuggest-accept-space  # Ctrl-Space
+bindkey -M main '^ ' autosuggest-accept  # Ctrl-Space
 
 ## zsh-history-substring-search
 historysubstringup-vicmd() {
