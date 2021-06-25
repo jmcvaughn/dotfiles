@@ -5,7 +5,6 @@ packages=(
 	apt-file
 	aria2
 	ceph-base
-	certbot
 	default-jre-headless
 	devscripts
 	docker
@@ -49,7 +48,6 @@ packages=(
 	yarnpkg
 	zfsutils-linux
 	zip
-	znc
 	zsh
 )
 
@@ -201,4 +199,4 @@ sudo mkdir /var/lib/samba/private/
 [ ! -f /var/lib/samba/private/passdb.tdb ] && sudo smbpasswd -a "$USER"
 
 [ "${systemd_reload:-0}" -eq 1 ] && sudo systemctl daemon-reload
-sudo systemctl enable --now {docker,smbd,znc}.service zfs-trim.timer
+sudo systemctl enable --now {docker,smbd}.service zfs-trim.timer
