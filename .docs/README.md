@@ -173,3 +173,11 @@ To add a client:
 
   This will route all traffic via WireGuard; change `AllowedIPs` to specific subnets to only route those subnets via the tunnel.
   Note that on macOS clients, due to an Apple bug (see point 9 of section D of [this link](https://docs.google.com/document/d/1BnzImOF8CkungFnuRlWhnEpY2OmEHSckat62aZ6LYGY/edit)), search domains won't be set unless `AllowedIPs` is set to `0.0.0.0/0`.
+
+### Let's Encrypt certificate
+
+Run `sudo certbot certonly --standalone`.
+
+### ZNC
+
+Run `sudo -u _znc znc --makeconf` and specify the port configured at the top of `setup.sh`. Do not start select "Yes" when prompted to start ZNC; run `sudo systemctl start znc.service` instead.

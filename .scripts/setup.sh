@@ -9,6 +9,8 @@ pppoe_user=''
 pppoe_password=''
 wg0_port=''
 wg0_address=''  # Without subnet mask or CIDR
+domain=''
+znc_port=''
 
 packages=(
 	apparmor-utils
@@ -35,6 +37,7 @@ packages=(
 	wireguard
 	yarnpkg
 	zip
+	znc
 	zsh
 )
 
@@ -139,7 +142,9 @@ sudo add-apt-repository -y ppa:neovim-ppa/unstable
 sudo apt-get update
 sudo apt-get -y install ${packages[@]}
 # sudo snap install canonical-livepatch  # Uncomment if running LTS release
-sudo snap install batcat --classic
+for i in batcat certbot; do
+	sudo snap install "$i" --classic
+done
 
 # Set locale
 sudo update-locale LANG=en_GB.UTF-8
@@ -202,6 +207,8 @@ if [ ! -f /etc/iptables/rules.v4 ]; then
 	--append INPUT --in-interface pppoe0 --protocol icmp --icmp-type echo-request --match limit --limit 1/second --jump ACCEPT
 	--append INPUT --in-interface pppoe0 --protocol icmp --icmp-type fragmentation-needed --jump ACCEPT
 	--append INPUT --in-interface pppoe0 --protocol icmp --icmp-type time-exceeded --jump ACCEPT
+	--append INPUT --in-interface pppoe0 --protocol tcp --dport 80 --match conntrack --ctstate NEW --jump ACCEPT --match comment --comment letsencrypt
+	--append INPUT --in-interface pppoe0 --protocol tcp --dport $znc_port --match conntrack --ctstate NEW --jump ACCEPT --match comment --comment znc
 	--append INPUT --jump REJECT
 
 	--append FORWARD --match conntrack --ctstate ESTABLISHED,RELATED,DNAT --jump ACCEPT
@@ -244,6 +251,29 @@ if ! sudo ls /etc/wireguard/wg0.conf > /dev/null 2>&1; then
 	EOF
 	sudo systemctl enable --now wg-quick@wg0.service
 fi
+
+# Add ZNC TLS certificate update script
+sudo mkdir -p /etc/letsencrypt/renewal-hooks/deploy/ > /dev/null 2>&1
+if [ ! -f /etc/letsencrypt/renewal-hooks/deploy/znc.sh ]; then
+	cat <<- EOF | sudo tee /etc/letsencrypt/renewal-hooks/deploy/znc.sh
+	#!/bin/bash
+
+	domain='$domain'
+
+	if [ "\$RENEWED_LINEAGE" = /etc/letsencrypt/live/"\$domain" ]; then
+		cat /etc/letsencrypt/live/"\$domain"/{privkey,fullchain}.pem > /var/lib/znc/znc.pem
+	fi
+	EOF
+fi
+sudo chmod 0755 /etc/letsencrypt/renewal-hooks/deploy/znc.sh
+
+# Enable ZNC
+## ZNC home directory is set to /var/lib/znc/, which means that
+## `znc --makeconfig` writes to /var/lib/znc/.znc/. However, znc.service uses
+## /var/lib/znc/, so symlinking the former to the latter is convenient.
+sudo ln -sf /var/lib/znc/ /var/lib/znc/.znc
+sudo chmod 0700 /var/lib/znc/
+sudo systemctl enable znc.service
 
 # Clone dotfiles
 git clone --bare git@github.com:jmcvaughn/dotfiles.git "$HOME"/.dotfiles/
