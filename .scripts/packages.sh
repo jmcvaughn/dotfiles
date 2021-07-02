@@ -128,7 +128,6 @@ main() {
 	clone_git_repos
 	install_vagrant_plugins
 	set_login_items
-	"$(gdirname "$0")"/nvim.sh
 }
 
 main
