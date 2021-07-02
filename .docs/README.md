@@ -24,7 +24,7 @@ This will set the system up to the point of, but not including, configuring dnsm
 You will be prompted to save current iptables rules.
 As there won't be any, select *No* for both IPv4 and IPv6.
 
-- Run `nvim.sh`
+- Run `helptags ALL` in `nvim` to generate helptags
 
 - Setup Canonical Livepatch if running an Ubuntu LTS release
 
