@@ -23,3 +23,4 @@ It is presumed during the setup process that where possible, "Set Up Later" or "
 1) Set it the version as global default: `pyenv global <VERSION>`
 1) Install Python packages: `pip install -r ../.scripts/requirements.txt`
 1) Run `../bin/update` to pull all Git repositories and Neovim/Zsh plugins
+1) Run `helptags ALL` in nvim to generate helptags
