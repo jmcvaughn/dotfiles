@@ -45,7 +45,7 @@ packages=(
 	tox
 	tree
 	xkcdpass
-	yarnpkg
+	yarn
 	zfsutils-linux
 	zip
 	zsh
@@ -60,11 +60,20 @@ if [ ! -f /etc/default/grub.d/console.cfg ]; then
 	sudo update-grub
 fi
 
-# Install packages
 sudo apt-get update
+
+# Add repositories
+## Neovim
 sudo add-apt-repository -y ppa:neovim-ppa/unstable
+## Node.js and Yarn
+curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+## HashiCorp
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
 sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+
+# Install packages
 sudo apt-get update
 sudo apt-get -y install --no-install-recommends gnuplot virtinst
 sudo apt-get -y install ${packages[@]}
