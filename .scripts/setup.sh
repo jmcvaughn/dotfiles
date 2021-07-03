@@ -30,14 +30,6 @@ packages=(
 	pylint
 	python-six
 	python3-dev
-	python3-glanceclient
-	python3-gnocchiclient
-	python3-heatclient
-	python3-neutronclient
-	python3-octaviaclient
-	python3-openstackclient
-	python3-osc-placement
-	python3-swiftclient
 	qemu-kvm
 	samba
 	smartmontools
@@ -77,7 +69,7 @@ sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(l
 sudo apt-get update
 sudo apt-get -y install --no-install-recommends gnuplot virtinst
 sudo apt-get -y install ${packages[@]}
-sudo snap install canonical-livepatch cmadison hotsos maas maas-test-db vault
+sudo snap install canonical-livepatch cmadison hotsos maas maas-test-db openstackclients vault
 for i in batcat charm juju; do
 	sudo snap install "$i" --classic
 done
