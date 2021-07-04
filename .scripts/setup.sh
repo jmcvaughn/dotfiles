@@ -70,7 +70,7 @@ sudo apt-get update
 sudo apt-get -y install --no-install-recommends gnuplot virtinst
 sudo apt-get -y install ${packages[@]}
 sudo snap install canonical-livepatch cmadison hotsos maas maas-test-db openstackclients vault
-for i in batcat charm juju; do
+for i in batcat charm juju kubectl; do
 	sudo snap install "$i" --classic
 done
 
