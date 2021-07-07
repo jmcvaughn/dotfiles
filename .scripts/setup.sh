@@ -30,6 +30,8 @@ packages=(
 	pylint
 	python-six
 	python3-dev
+	python3-keystoneclient
+	python3-neutronclient
 	qemu-kvm
 	samba
 	smartmontools
