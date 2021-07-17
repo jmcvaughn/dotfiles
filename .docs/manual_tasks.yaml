@@ -331,6 +331,7 @@ Applications:
     Accounts:
       On My Mac:
         Active: False
+      iCloud: True
 
   Podcasts:
     Menu options:
