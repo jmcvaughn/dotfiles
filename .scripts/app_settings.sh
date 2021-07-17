@@ -170,6 +170,13 @@ mail() {
 }
 
 
+netnewswire() {
+	# Preferences
+	## General > Article Text Size: Medium
+	defaults write com.ranchero.NetNewsWire-Evergreen articleTextSize -int 2
+}
+
+
 notes() {
 	# Preferences
 	## Automatically sort ticked items: True
@@ -424,6 +431,9 @@ main() {
 
 	mail
 	pkill -x Mail && open -a Mail
+
+	netnewswire
+	pkill -x NetNewsWire && open -a NetNewsWire
 
 	if ! pgrep -qx Notes; then
 		open -a Notes
