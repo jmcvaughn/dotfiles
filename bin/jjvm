@@ -11,12 +11,12 @@ mac=$(generate_mac)
 
 virt-install --connect qemu:///system \
 	--name "$name" \
-	--memory 4096 \
+	--memory 2560 \
 	--events on_crash=restart \
 	--vcpus 4 \
 	--boot network,hd \
 	--controller type=scsi,model=virtio-scsi \
-	--disk pool=srv-libvirt-images,size=50,format=raw,target.bus=scsi,cache=none,driver.io=native \
+	--disk size=50,format=raw,target.bus=scsi,cache=none,driver.io=native \
 	--network bridge=maasbr0,model=virtio,mac="$mac" \
 	--noautoconsole
 

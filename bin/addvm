@@ -9,9 +9,9 @@ mac=$(generate_mac)
 
 virt-install --connect qemu:///system \
 	--name "$name" \
-	--memory 8192 \
+	--memory 6144 \
 	--events on_crash=restart \
-	--vcpus 8 \
+	--vcpus 6 \
 	--boot network,hd \
 	--controller type=scsi,model=virtio-scsi \
 	--disk size=200,format=raw,target.bus=scsi,cache=none,driver.io=native \
