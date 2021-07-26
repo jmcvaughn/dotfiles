@@ -264,6 +264,89 @@ def sshebang():
     except subprocess.CalledProcessError as e:
         sys.exit(e.stderr)
 
+class VagrantBox(object):
+    _instances = []
+
+    def __init__(self, name, provider, latest_version):
+        self._instances.append(self)
+        self.name = name
+        self.provider = provider
+        self.latest_version = latest_version
+        self.installed_versions = []
+
+    def name(self):
+        return self.name
+
+    def append_to_installed_versions(self, version):
+        if version not in self.installed_versions:
+            self.installed_versions.append(version)
+            self.installed_versions.sort()
+
+    def install_latest(self):
+        if self.latest_version not in self.installed_versions:
+            try:
+                subprocess.run(['vagrant', 'box', 'add', '--clean',
+                    '--provider', self.provider, self.name], check=True)
+            except subprocess.CalledProcessError as e:
+                sys.exit(1)
+
+    def installed_versions(self):
+        return self.installed_versions
+
+def vagrant_boxes():
+    try:
+        cmd = subprocess.run(['vagrant', 'box', 'outdated', '--global'],
+                check=True, capture_output=True, text=True)
+    except subprocess.CalledProcessError as e:
+        print('vagrant not found, skipping...', file=stderr)
+
+    # Strip characters from Vagrant output. Lines (not yet split) will resemble
+    # one of either:
+    # bento/ubuntu-16.04 for vmware_desktop is outdated Current: 202103.19.0. Latest: 202104.19.0
+    # bento/ubuntu-14.04 for vmware_desktop v201808.24.0 is up to date
+    transtable = cmd.stdout.maketrans({
+        '*': '',
+        "'": "",
+        '(': '',
+        ')': '',
+        '!': ''
+    })
+    output = cmd.stdout.translate(transtable)
+
+    for line in output.split('\n'):
+        line = line.lstrip(' ').split(' ')
+        box_instance_exists = False
+
+        if 'outdated' in line:
+            for box in VagrantBox._instances:
+                if box.name == line[0]:
+                    box.append_to_installed_versions(line[6])
+                    box_instance_exists = True
+                    break
+            if box_instance_exists is not True:
+                box = VagrantBox(line[0], line[2], line[-1])
+                box.append_to_installed_versions(line[6])
+
+        elif 'up' in line:
+            for box in VagrantBox._instances:
+                if box.name == line[0]:
+                    box.append_to_installed_versions(line[3].strip('(v)'))
+                    box_instance_exists = True
+                    break
+            if box_instance_exists is not True:
+                latest_version = line[3].strip('(v)')
+                box = VagrantBox(line[0], line[2], latest_version)
+                box.append_to_installed_versions(latest_version)
+
+    for box in VagrantBox._instances:
+        box.install_latest()
+
+    try:
+        subprocess.run(['vagrant', 'box', 'prune', '--force',
+            '--keep-active-boxes'], check=True)
+    except subprocess.CalledProcessError as e:
+        sys.exit(1)
+
 def main():
     parser = argparse.ArgumentParser()
 
@@ -286,7 +369,7 @@ def main():
             action='store_true')
     args = parser.parse_args()
 
-    # If not arguments specified, run everything
+    # If no arguments specified, update everything apart from Vagrant boxes
     if True not in vars(args).values():
         if 'git' in vars(repolists):
             pull_or_clone_git_repos(repolists.git)
@@ -309,6 +392,8 @@ def main():
             pull_or_clone_zsh_plugins(repolists.zsh)
         if args.packages is True:
             packages()
+        if args.vagrant is True:
+            vagrant_boxes()
 
 if __name__ == "__main__":
     main()
