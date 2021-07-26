@@ -9,73 +9,6 @@ import re
 
 import repolists
 
-def apt_packages():
-    try:
-        subprocess.run(['sudo', 'apt-get', 'update'], check=True,
-                capture_output=True, text=True)
-    except subprocess.CalledProcessError as e:
-        print('Error running `sudo apt-get update`:\n' + e.stderr)
-        sys.exit(1)
-
-    try:
-        subprocess.run(['sudo', 'apt-get', '--yes', 'dist-upgrade'],
-                check=True)
-    except subprocess.CalledProcessError as e:
-        sys.exit(1)
-
-def homebrew_packages():
-    try:
-        subprocess.run(['brew', 'update'], check=True, capture_output=True,
-                text=True)
-    except subprocess.CalledProcessError as e:
-        sys.exit('Error running `brew update`:\n' + e.stderr)
-
-    try:
-        cmd = subprocess.run(['brew', 'outdated', '--json'], check=True,
-                capture_output=True, text=True) 
-    except subprocess.CalledProcessError as e:
-        sys.exit('Error checking outdated packages using `brew outdated`:\n'
-                + e.stderr)
-
-    outdated = json.loads(cmd.stdout)
-
-    formulae = []
-    for formula in outdated['formulae']:
-        formulae.append(
-                formula['name'] + ' (' + formula['current_version'] + ')')
-    if formulae:
-        print('The following formulae will be updated:')
-        print('\n'.join(formulae))
-
-    casks = []
-    for cask in outdated['casks']:
-        casks.append(
-                cask['name'] + ' (' + cask['current_version'] + ')')
-    if casks:
-        print('The following casks will be updated:')
-        print('\n'.join(casks))
-
-    try:
-        subprocess.run(['brew', 'upgrade'], check=True)
-    except subprocess.CalledProcessError:
-        sys.exit(1)
-
-def packages():
-    if sys.platform.startswith('darwin'):
-        homebrew_packages()
-    elif sys.platform.startswith('linux'):
-        with open('/etc/os-release') as f:
-            lines = f.readlines()
-        if 'Ubuntu' or 'Debian' in lines[0]:
-            apt_packages()
-        else:
-            print('Unsupported Linux distribution, not updating packages',
-                    file=sys.stderr)
-            return 1
-    else:
-        print('Unsupported platform, not updating packages', file=sys.stderr)
-        return 1
-
 class GitRepo(object):
     def __init__(self, url, branch='master', directory=None):
         self.url = re.sub('\.git$', '', url)
@@ -168,6 +101,102 @@ class ZshPlugin(GitRepo):
         directory = (os.path.expanduser( '~/.zsh/') + re.sub('\.git$', '',
             url).split('/')[-1])
         super().__init__(url, branch, directory)
+
+class VagrantBox(object):
+    _instances = []
+
+    def __init__(self, name, provider, latest_version):
+        self._instances.append(self)
+        self.name = name
+        self.provider = provider
+        self.latest_version = latest_version
+        self.installed_versions = []
+
+    def name(self):
+        return self.name
+
+    def append_to_installed_versions(self, version):
+        if version not in self.installed_versions:
+            self.installed_versions.append(version)
+            self.installed_versions.sort()
+
+    def install_latest(self):
+        if self.latest_version not in self.installed_versions:
+            try:
+                subprocess.run(['vagrant', 'box', 'add', '--clean',
+                    '--provider', self.provider, self.name], check=True)
+            except subprocess.CalledProcessError as e:
+                sys.exit(1)
+
+    def installed_versions(self):
+        return self.installed_versions
+
+def apt_packages():
+    try:
+        subprocess.run(['sudo', 'apt-get', 'update'], check=True,
+                capture_output=True, text=True)
+    except subprocess.CalledProcessError as e:
+        print('Error running `sudo apt-get update`:\n' + e.stderr)
+        sys.exit(1)
+
+    try:
+        subprocess.run(['sudo', 'apt-get', '--yes', 'dist-upgrade'],
+                check=True)
+    except subprocess.CalledProcessError as e:
+        sys.exit(1)
+
+def homebrew_packages():
+    try:
+        subprocess.run(['brew', 'update'], check=True, capture_output=True,
+                text=True)
+    except subprocess.CalledProcessError as e:
+        sys.exit('Error running `brew update`:\n' + e.stderr)
+
+    try:
+        cmd = subprocess.run(['brew', 'outdated', '--json'], check=True,
+                capture_output=True, text=True) 
+    except subprocess.CalledProcessError as e:
+        sys.exit('Error checking outdated packages using `brew outdated`:\n'
+                + e.stderr)
+
+    outdated = json.loads(cmd.stdout)
+
+    formulae = []
+    for formula in outdated['formulae']:
+        formulae.append(
+                formula['name'] + ' (' + formula['current_version'] + ')')
+    if formulae:
+        print('The following formulae will be updated:')
+        print('\n'.join(formulae))
+
+    casks = []
+    for cask in outdated['casks']:
+        casks.append(
+                cask['name'] + ' (' + cask['current_version'] + ')')
+    if casks:
+        print('The following casks will be updated:')
+        print('\n'.join(casks))
+
+    try:
+        subprocess.run(['brew', 'upgrade'], check=True)
+    except subprocess.CalledProcessError:
+        sys.exit(1)
+
+def packages():
+    if sys.platform.startswith('darwin'):
+        homebrew_packages()
+    elif sys.platform.startswith('linux'):
+        with open('/etc/os-release') as f:
+            lines = f.readlines()
+        if 'Ubuntu' or 'Debian' in lines[0]:
+            apt_packages()
+        else:
+            print('Unsupported Linux distribution, not updating packages',
+                    file=sys.stderr)
+            return 1
+    else:
+        print('Unsupported platform, not updating packages', file=sys.stderr)
+        return 1
 
 def pull_or_clone_git_repos(repos):
     try:
@@ -263,35 +292,6 @@ def sshebang():
                 cwd=os.path.expanduser('~/.ssh/sshebang'), text=True)
     except subprocess.CalledProcessError as e:
         sys.exit(e.stderr)
-
-class VagrantBox(object):
-    _instances = []
-
-    def __init__(self, name, provider, latest_version):
-        self._instances.append(self)
-        self.name = name
-        self.provider = provider
-        self.latest_version = latest_version
-        self.installed_versions = []
-
-    def name(self):
-        return self.name
-
-    def append_to_installed_versions(self, version):
-        if version not in self.installed_versions:
-            self.installed_versions.append(version)
-            self.installed_versions.sort()
-
-    def install_latest(self):
-        if self.latest_version not in self.installed_versions:
-            try:
-                subprocess.run(['vagrant', 'box', 'add', '--clean',
-                    '--provider', self.provider, self.name], check=True)
-            except subprocess.CalledProcessError as e:
-                sys.exit(1)
-
-    def installed_versions(self):
-        return self.installed_versions
 
 def vagrant_boxes():
     try:
