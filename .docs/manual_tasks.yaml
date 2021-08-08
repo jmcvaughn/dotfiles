@@ -355,6 +355,9 @@ Applications:
       When app is in focus:
         Show notifications: True
     Data and Storage:
+      Storage Usage:
+        Keep Media: 1 month
+        Maximum Cache Size: 16GB
       Download Folder: ~/Downloads/Telegram/
     Appearance:
       Bubble Mode: True
