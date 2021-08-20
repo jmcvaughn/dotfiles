@@ -19,19 +19,71 @@
 	</dict>
 	<key>disabledItems</key>
 	<array>
-		<string>ODLBSearchTemplateItem:2AF32EF0-4877-410F-B04C-2EB4D069FE94</string>
+		<string>ODLBSearchTemplateItem:FED01FF7-CDD4-4CFF-8F5C-6F46E403B58F</string>
 		<string>ODLBPathItem:/System/Applications/Launchpad.app</string>
 		<string>ODLBPathItem:/System/Applications/Utilities/Terminal.app</string>
 		<string>ODLBPathItem:@</string>
-		<string>ODLBSearchTemplateItem:FED01FF7-CDD4-4CFF-8F5C-6F46E403B58F</string>
+		<string>ODLBSearchTemplateItem:2AF32EF0-4877-410F-B04C-2EB4D069FE94</string>
 	</array>
 	<key>itemIdentifierVersion</key>
 	<integer>4294967303</integer>
 	<key>rules</key>
 	<array>
 		<dict>
+			<key>abbreviatedSpecificPlaces</key>
+			<array>
+				<string>/Applications</string>
+				<string>/System/Library/CoreServices</string>
+				<string>~/Applications</string>
+				<string>~/Library/Printers</string>
+			</array>
 			<key>className</key>
-			<string>ODLBTagsRule</string>
+			<string>ODLBApplicationsRule</string>
+		</dict>
+		<dict>
+			<key>abbreviatedPath</key>
+			<string>~</string>
+			<key>className</key>
+			<string>ODLBFolderContentsRule</string>
+			<key>subfolderLevels</key>
+			<integer>0</integer>
+			<key>typeCollectionIdentifier</key>
+			<string>@folder</string>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>ODLBEmojiRule</string>
+			<key>subsearchOnly</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>ODLBSafariCloudTabsRule</string>
+		</dict>
+		<dict>
+			<key>aliasName</key>
+			<string>Unix Directories</string>
+			<key>className</key>
+			<string>ODLBListRule</string>
+			<key>list</key>
+			<array>
+				<string>/bin</string>
+				<string>/etc</string>
+				<string>/sbin</string>
+				<string>/tmp</string>
+				<string>/usr</string>
+				<string>/usr/bin</string>
+				<string>/usr/sbin</string>
+				<string>/usr/local</string>
+				<string>/usr/local/bin</string>
+				<string>/var</string>
+			</array>
+		</dict>
+		<dict>
+			<key>abbreviatedPath</key>
+			<string>_safariHistoryPath</string>
+			<key>className</key>
+			<string>ODLBHistoryRule</string>
 		</dict>
 		<dict>
 			<key>className</key>
@@ -48,57 +100,12 @@
 			<integer>0</integer>
 		</dict>
 		<dict>
-			<key>abbreviatedSpecificPlaces</key>
-			<array>
-				<string>/Applications</string>
-				<string>/System/Library/CoreServices</string>
-				<string>~/Applications</string>
-				<string>~/Library/Printers</string>
-			</array>
-			<key>className</key>
-			<string>ODLBApplicationsRule</string>
-		</dict>
-		<dict>
-			<key>className</key>
-			<string>ODLBSnippetsRule</string>
-		</dict>
-		<dict>
-			<key>className</key>
-			<string>ODLBSafariCloudTabsRule</string>
-		</dict>
-		<dict>
-			<key>abbreviatedPath</key>
-			<string>~</string>
-			<key>className</key>
-			<string>ODLBFolderContentsRule</string>
-			<key>subfolderLevels</key>
-			<integer>0</integer>
-			<key>typeCollectionIdentifier</key>
-			<string>@folder</string>
-		</dict>
-		<dict>
-			<key>className</key>
-			<string>ODLBSafariReadingListRule</string>
-		</dict>
-		<dict>
-			<key>abbreviatedPath</key>
-			<string>_safariHistoryPath</string>
-			<key>className</key>
-			<string>ODLBHistoryRule</string>
-		</dict>
-		<dict>
 			<key>className</key>
 			<string>ODLBPrefPanesRule</string>
 		</dict>
 		<dict>
 			<key>className</key>
-			<string>ODLBMountedVolumesRule</string>
-		</dict>
-		<dict>
-			<key>abbreviatedPath</key>
-			<string>_safariBookmarksPath</string>
-			<key>className</key>
-			<string>ODLBBookmarksRule</string>
+			<string>ODLBSafariTopSitesRule</string>
 		</dict>
 		<dict>
 			<key>className</key>
@@ -163,6 +170,14 @@
 				</dict>
 				<dict>
 					<key>name</key>
+					<string>Charmhub (Juju)</string>
+					<key>templateURL</key>
+					<string>https://charmhub.io/?q=*</string>
+					<key>uuid</key>
+					<string>AC5D118E-4422-407E-9C0F-B2FDE833DE0D</string>
+				</dict>
+				<dict>
+					<key>name</key>
 					<string>Chocolatey Packages</string>
 					<key>templateURL</key>
 					<string>https://chocolatey.org/packages?q=*</string>
@@ -208,14 +223,6 @@
 					<string>https://downloadcenter.intel.com/search?keyword=*</string>
 					<key>uuid</key>
 					<string>2E0A078F-0BF9-4B74-B093-3C28062409D1</string>
-				</dict>
-				<dict>
-					<key>name</key>
-					<string>Juju Store</string>
-					<key>templateURL</key>
-					<string>https://jaas.ai/search?q=*</string>
-					<key>uuid</key>
-					<string>AC5D118E-4422-407E-9C0F-B2FDE833DE0D</string>
 				</dict>
 				<dict>
 					<key>name</key>
@@ -325,13 +332,13 @@
 		</dict>
 		<dict>
 			<key>className</key>
-			<string>ODLBEmojiRule</string>
-			<key>subsearchOnly</key>
-			<integer>1</integer>
+			<string>ODLBWorkflowsRule</string>
 		</dict>
 		<dict>
+			<key>abbreviatedPath</key>
+			<string>_safariBookmarksPath</string>
 			<key>className</key>
-			<string>ODLBManagedSearchTemplatesRule</string>
+			<string>ODLBBookmarksRule</string>
 		</dict>
 		<dict>
 			<key>allowsActionURLs</key>
@@ -340,33 +347,18 @@
 			<string>ODLBActionsRule</string>
 		</dict>
 		<dict>
+			<key>abbreviatedPath</key>
+			<string>~/Documents</string>
 			<key>className</key>
-			<string>ODLBUserAccountsRule</string>
-			<key>enabled</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>className</key>
-			<string>ODLBServicesRule</string>
-		</dict>
-		<dict>
-			<key>aliasName</key>
-			<string>Unix Directories</string>
-			<key>className</key>
-			<string>ODLBListRule</string>
-			<key>list</key>
+			<string>ODLBFolderContentsRule</string>
+			<key>skipQualifiers</key>
 			<array>
-				<string>/bin</string>
-				<string>/etc</string>
-				<string>/sbin</string>
-				<string>/tmp</string>
-				<string>/usr</string>
-				<string>/usr/bin</string>
-				<string>/usr/sbin</string>
-				<string>/usr/local</string>
-				<string>/usr/local/bin</string>
-				<string>/var</string>
+				<string>iTunes Music</string>
 			</array>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>ODLBManagedSearchTemplatesRule</string>
 		</dict>
 		<dict>
 			<key>aliasName</key>
@@ -395,6 +387,28 @@
 			</array>
 		</dict>
 		<dict>
+			<key>abbreviatedPath</key>
+			<string>~/Desktop</string>
+			<key>className</key>
+			<string>ODLBFolderContentsRule</string>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>ODLBMountedVolumesRule</string>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>ODLBServicesRule</string>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>ODLBTagsRule</string>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>ODLBSnippetsRule</string>
+		</dict>
+		<dict>
 			<key>className</key>
 			<string>ODLBThemesRule</string>
 			<key>enabled</key>
@@ -402,7 +416,13 @@
 		</dict>
 		<dict>
 			<key>className</key>
-			<string>ODLBDockRule</string>
+			<string>ODLBSafariReadingListRule</string>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>ODLBUserAccountsRule</string>
+			<key>enabled</key>
+			<integer>0</integer>
 		</dict>
 		<dict>
 			<key>className</key>
@@ -410,43 +430,15 @@
 		</dict>
 		<dict>
 			<key>className</key>
-			<string>ODLBSafariTopSitesRule</string>
-		</dict>
-		<dict>
-			<key>className</key>
 			<string>ODLBNetworkLocationsRule</string>
 		</dict>
 		<dict>
 			<key>className</key>
-			<string>ODLBWorkflowsRule</string>
-		</dict>
-		<dict>
-			<key>abbreviatedPath</key>
-			<string>~/Desktop</string>
-			<key>className</key>
-			<string>ODLBFolderContentsRule</string>
-		</dict>
-		<dict>
-			<key>abbreviatedPath</key>
-			<string>~/Documents</string>
-			<key>className</key>
-			<string>ODLBFolderContentsRule</string>
-			<key>skipQualifiers</key>
-			<array>
-				<string>iTunes Music</string>
-			</array>
+			<string>ODLBDockRule</string>
 		</dict>
 	</array>
 	<key>typeCollections</key>
 	<array>
-		<dict>
-			<key>definition</key>
-			<string>'RTF ', 'SLD8', 'TEXT', 'W6BN', 'W8BN', 'WDBN', 'XLS8', doc, docx, pps, ppsx, ppt, pptx, rtf, txt, xls, xlsx</string>
-			<key>identifier</key>
-			<string>4</string>
-			<key>name</key>
-			<string>MS Office Documents</string>
-		</dict>
 		<dict>
 			<key>definition</key>
 			<string>'CWWP', cwk</string>
@@ -462,6 +454,14 @@
 			<string>2</string>
 			<key>name</key>
 			<string>Source Files</string>
+		</dict>
+		<dict>
+			<key>definition</key>
+			<string>'RTF ', 'SLD8', 'TEXT', 'W6BN', 'W8BN', 'WDBN', 'XLS8', doc, docx, pps, ppsx, ppt, pptx, rtf, txt, xls, xlsx</string>
+			<key>identifier</key>
+			<string>4</string>
+			<key>name</key>
+			<string>MS Office Documents</string>
 		</dict>
 		<dict>
 			<key>definition</key>
