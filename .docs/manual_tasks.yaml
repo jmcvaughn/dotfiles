@@ -266,7 +266,9 @@ Applications:
 
   Finder:
     View menu options:
-      Show Path Bar: True  # Doesn't appear to be scriptable in Big Sur
+      Sort By:
+        Snap to Grid: True  # While on Desktop
+      Show Path Bar: True  # While in Finder window
     Sidebar:
       - Add Home folder above default user folders
 
