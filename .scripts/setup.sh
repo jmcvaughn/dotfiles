@@ -22,6 +22,7 @@ packages=(
 	dnsmasq
 	docker
 	docker-compose
+	gh
 	ipmitool
 	iptables-persistent
 	jq
@@ -145,6 +146,9 @@ sudo add-apt-repository -y ppa:neovim-ppa/unstable
 curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+## GitHub CLI
+curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 
 # Install packages
 sudo apt-get update
