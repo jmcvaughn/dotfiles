@@ -5,8 +5,12 @@
 # zsh: list of 2-tuples of URL and branch
 git = [
     ('https://github.com/bswinnerton/launchbar-github', 'master',
-        '~/Library/Application Support/LaunchBar/Actions/github.lbaction'),
-    ('https://github.com/jmcvaughn/less_app', 'master', '~/git/less_app/')
+        '~/Library/Application Support/LaunchBar/Actions/github.lbaction', []),
+    ('git@github.com:jmcvaughn/less_app', 'master', '~/git/less_app/', []),
+    ('git@github.com:jmcvaughn/qmk_firmware.git', 'jmcvaughn-keymap',
+        '~/git/qmk_firmware/',
+        [('upstream', 'git@github.com:qmk/qmk_firmware.git')]
+    )
 ]
 
 neovim = [

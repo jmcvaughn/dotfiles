@@ -69,17 +69,6 @@ install_packages() {
 }
 
 
-clone_git_repos() {
-	gmkdir "$HOME/git/" > /dev/null 2>&1
-
-	pushd "$HOME/git/"
-	if [ ! -d qmk_firmware ]; then
-		git clone git@github.com:jmcvaughn/qmk_firmware.git
-	fi
-	popd
-}
-
-
 install_vagrant_plugins() {
 	installed_vagrant_plugins=$(vagrant plugin list)
 
@@ -125,7 +114,6 @@ main() {
 	fi
 
 	install_packages
-	clone_git_repos
 	install_vagrant_plugins
 	set_login_items
 }
