@@ -36,6 +36,9 @@ system_preferences() {  # {{{
 	defaults delete com.apple.controlcenter 2> /dev/null
 
 	# System Preferences
+	## Dock & Menu Bar > Size: 80
+	defaults write com.apple.dock tilesize -float 80
+
 	## Dock & Menu Bar > Minimise windows using: Scale effect
 	defaults write com.apple.dock mineffect -string 'scale'
 
