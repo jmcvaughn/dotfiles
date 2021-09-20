@@ -353,7 +353,7 @@ Applications:
       Show Icon in Menu Bar: False
     Notifications and Sounds:
       Message Preview: False
-      Notification Tone: Pop
+      Notification Tone: Tremolo
       When app is in focus:
         Show notifications: True
     Data and Storage:
