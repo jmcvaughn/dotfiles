@@ -219,8 +219,8 @@ safari() {
 	## General > Remove download list items: When Safari quits
 	defaults write com.apple.Safari DownloadsClearingPolicy -int 1
 
-	## Tabs > Show website icons in tabs: False
-	defaults write com.apple.Safari ShowIconsInTabs -bool false
+	## Tabs > Show colour in tab bar: False
+	defaults write com.apple.Safari NeverUseBackgroundColorInToolbar -bool true
 
 	## AutoFill > Using information from my contacts: False
 	defaults write com.apple.Safari AutoFillFromAddressBook -bool false
@@ -247,12 +247,9 @@ safari() {
 	## View > Show status bar: True
 	defaults write com.apple.Safari ShowOverlayStatusBar -bool true
 
-	## Bookmarks > Show Bookmarks: True (in Top Sites page)
-	defaults write com.apple.Safari ShowSidebarInTopSites -bool true
-
 	# Other
 	## Toolbar: Sidebar, Back/Forward, Flexible Space, Bitwarden, Address and Search, Privacy Report, AdGuard for Safari, Flexible Space, Share
-	defaults write com.apple.Safari 'NSToolbar Configuration BrowserToolbarIdentifier-v3.1' -dict 'TB Item Identifiers' '(
+	defaults write com.apple.Safari 'NSToolbar Configuration BrowserStandaloneTabBarToolbarIdentifier' -dict 'TB Item Identifiers' '(
 		SidebarToolbarIdentifier,
 		BackForwardToolbarIdentifier,
 		NSToolbarFlexibleSpaceItem,
