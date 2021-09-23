@@ -52,7 +52,13 @@ sudo timedatectl set-timezone Europe/London
 # Enable console output
 if [ ! -f /etc/default/grub.d/console.cfg ]; then
 	echo 'GRUB_CMDLINE_LINUX="$GRUB_CMDLINE_LINUX console=ttyS0"' | sudo tee /etc/default/grub.d/console.cfg
-	sudo update-grub
+	update_grub=1
+fi
+
+# Set rootdelay due to SATA initialisation delay
+if [ ! -f /etc/default/grub.d/rootdelay.cfg ]; then
+	echo 'GRUB_CMDLINE_LINUX="$GRUB_CMDLINE_LINUX rootdelay=60"' | sudo tee /etc/default/grub.d/rootdelay.cfg
+	update_grub=1
 fi
 
 sudo apt-get update
@@ -197,3 +203,4 @@ sudo mkdir /var/lib/samba/private/
 
 [ "${systemd_reload:-0}" -eq 1 ] && sudo systemctl daemon-reload
 sudo systemctl enable --now {docker,smbd}.service zfs-trim.timer
+[ "${update_grub:-0}" -eq 1 ] && sudo update-grub
