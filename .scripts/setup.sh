@@ -81,10 +81,11 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githu
 sudo apt-get update
 sudo apt-get -y install --no-install-recommends gnuplot virtinst
 sudo apt-get -y install ${packages[@]}
-sudo snap install canonical-livepatch cmadison hotsos maas maas-test-db openstackclients vault
+sudo snap install canonical-livepatch cmadison hotsos maas maas-test-db openstackclients ovs-stat vault
 for i in batcat charm charmcraft juju kubectl; do
 	sudo snap install "$i" --classic
 done
+sudo snap connect ovs-stat:removable-media  # See https://snapcraft.io/ovs-stat
 
 # Create Intel One Boot Flash Update (OFU) symlink
 sudo ln -s /usr/bin/flashupdt/flashupdt /usr/local/sbin/
