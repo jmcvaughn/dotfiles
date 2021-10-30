@@ -219,9 +219,6 @@ safari() {
 	## General > Remove download list items: When Safari quits
 	defaults write com.apple.Safari DownloadsClearingPolicy -int 1
 
-	## Tabs > Show colour in tab bar: False
-	defaults write com.apple.Safari NeverUseBackgroundColorInToolbar -bool true
-
 	## AutoFill > Using information from my contacts: False
 	defaults write com.apple.Safari AutoFillFromAddressBook -bool false
 
