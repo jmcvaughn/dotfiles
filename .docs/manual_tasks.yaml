@@ -204,7 +204,8 @@ Applications:
         - AdGuard Safari Icon
         - AdGuard Security
         - AdGuard Social
-        - Bitwarden
+        - Bitwarden:
+          - Always Allow on Every Website
       Advanced:
         Show Develop menu in menu bar: True
 
