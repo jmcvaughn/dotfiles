@@ -51,19 +51,16 @@ system_preferences() {  # {{{
 	## Dock & Menu Bar > Show recent applications in Dock: False
 	defaults write com.apple.dock show-recents -bool false
 
-	## Dock & Menu Bar > Wi-Fi > Show in Menu Bar: False
+	## Wi-Fi > Show in Menu Bar: False
 	defaults -currentHost write com.apple.controlcenter WiFi -int 8
-
-	## Dock & Menu Bar > Do Not Disturb > Show in Menu Bar: False
-	defaults -currentHost write com.apple.controlcenter DoNotDisturb -int 8
 
 	## Screen Mirroring > Show in Menu Bar: False
 	defaults write com.apple.airplay showInMenuBarIfPresent -bool false
 
-	## Dock & Menu Bar > Display > Show in Menu Bar: False
+	## Display > Show in Menu Bar: False
 	defaults -currentHost write com.apple.controlcenter Display -int 8
 
-	## Dock & Menu Bar > Sound > Show in Menu Bar: False
+	## Sound > Show in Menu Bar: False
 	defaults -currentHost write com.apple.controlcenter Sound -int 8
 
 	## Battery > Show Percentage: True
@@ -165,7 +162,7 @@ system_preferences() {  # {{{
 	## Text > Correct spelling automatically: False
 	defaults write -g NSAutomaticSpellingCorrectionEnabled -bool false
 
-	## Text > Capitalise word automatically: False
+	## Text > Capitalise words automatically: False
 	defaults write -g NSAutomaticCapitalizationEnabled -bool false
 
 	## Text > Add full stop with double space: False
