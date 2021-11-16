@@ -43,6 +43,8 @@ Profiles:
       Enable subpixel anti-aliasing: True  # Affects all profiles
       Font: Source Code Pro Regular 12
     Window:
+      Columns: 180
+      Rows: 65
       Use transparency: False
     Terminal:
       Unlimited scrollback: True
@@ -62,9 +64,6 @@ Profiles:
       Title: Profile
       Send text at start: ' matterhorn; exit'
       Working Directory: Home directory
-    Window:
-      Columns: 180
-      Rows: 65
     Keys:
       A hotkey opens a dedicated window with this profile: True
       Configure Hotkey Window:
