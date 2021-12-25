@@ -81,6 +81,7 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githu
 sudo apt-get update
 sudo apt-get -y install --no-install-recommends gnuplot virtinst
 sudo apt-get -y install ${packages[@]}
+sudo snap set system experimental.parallel-instances=true
 sudo snap install canonical-livepatch cmadison hotsos maas maas-test-db openstackclients ovs-stat vault
 for i in batcat charm charmcraft juju kubectl; do
 	sudo snap install "$i" --classic
