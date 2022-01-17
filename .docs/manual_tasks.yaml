@@ -113,6 +113,7 @@ System Preferences:
 
   Network:
     - Add Home VPN location with appropriate Wi-Fi DNS/search domain settings
+    - Add Google DNS location with appropriate Wi-Fi DNS/search domain settings
 
   Keyboard:
     Keyboard:
