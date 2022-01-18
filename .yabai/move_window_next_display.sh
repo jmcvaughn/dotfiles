@@ -5,6 +5,8 @@ focused=$(yabai -m query --windows | jq '.[] | select(."has-focus" == true) | .d
 
 if [ "$focused" = "$num_displays" ]; then
 	yabai -m window --display 1
+	yabai -m display --focus 1
 else
 	yabai -m window --display $((focused+1))
+	yabai -m display --focus $((focused+1))
 fi
