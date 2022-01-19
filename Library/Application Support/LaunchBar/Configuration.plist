@@ -19,20 +19,16 @@
 	</dict>
 	<key>disabledItems</key>
 	<array>
-		<string>ODLBSearchTemplateItem:2AF32EF0-4877-410F-B04C-2EB4D069FE94</string>
+		<string>ODLBPathItem:@</string>
 		<string>ODLBPathItem:/System/Applications/Launchpad.app</string>
 		<string>ODLBSearchTemplateItem:FED01FF7-CDD4-4CFF-8F5C-6F46E403B58F</string>
 		<string>ODLBPathItem:/System/Applications/Utilities/Terminal.app</string>
-		<string>ODLBPathItem:@</string>
+		<string>ODLBSearchTemplateItem:2AF32EF0-4877-410F-B04C-2EB4D069FE94</string>
 	</array>
 	<key>itemIdentifierVersion</key>
 	<integer>4294967303</integer>
 	<key>rules</key>
 	<array>
-		<dict>
-			<key>className</key>
-			<string>ODLBDockRule</string>
-		</dict>
 		<dict>
 			<key>abbreviatedPath</key>
 			<string>_safariHistoryPath</string>
@@ -41,82 +37,7 @@
 		</dict>
 		<dict>
 			<key>className</key>
-			<string>ODLBServicesRule</string>
-		</dict>
-		<dict>
-			<key>className</key>
-			<string>ODLBUserAccountsRule</string>
-			<key>enabled</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>abbreviatedPath</key>
-			<string>~</string>
-			<key>className</key>
-			<string>ODLBFolderContentsRule</string>
-			<key>subfolderLevels</key>
-			<integer>0</integer>
-			<key>typeCollectionIdentifier</key>
-			<string>@folder</string>
-		</dict>
-		<dict>
-			<key>className</key>
 			<string>ODLBSnippetsRule</string>
-		</dict>
-		<dict>
-			<key>className</key>
-			<string>ODLBMountedVolumesRule</string>
-		</dict>
-		<dict>
-			<key>className</key>
-			<string>ODLBPrefPanesRule</string>
-		</dict>
-		<dict>
-			<key>className</key>
-			<string>ODLBTagsRule</string>
-		</dict>
-		<dict>
-			<key>className</key>
-			<string>ODLBEmojiRule</string>
-			<key>subsearchOnly</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>className</key>
-			<string>ODLBSafariTopSitesRule</string>
-		</dict>
-		<dict>
-			<key>className</key>
-			<string>ODLBNetworkLocationsRule</string>
-		</dict>
-		<dict>
-			<key>className</key>
-			<string>ODLBWorkflowsRule</string>
-		</dict>
-		<dict>
-			<key>abbreviatedPath</key>
-			<string>~/Documents</string>
-			<key>className</key>
-			<string>ODLBFolderContentsRule</string>
-			<key>skipQualifiers</key>
-			<array>
-				<string>iTunes Music</string>
-			</array>
-		</dict>
-		<dict>
-			<key>className</key>
-			<string>ODLBCategoriesRule</string>
-		</dict>
-		<dict>
-			<key>abbreviatedSpecificPlaces</key>
-			<array>
-				<string>/Applications</string>
-				<string>/System/Library/CoreServices</string>
-				<string>~/Applications</string>
-				<string>~/Library/Printers</string>
-			</array>
-			<key>className</key>
-			<string>ODLBApplicationsRule</string>
 		</dict>
 		<dict>
 			<key>aliasName</key>
@@ -146,7 +67,83 @@
 		</dict>
 		<dict>
 			<key>className</key>
+			<string>ODLBEmojiRule</string>
+			<key>subsearchOnly</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>ODLBCategoriesRule</string>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>ODLBTagsRule</string>
+		</dict>
+		<dict>
+			<key>className</key>
 			<string>ODLBSafariReadingListRule</string>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>ODLBSafariTopSitesRule</string>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>ODLBSafariCloudTabsRule</string>
+		</dict>
+		<dict>
+			<key>abbreviatedPath</key>
+			<string>_safariBookmarksPath</string>
+			<key>className</key>
+			<string>ODLBBookmarksRule</string>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>ODLBMusicRule</string>
+			<key>enabled</key>
+			<integer>0</integer>
+			<key>includeLovedSongsInBestOfLists</key>
+			<integer>0</integer>
+			<key>removeFormationFromArtistName</key>
+			<integer>0</integer>
+			<key>removeParenthesizedTextFromArtistName</key>
+			<integer>0</integer>
+			<key>splitArtists</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>abbreviatedPath</key>
+			<string>~/Desktop</string>
+			<key>className</key>
+			<string>ODLBFolderContentsRule</string>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>ODLBPrefPanesRule</string>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>ODLBThemesRule</string>
+			<key>enabled</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>ODLBServicesRule</string>
+		</dict>
+		<dict>
+			<key>abbreviatedPath</key>
+			<string>~/Documents</string>
+			<key>className</key>
+			<string>ODLBFolderContentsRule</string>
+			<key>skipQualifiers</key>
+			<array>
+				<string>iTunes Music</string>
+			</array>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>ODLBShortcutsRule</string>
 		</dict>
 		<dict>
 			<key>aliasName</key>
@@ -168,8 +165,22 @@
 			</array>
 		</dict>
 		<dict>
+			<key>abbreviatedPath</key>
+			<string>~</string>
 			<key>className</key>
-			<string>ODLBSafariCloudTabsRule</string>
+			<string>ODLBFolderContentsRule</string>
+			<key>subfolderLevels</key>
+			<integer>0</integer>
+			<key>typeCollectionIdentifier</key>
+			<string>@folder</string>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>ODLBMountedVolumesRule</string>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>ODLBNetworkLocationsRule</string>
 		</dict>
 		<dict>
 			<key>className</key>
@@ -314,14 +325,6 @@
 				</dict>
 				<dict>
 					<key>name</key>
-					<string>Juju Store</string>
-					<key>templateURL</key>
-					<string>https://jaas.ai/search?q=*</string>
-					<key>uuid</key>
-					<string>11AE2FF0-089C-429F-9B15-BBC7FF079A1D</string>
-				</dict>
-				<dict>
-					<key>name</key>
 					<string>OpenStack Docs</string>
 					<key>templateURL</key>
 					<string>https://www.google.com/search?q=site:docs.openstack.org+*</string>
@@ -403,14 +406,22 @@
 			</array>
 		</dict>
 		<dict>
-			<key>abbreviatedPath</key>
-			<string>_safariBookmarksPath</string>
 			<key>className</key>
-			<string>ODLBBookmarksRule</string>
+			<string>ODLBUserAccountsRule</string>
+			<key>enabled</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>ODLBDockRule</string>
 		</dict>
 		<dict>
 			<key>className</key>
 			<string>ODLBManagedSearchTemplatesRule</string>
+		</dict>
+		<dict>
+			<key>className</key>
+			<string>ODLBWorkflowsRule</string>
 		</dict>
 		<dict>
 			<key>allowsActionURLs</key>
@@ -419,34 +430,27 @@
 			<string>ODLBActionsRule</string>
 		</dict>
 		<dict>
+			<key>abbreviatedSpecificPlaces</key>
+			<array>
+				<string>/Applications</string>
+				<string>/System/Library/CoreServices</string>
+				<string>~/Applications</string>
+				<string>~/Library/Printers</string>
+			</array>
 			<key>className</key>
-			<string>ODLBMusicRule</string>
-			<key>enabled</key>
-			<integer>0</integer>
-			<key>includeLovedSongsInBestOfLists</key>
-			<integer>0</integer>
-			<key>removeFormationFromArtistName</key>
-			<integer>0</integer>
-			<key>removeParenthesizedTextFromArtistName</key>
-			<integer>0</integer>
-			<key>splitArtists</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>abbreviatedPath</key>
-			<string>~/Desktop</string>
-			<key>className</key>
-			<string>ODLBFolderContentsRule</string>
-		</dict>
-		<dict>
-			<key>className</key>
-			<string>ODLBThemesRule</string>
-			<key>enabled</key>
-			<integer>0</integer>
+			<string>ODLBApplicationsRule</string>
 		</dict>
 	</array>
 	<key>typeCollections</key>
 	<array>
+		<dict>
+			<key>definition</key>
+			<string>htm, html, htmld</string>
+			<key>identifier</key>
+			<string>1</string>
+			<key>name</key>
+			<string>HTML Files</string>
+		</dict>
 		<dict>
 			<key>definition</key>
 			<string>'CWWP', cwk</string>
@@ -454,14 +458,6 @@
 			<string>3</string>
 			<key>name</key>
 			<string>AppleWorks Documents</string>
-		</dict>
-		<dict>
-			<key>definition</key>
-			<string>'RTF ', 'SLD8', 'TEXT', 'W6BN', 'W8BN', 'WDBN', 'XLS8', doc, docx, pps, ppsx, ppt, pptx, rtf, txt, xls, xlsx</string>
-			<key>identifier</key>
-			<string>4</string>
-			<key>name</key>
-			<string>MS Office Documents</string>
 		</dict>
 		<dict>
 			<key>definition</key>
@@ -473,14 +469,14 @@
 		</dict>
 		<dict>
 			<key>definition</key>
-			<string>htm, html, htmld</string>
+			<string>'RTF ', 'SLD8', 'TEXT', 'W6BN', 'W8BN', 'WDBN', 'XLS8', doc, docx, pps, ppsx, ppt, pptx, rtf, txt, xls, xlsx</string>
 			<key>identifier</key>
-			<string>1</string>
+			<string>4</string>
 			<key>name</key>
-			<string>HTML Files</string>
+			<string>MS Office Documents</string>
 		</dict>
 	</array>
 	<key>version</key>
-	<integer>19</integer>
+	<integer>20</integer>
 </dict>
 </plist>
