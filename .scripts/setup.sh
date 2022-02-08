@@ -20,8 +20,6 @@ packages=(
 	devscripts
 	dnscrypt-proxy
 	dnsmasq
-	docker
-	docker-compose
 	gh
 	ipmitool
 	iptables-persistent
@@ -192,9 +190,9 @@ if [ ! -f /etc/ssh/sshd_config.d/password_auth.conf ]; then
 	sudo systemctl restart sshd.service
 fi
 
-# Modify Docker and WireGuard services to restart whenever iptables service is
-# restarted, as these add their own rules
-for service in 'docker' 'wg-quick@'; do
+# Modify WireGuard service to restart whenever iptables service is restarted,
+# as this adds its own rules
+for service in 'wg-quick@'; do
 	if [ ! -f /etc/systemd/system/"$service".service.d/override.conf ]; then
 		sudo mkdir /etc/systemd/system/"$service".service.d/ 2> /dev/null
 		sudo tee /etc/systemd/system/"$service".service.d/override.conf <<- 'EOF'
@@ -243,7 +241,7 @@ if [ ! -f /etc/iptables/rules.v4 ]; then
 	sudo systemctl restart iptables.service
 fi
 
-sudo systemctl enable --now {docker,iptables}.service
+sudo systemctl enable --now iptables.service
 
 # Configure WireGuard
 if ! sudo ls /etc/wireguard/wg0.conf > /dev/null 2>&1; then
