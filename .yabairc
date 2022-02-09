@@ -25,6 +25,7 @@ yabai -m rule --add app='Firefox' title='^Natterbox CTI$' manage=off
 yabai -m rule --add app='LibreOffice' title='^Options - .+' manage=off
 yabai -m rule --add app='Safari' title='^Meet – .+' manage=off
 yabai -m rule --add app='Safari' title='^Netflix$' manage=off
+yabai -m rule --add app='Safari' title='^| Prime Video$' manage=off
 yabai -m rule --add app='Safari' title='^Start Page, Private Browsing$' manage=off
 yabai -m rule --add app='Safari' title='^.+ - YouTube$' manage=off  # Not a '-'
 ## Set as floating by iTerm2 but yabai occasionally tiles it without this rule
