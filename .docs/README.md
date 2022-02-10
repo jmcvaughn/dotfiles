@@ -56,10 +56,11 @@ All virtualisation requirements are met by MAAS and KVM. However, as MAAS KVM po
 sudo maas init region+rack --database-uri maas-test-db:///
 ```
 
-- Create an admin user:
+- Create an admin user using your username and set up the MAAS CLI (as required by several scripts in ~/bin/):
 
 ```shell
-sudo maas createadmin
+sudo maas createadmin --username "$USERNAME" --email <EMAIL>
+sudo maas apikey --username "$USERNAME" | maas login "$(hostname -s)" MAAS_URL -
 ```
 
 - Sign in to the MAAS web UI and change the following settings:
@@ -75,16 +76,10 @@ Settings:
       Network discovery: False
 ```
 
-- Create the "maas0" space and add the 10.188.0.0/16 fabric
+- Create the "maas0" space and add the 10.188.0.0/16 fabric, and configure/enable DHCP on it
 
 - Set a reserved range for VIPs as per [`VIP_ADDR_START` in my stsstack-bundles fork](https://git.launchpad.net/~jmcvaughn/stsstack-bundles/tree/common/helpers?h=jvaughnserver#n11)
 
 - Set a reserved range for OpenStack floating IPs as per [`FIP_RANGE` in my stsstack-bundles fork](https://git.launchpad.net/~jmcvaughn/stsstack-bundles/tree/openstack/profiles/jvaughnserver?h=jvaughnserver#n6)
 
-- Configure MAAS's CLI access by following the [MAAS CLI page of the MAAS documentation](https://maas.io/docs/maas-cli), setting `$PROFILE` as the output of `hostname -s` (this is required by the `newvm` and `rmvm` scripts in ~/bin/):
-
-```shell
-PROFILE=$(hostname -s)
-```
-
-Then proceed with any required MAAS configuration as normal.
+Then proceed with any required MAAS configuration as normal, e.g. adding virtual machines using the `jjvm` and `addvm` scripts, setting up Juju.
