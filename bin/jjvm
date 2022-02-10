@@ -15,6 +15,7 @@ virt-install --connect qemu:///system \
 	--events on_crash=restart \
 	--vcpus 4 \
 	--boot network,hd \
+	--boot uefi \
 	--controller type=scsi,model=virtio-scsi \
 	--disk size=50,format=raw,target.bus=scsi,cache=none,driver.io=native \
 	--network bridge=maasbr0,model=virtio,mac="$mac" \

@@ -13,6 +13,7 @@ virt-install --connect qemu:///system \
 	--events on_crash=restart \
 	--vcpus 6 \
 	--boot network,hd \
+	--boot uefi \
 	--controller type=scsi,model=virtio-scsi \
 	--disk size=200,format=raw,target.bus=scsi,cache=none,driver.io=native \
 	--disk size=200,format=raw,target.bus=scsi,cache=none,driver.io=native \
