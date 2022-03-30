@@ -49,6 +49,10 @@ packages=(
 # Set timezone
 sudo timedatectl set-timezone Europe/London
 
+# Use the "performance" governor
+echo 'performance' | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+sudo systemctl disable ondemand.service
+
 # Enable console output
 if [ ! -f /etc/default/grub.d/console.cfg ]; then
 	echo 'GRUB_CMDLINE_LINUX="$GRUB_CMDLINE_LINUX console=ttyS0"' | sudo tee /etc/default/grub.d/console.cfg
