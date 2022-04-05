@@ -10,7 +10,7 @@ import re
 import repolists
 
 class GitRepo(object):
-    def __init__(self, url, branch='master', directory=None):
+    def __init__(self, url, branch='master', directory=None, remotes=[]):
         self.url = re.sub('\.git$', '', url)
         self.branch = branch
         if directory is None:
@@ -18,6 +18,16 @@ class GitRepo(object):
                     '', url).split('/')[-1]
         else:
             self.directory = os.path.expanduser(directory)
+        self.remotes = remotes
+
+    def add_remotes(self):
+        for name, url in self.remotes:
+            try:
+                subprocess.run(['git', '-C', self.directory, 'remote', 'add',
+                    name, url], check=True)
+            except subprocess.CalledProcessError as e:
+                sys.exit(e.stderr)
+        return 0
 
     def checkout(self):
         try:
@@ -33,6 +43,7 @@ class GitRepo(object):
                     check=True)
         except subprocess.CalledProcessError as e:
             sys.exit(e.stderr)
+        self.add_remotes()
         return 0
 
     def pull(self):
@@ -204,8 +215,8 @@ def pull_or_clone_git_repos(repos):
     except:
         sys.exit(1)
 
-    for url, branch, directory in repos:
-        repo = GitRepo(url, branch, directory)
+    for url, branch, directory, remotes in repos:
+        repo = GitRepo(url, branch, directory, remotes)
         if repo.is_present():
             repo.stash()
             repo.checkout()

@@ -1,4 +1,4 @@
-# git: list of 3-tuples of URL, branch, directory
+# git: list of 4-tuples of URL, branch, directory, list of 2-tuples of remotes
 # neovim: list of 3-tuples of url, branch, and whether `yarn install` required
 # zsh: list of 2-tuples of URL and branch
 neovim = [
