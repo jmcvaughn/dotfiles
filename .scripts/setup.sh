@@ -1,15 +1,12 @@
 #!/bin/bash
 
-wan_interface=enp2s0
+domain=''
+duckdns_token=''
 lan_interface=eno1
-pppoe_jumbo=1
 subnets=''
-search=''
-pppoe_user=''
-pppoe_password=''
+wan_interface=enp2s0
 wg0_port=''
 wg0_address=''  # Without subnet mask or CIDR
-domain=''
 znc_port=''
 
 packages=(
@@ -27,9 +24,9 @@ packages=(
 	ksmtuned
 	language-pack-en
 	neovim
+	net-tools
 	nfs-common
 	nodejs
-	ppp
 	smartmontools
 	speedtest-cli
 	tree
@@ -42,84 +39,66 @@ packages=(
 
 sudo systemctl disable --now {systemd-resolved,ufw}.service
 
+# Enable forwarding
+if [ ! -f /etc/sysctl.d/99-z-forwarding.conf ]; then
+	echo 'net.ipv4.conf.all.forwarding = 1' | sudo tee /etc/sysctl.d/99-z-forwarding.conf
+	sudo sysctl -p /etc/sysctl.d/99-z-forwarding.conf
+fi
+
+# Create script to prevent dhclient from modifying /etc/resolv.conf
+sudo tee /etc/dhcp/dhclient-enter-hooks.d/resolvconf_null << 'EOF'
+#!/bin/bash
+
+make_resolv_conf() {
+	exit 0
+}
+EOF
+sudo chmod +x /etc/dhcp/dhclient-enter-hooks.d/resolvconf_null
+
+# Configure dhclient for WAN interface
+[ ! -f /etc/dhcp/dhclient."$wan_interface".conf ] && sudo tee /etc/dhcp/dhclient."$wan_interface".conf << 'EOF'
+option rfc3442-classless-static-routes code 121 = array of unsigned integer 8;
+
+request broadcast-address,
+	interface-mtu,
+	routers,
+	rfc3442-classless-static-routes,
+	subnet-mask;
+
+# anything@skydsl|anything
+send dhcp-client-identifier 61:6e:79:74:68:69:6e:67:40:73:6b:79:64:73:6c:7c:61:6e:79:74:68:69:6e:67;
+EOF
+
+# Create systemd template service for dhclient and start dhclient service for
+# WAN interface
+if [ ! -f /etc/systemd/system/dhclient@.service ]; then
+	sudo tee /etc/systemd/system/dhclient@.service <<- 'EOF'
+	[Unit]
+	Description=Run dhclient for interface %I
+	Wants=network.target
+	BindsTo=sys-subsystem-net-devices-%i.device
+	Before=network.target
+	After=sys-subsystem-net-devices-%i.device
+
+	[Service]
+	PIDFile=dhclient.%I.pid
+	ExecStart=/usr/sbin/dhclient -4 -d -cf /etc/dhcp/dhclient.%I.conf -lf /var/lib/dhcp/dhclient.%I.leases -pf /run/dhclient.%I.pid %I
+	Restart=always
+
+	[Install]
+	WantedBy=multi-user.target
+	EOF
+	sudo systemctl daemon-reload
+	sudo systemctl enable dhclient@"$wan_interface".service
+	sudo systemctl restart dhclient@"$wan_interface".service
+fi
+
 # Enable discard for the root ('/') file system, remount
 rootfs_uuid=$(lsblk -lno mountpoint,uuid | awk '$1 == "/" { print $2 }')
 if ! grep -E "^[^#].*$rootfs_uuid.+discard" /etc/fstab; then
 	sudo sed -i "/$rootfs_uuid/ s/defaults/defaults,discard/" /etc/fstab
 	sudo mount -o remount /
 fi
-
-# Ensure interface is up and with correct MTU
-if [ ! -f /etc/netplan/10-"$wan_interface".yaml ]; then
-	if [ "${pppoe_jumbo:-0}" = 1 ]; then
-		sudo tee /etc/netplan/10-"$wan_interface".yaml <<- EOF
-		network:
-		  ethernets:
-		    $wan_interface:
-		      mtu: 1508
-		EOF
-	else
-		sudo tee /etc/netplan/10-"$wan_interface".yaml <<- EOF
-		network:
-		  ethernets:
-		    $wan_interface: {}
-		EOF
-	fi
-	sudo netplan apply
-fi
-
-# Generate ppp configuration
-if [ ! -f /etc/ppp/peers/pppoe0 ]; then
-	sudo tee /etc/ppp/peers/pppoe0 <<- EOF
-	# See pppd(8)
-
-	plugin rp-pppoe.so  # Must be immediately before interface
-
-	## Frequently Used Options
-	$wan_interface
-	user "$pppoe_user"
-	password "$pppoe_password"
-	defaultroute
-
-	## Options
-	ifname pppoe0
-	ipparam pppoe0
-	maxfail 0
-	noauth
-	noipdefault
-	noproxyarp
-	persist
-
-	## https://tools.ietf.org/html/rfc2516#section-7
-	default-asyncmap
-	noaccomp
-	EOF
-
-	[ "${pppoe_jumbo:-0}" = 0 ] && sudo tee -a /etc/ppp/peers/pppoe0 <<- 'EOF'
-
-	mru 1492
-	mtu 1492
-	EOF
-fi
-
-# Add ppp systemd service
-if [ ! -f /etc/systemd/system/ppp@.service ]; then
-	sudo tee /etc/systemd/system/ppp@.service <<- 'EOF'
-	[Unit]
-	Description=PPP provider %I
-	Before=network.target
-
-	[Service]
-	ExecStart=/usr/sbin/pppd call %I nodetach nolog
-
-	[Install]
-	WantedBy=multi-user.target
-	EOF
-	sudo systemctl daemon-reload
-fi
-
-# Enable ppp service for pppoe0
-sudo systemctl enable --now ppp@pppoe0.service
 
 for count in {1..5}; do
 	ping -c 1 1.1.1.1 && break || sleep 5
@@ -164,10 +143,10 @@ if [ ! -f /etc/dnsmasq.d/jmcvaughn-dotfiles ]; then
 	sudo tee /etc/dnsmasq.d/jmcvaughn-dotfiles <<- 'EOF'
 	# Redirect everything to dnscrypt-proxy
 	listen-address = 127.0.0.1  # Required as dnscrypt-proxy also listens on lo
+	bind-interfaces
 	no-resolv
 	server = 127.0.2.1
 	cache-size = 0  # dnscrypt-proxy caches
-	dnssec
 	conf-file = /usr/share/dnsmasq-base/trust-anchors.conf
 	EOF
 	sudo systemctl restart dnsmasq.service
@@ -177,7 +156,7 @@ fi
 if ! grep -q 'nameserver 127.0.0.1' /etc/resolv.conf; then
 	sudo tee /etc/resolv.conf <<- EOF
 	nameserver 127.0.0.1
-	search $search
+	search $domain
 	EOF
 fi
 
@@ -190,6 +169,34 @@ if [ ! -f /etc/ssh/sshd_config.d/password_auth.conf ]; then
 	sudo systemctl restart sshd.service
 fi
 
+# Create dynamic DNS service
+if [ ! -f /etc/systemd/system/dynamic-dns.service ]; then
+	sudo tee /etc/systemd/system/dynamic-dns.service <<- EOF
+	[Unit]
+	Description=Update dynamic DNS entry
+	After=multi-user.target
+	[Service]
+	ExecStart=curl -k https://www.duckdns.org/update?domains=${domain%.duckdns.org}&token=$duckdns_token&ip=
+	EOF
+	sudo systemctl daemon-reload
+fi
+
+# Timer to run the above service every 5 minutes
+if [ ! -f /etc/systemd/system/dynamic-dns.timer ]; then
+	sudo tee /etc/systemd/system/dynamic-dns.timer <<- 'EOF'
+	[Unit]
+	Description=Update dynamic DNS entry periodically
+	[Timer]
+	OnCalendar=*-*-* *:00,05,10,15,20,25,30,35,40,45,50,55:00
+	Unit=dynamic-dns.service
+	Persistent=true
+	[Install]
+	WantedBy=timers.target
+	EOF
+	sudo systemctl daemon-reload
+	sudo systemctl enable --now dynamic-dns.timer
+fi
+
 # Modify WireGuard service to restart whenever iptables service is restarted,
 # as this adds its own rules
 for service in 'wg-quick@'; do
@@ -199,10 +206,9 @@ for service in 'wg-quick@'; do
 		[Unit]
 		PartOf=iptables.service
 		EOF
-		systemd_reload=1
+		sudo systemctl daemon-reload
 	fi
 done
-[ "${systemd_reload:-0}" = 1 ] && sudo systemctl daemon-reload
 
 # Add basic configuration
 if [ ! -f /etc/iptables/rules.v4 ]; then
@@ -214,11 +220,11 @@ if [ ! -f /etc/iptables/rules.v4 ]; then
 	--append INPUT --match conntrack --ctstate ESTABLISHED,RELATED --jump ACCEPT
 	--append INPUT --in-interface $lan_interface --jump ACCEPT
 	--append INPUT --in-interface lo --jump ACCEPT
-	--append INPUT --in-interface pppoe0 --protocol icmp --icmp-type echo-request --match limit --limit 1/second --jump ACCEPT
-	--append INPUT --in-interface pppoe0 --protocol icmp --icmp-type fragmentation-needed --jump ACCEPT
-	--append INPUT --in-interface pppoe0 --protocol icmp --icmp-type time-exceeded --jump ACCEPT
-	--append INPUT --in-interface pppoe0 --protocol tcp --dport 80 --match conntrack --ctstate NEW --jump ACCEPT --match comment --comment letsencrypt
-	--append INPUT --in-interface pppoe0 --protocol tcp --dport $znc_port --match conntrack --ctstate NEW --jump ACCEPT --match comment --comment znc
+	--append INPUT --in-interface $wan_interface --protocol icmp --icmp-type echo-request --match limit --limit 1/second --jump ACCEPT
+	--append INPUT --in-interface $wan_interface --protocol icmp --icmp-type fragmentation-needed --jump ACCEPT
+	--append INPUT --in-interface $wan_interface --protocol icmp --icmp-type time-exceeded --jump ACCEPT
+	--append INPUT --in-interface $wan_interface --protocol tcp --dport 80 --match conntrack --ctstate NEW --jump ACCEPT --match comment --comment letsencrypt
+	--append INPUT --in-interface $wan_interface --protocol tcp --dport $znc_port --match conntrack --ctstate NEW --jump ACCEPT --match comment --comment znc
 	--append INPUT --jump REJECT
 
 	--append FORWARD --match conntrack --ctstate ESTABLISHED,RELATED,DNAT --jump ACCEPT
@@ -227,15 +233,8 @@ if [ ! -f /etc/iptables/rules.v4 ]; then
 	COMMIT
 
 	*nat
-	--append POSTROUTING --out-interface pppoe0 --jump MASQUERADE
+	--append POSTROUTING --out-interface $wan_interface --jump MASQUERADE
 	$hairpin_nat_rules
-	COMMIT
-	EOF
-
-	[ "${pppoe_jumbo:-0}" = 0 ] && sudo tee -a /etc/iptables/rules.v4 <<- 'EOF'
-
-	*mangle
-	--append FORWARD --protocol tcp --tcp-flags SYN,RST SYN --jump TCPMSS --clamp-mss-to-pmtu
 	COMMIT
 	EOF
 	sudo systemctl restart iptables.service
