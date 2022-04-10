@@ -160,9 +160,14 @@ if ! grep -q 'nameserver 127.0.0.1' /etc/resolv.conf; then
 	EOF
 fi
 
+# Import jmcvaughn SSH keys
+## Empty authorized_keys exists by default
+if ! grep -q 'jmcvaughn' "$HOME"/.ssh/authorized_keys; then
+	ssh-import-id gh:jmcvaughn
+fi
+
 # Disable password authentication for SSH
 if [ ! -f /etc/ssh/sshd_config.d/password_auth.conf ]; then
-	ssh-import-id gh:jmcvaughn
 	sudo tee /etc/ssh/sshd_config.d/password_auth.conf <<- 'EOF' 
 	PasswordAuthentication no
 	EOF
@@ -243,7 +248,7 @@ sudo systemctl enable --now iptables.service
 
 # Configure WireGuard
 if ! sudo ls /etc/wireguard/wg0.conf > /dev/null 2>&1; then
-	cat <<- EOF | sudo tee /etc/wireguard/wg0.conf
+	sudo tee /etc/wireguard/wg0.conf <<- EOF
 	[Interface]
 	PrivateKey = $(wg genkey)
 	ListenPort = $wg0_port
@@ -263,7 +268,7 @@ fi
 # Add ZNC TLS certificate update script
 sudo mkdir -p /etc/letsencrypt/renewal-hooks/deploy/ > /dev/null 2>&1
 if [ ! -f /etc/letsencrypt/renewal-hooks/deploy/znc.sh ]; then
-	cat <<- EOF | sudo tee /etc/letsencrypt/renewal-hooks/deploy/znc.sh
+	sudo tee /etc/letsencrypt/renewal-hooks/deploy/znc.sh <<- EOF
 	#!/bin/bash
 
 	domain='$domain'
