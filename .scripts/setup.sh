@@ -212,9 +212,6 @@ done
 
 # Add basic configuration
 if [ ! -f /etc/iptables/rules.v4 ]; then
-	for subnet in $subnets; do
-		hairpin_nat_rules=${hairpin_nat_rules}$(printf -- "--append POSTROUTING --source $subnet --dest $subnet --jump MASQUERADE --match comment --comment \"Hairpin NAT\"\n")
-	done
 	sudo tee /etc/iptables/rules.v4 <<- EOF
 	*filter
 	--append INPUT --match conntrack --ctstate ESTABLISHED,RELATED --jump ACCEPT
@@ -234,9 +231,11 @@ if [ ! -f /etc/iptables/rules.v4 ]; then
 
 	*nat
 	--append POSTROUTING --out-interface $wan_interface --jump MASQUERADE
-	$hairpin_nat_rules
-	COMMIT
 	EOF
+	for subnet in $subnets; do
+		echo "--append POSTROUTING --source $subnet --dest $subnet --jump MASQUERADE --match comment --comment \"Hairpin NAT\"" | sudo tee -a /etc/iptables/rules.v4
+	done
+	echo 'COMMIT' | sudo tee -a /etc/iptables/rules.v4
 	sudo systemctl restart iptables.service
 fi
 
