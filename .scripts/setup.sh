@@ -128,7 +128,7 @@ if ! swapon -s | grep -q '/swap2.img'; then
 	sudo mkswap /swap2.img
 	sudo swapon /swap2.img
 	if ! grep -qE '^/swap2.img' /etc/fstab; then
-		cat <<- 'EOF' | sudo tee -a /etc/fstab
+		sudo tee -a /etc/fstab <<- 'EOF'
 		/swap2.img	none	swap	sw	0	0
 		EOF
 	fi
@@ -136,7 +136,7 @@ fi
 
 # Disable password authentication for SSH
 if [ ! -f /etc/ssh/sshd_config.d/password_auth.conf ]; then
-	cat <<- 'EOF' | sudo tee /etc/ssh/sshd_config.d/password_auth.conf
+	sudo tee /etc/ssh/sshd_config.d/password_auth.conf <<- 'EOF'
 	PasswordAuthentication no
 	EOF
 	sudo systemctl restart sshd.service
