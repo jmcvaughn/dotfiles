@@ -8,6 +8,9 @@ user_pref("browser.shell.checkDefaultBrowser", false);
 // General > Ctrl+Tab cycles through tabs in recently used order: False
 user_pref("browser.ctrlTab.recentlyUsedOrder", false);
 
+// General > Confirm before quitting with Command+Q: False
+user_pref("browser.warnOnQuitShortcut", false);
+
 // General > Allow Firefox to: Check for updates but let you choose to install
 // them
 user_pref("app.update.auto", false);
