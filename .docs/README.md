@@ -178,6 +178,29 @@ To add a client:
 
 Run `sudo certbot certonly --standalone`.
 
+### Unifi Controller
+
+Run the following as your user, replacing `IP` with the internal IP address of the machine:
+
+```shell
+sudo docker run \
+  --init \
+  -p IP:6789:6789 \
+  -p IP:8080:8080 \
+  -p IP:8443:8443 \
+  -p IP:8843:8843 \
+  -p IP:8880:8880 \
+  -p IP:3414:3414/udp \
+  -p IP:3478:3478/udp \
+  -p IP:10001:10001/udp \
+  -e TZ='Europe/London' \
+  -v ~/unifi:/unifi \
+  --name unifi \
+  --detach \
+  --restart unless-stopped \
+  jacobalberty/unifi
+```
+
 ### ZNC
 
 Run `sudo -u _znc znc --makeconf` and specify the port configured at the top of `setup.sh`. Do not start select "Yes" when prompted to start ZNC; run `sudo systemctl start znc.service` instead.

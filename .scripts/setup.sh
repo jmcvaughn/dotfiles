@@ -130,7 +130,7 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githu
 # Install packages
 sudo apt-get update
 sudo apt-get -y install ${packages[@]}
-sudo snap install canonical-livepatch
+sudo snap install canonical-livepatch docker
 for i in batcat certbot; do
 	sudo snap install "$i" --classic
 done
@@ -264,6 +264,9 @@ if ! sudo ls /etc/wireguard/wg0.conf > /dev/null 2>&1; then
 	EOF
 	sudo systemctl enable --now wg-quick@wg0.service
 fi
+
+# Create Unifi Controller Docker container directories
+mkdir -p "$HOME"/unifi/{data,log}/ 2> /dev/null
 
 # Add ZNC TLS certificate update script
 sudo mkdir -p /etc/letsencrypt/renewal-hooks/deploy/ > /dev/null 2>&1
