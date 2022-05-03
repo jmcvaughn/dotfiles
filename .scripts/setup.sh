@@ -130,7 +130,7 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githu
 # Install packages
 sudo apt-get update
 sudo apt-get -y install ${packages[@]}
-# sudo snap install canonical-livepatch  # Uncomment if running LTS release
+sudo snap install canonical-livepatch
 for i in batcat certbot; do
 	sudo snap install "$i" --classic
 done
