@@ -7,8 +7,6 @@ packages=(
 	ceph-base
 	default-jre-headless
 	devscripts
-	docker
-	docker-compose
 	fio
 	genisoimage
 	gh
@@ -86,7 +84,7 @@ sudo apt-get update
 sudo apt-get -y install --no-install-recommends gnuplot virtinst
 sudo apt-get -y install ${packages[@]}
 sudo snap set system experimental.parallel-instances=true
-sudo snap install canonical-livepatch cmadison hotsos maas maas-test-db openstackclients ovs-stat vault
+sudo snap install canonical-livepatch cmadison docker hotsos maas maas-test-db openstackclients ovs-stat vault
 for i in batcat charm charmcraft juju kubectl; do
 	sudo snap install "$i" --classic
 done
@@ -208,5 +206,5 @@ sudo mkdir /var/lib/samba/private/
 [ ! -f /var/lib/samba/private/passdb.tdb ] && sudo smbpasswd -a "$USER"
 
 [ "${systemd_reload:-0}" -eq 1 ] && sudo systemctl daemon-reload
-sudo systemctl enable --now {docker,smbd}.service zfs-trim.timer
+sudo systemctl enable --now smbd.service zfs-trim.timer
 [ "${update_grub:-0}" -eq 1 ] && sudo update-grub
