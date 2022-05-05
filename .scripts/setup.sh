@@ -1,7 +1,6 @@
 #!/bin/bash
 
 packages=(
-	apparmor-utils
 	apt-file
 	aria2
 	ceph-base
@@ -101,8 +100,18 @@ if [ "$(awk -F ':' "/$USER/ { print \$7 }" /etc/passwd)" != '/bin/zsh' ]; then
 	chsh -s /bin/zsh
 fi
 
-# Set AppArmor libvirtd profile to complain mode
-sudo aa-complain /usr/sbin/libvirtd
+# Configure libvirt-guests
+if [ ! -f /etc/default/libvirt-guests.bak ]; then
+	sudo mv /etc/default/libvirt-guests{,.bak}
+	sudo tee /etc/default/libvirt-guests <<- 'EOF'
+	# See /etc/default/libvirt-guests.bak for documentation and defaults
+	# See /usr/lib/libvirt/libvirt-guests.sh for script defaults
+
+	ON_BOOT=start
+	PARALLEL_SHUTDOWN=10
+	START_DELAY=5
+	EOF
+fi
 
 # Add maas0 network
 if ! sudo virsh net-list --all --name | grep -q maas0; then
