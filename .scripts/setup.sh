@@ -3,6 +3,7 @@
 packages=(
 	apt-file
 	aria2
+	bzr
 	ceph-base
 	default-jre-headless
 	devscripts
