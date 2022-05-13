@@ -2,7 +2,6 @@
 # neovim: list of 3-tuples of url, branch, and whether `yarn install` required
 # zsh: list of 2-tuples of URL and branch
 neovim = [
-        ('https://github.com/neoclide/coc.nvim', 'release', True),
         ('https://github.com/morhetz/gruvbox', 'master', False),
         ('https://github.com/tomtom/tcomment_vim', 'master', False),
         ('https://github.com/rbong/vim-crystalline', 'master', False),
