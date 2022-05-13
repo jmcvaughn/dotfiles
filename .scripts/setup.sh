@@ -21,9 +21,7 @@ packages=(
 	libvirt-daemon-system
 	lnav
 	mongo-tools
-	neovim
 	nfs-kernel-server
-	nodejs
 	ovmf
 	packer
 	pylint
@@ -38,7 +36,6 @@ packages=(
 	tox
 	tree
 	xkcdpass
-	yarn
 	zfsutils-linux
 	zip
 	zsh
@@ -66,12 +63,6 @@ fi
 sudo apt-get update
 
 # Add repositories
-## Neovim
-sudo add-apt-repository -y ppa:neovim-ppa/unstable
-## Node.js and Yarn
-curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 ## HashiCorp
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
 sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
@@ -85,9 +76,10 @@ sudo apt-get -y install --no-install-recommends gnuplot virtinst
 sudo apt-get -y install ${packages[@]}
 sudo snap set system experimental.parallel-instances=true
 sudo snap install canonical-livepatch cmadison docker hotsos maas maas-test-db openstackclients ovs-stat vault
-for i in batcat charm charmcraft juju kubectl; do
+for i in batcat charm charmcraft juju kubectl nvim; do
 	sudo snap install "$i" --classic
 done
+sudo snap install --channel 18/stable --classic node
 sudo snap connect ovs-stat:removable-media  # See https://snapcraft.io/ovs-stat
 
 # Create Intel One Boot Flash Update (OFU) symlink
