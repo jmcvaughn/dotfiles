@@ -23,15 +23,12 @@ packages=(
 	jq
 	ksmtuned
 	language-pack-en
-	neovim
 	net-tools
 	nfs-common
-	nodejs
 	smartmontools
 	speedtest-cli
 	tree
 	wireguard
-	yarn
 	zip
 	znc
 	zsh
@@ -117,12 +114,6 @@ sudo timedatectl set-timezone Europe/London
 sudo apt-get update
 
 # Add repositories
-## Neovim
-sudo add-apt-repository -y ppa:neovim-ppa/unstable
-## Node.js and Yarn
-curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 ## GitHub CLI
 curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
@@ -131,9 +122,10 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githu
 sudo apt-get update
 sudo apt-get -y install ${packages[@]}
 sudo snap install canonical-livepatch docker
-for i in batcat certbot; do
+for i in batcat certbot nvim; do
 	sudo snap install "$i" --classic
 done
+sudo snap install --channel 18/stable --classic node
 
 # Set locale
 sudo update-locale LANG=en_GB.UTF-8
