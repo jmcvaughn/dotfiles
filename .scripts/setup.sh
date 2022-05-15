@@ -5,24 +5,18 @@
 
 sudo timedatectl set-timezone Europe/London
 
+# Install packages
 sudo apt-get update
-
-# Add repositories
-## Neovim
-sudo add-apt-repository -y ppa:neovim-ppa/unstable
-## Node.js and Yarn
-curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-
-sudo apt-get update
-sudo apt-get -y install apt-file default-jre-headless devscripts jq language-pack-en neovim nfs-common nodejs openssh-server ssh-askpass-gnome tree virt-manager virt-what yarn zip zsh
+sudo apt-get -y install apt-file default-jre-headless devscripts jq language-pack-en nfs-common openssh-server ssh-askpass-gnome tree virt-manager virt-what zip zsh
 hypervisor=$(sudo virt-what | head -n 1)
 case $hypervisor in
 	'vmware') sudo apt-get -y install open-vm-tools-desktop ;;
 	'virtualbox') sudo apt-get -y install virtualbox-guest-dkms ;;
 esac
-sudo snap install batcat --classic
+for i in batcat nvim; do
+	sudo snap install "$i" --classic
+done
+sudo snap install --channel 18/stable --classic node
 
 sudo update-locale LANG=en_GB.UTF-8
 
