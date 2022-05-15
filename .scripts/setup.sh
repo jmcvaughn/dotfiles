@@ -7,16 +7,6 @@ user_home=$(getent passwd 1000 | cut -d ':' -f 6)
 
 sudo timedatectl set-timezone Europe/London
 
-sudo apt-get update
-
-# Add repositories
-## Neovim
-sudo add-apt-repository -y ppa:neovim-ppa/unstable
-## Node.js and Yarn
-curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-
 # Install packages
 sudo apt-get update
 if grep -q 'vmx' /proc/cpuinfo; then
@@ -24,8 +14,11 @@ if grep -q 'vmx' /proc/cpuinfo; then
 	libvirt_pkgs='libvirt-clients libvirt-daemon-system ovmf qemu-kvm'
 	[ "$DISTRIB_RELEASE" = '16.04' ] && libvirt_pkgs='libvirt-bin ovmf qemu-kvm'
 fi
-sudo apt-get -y install apt-file bridge-utils default-jre-headless devscripts jq language-pack-en $libvirt_pkgs neovim nfs-common nodejs tree yarn zip zsh
-sudo snap install batcat --classic
+sudo apt-get -y install apt-file bridge-utils default-jre-headless devscripts jq language-pack-en $libvirt_pkgs nfs-common tree zip zsh
+for i in batcat nvim; do
+	sudo snap install "$i" --classic
+done
+sudo snap install --channel 18/stable --classic node
 
 sudo update-locale LANG=en_GB.UTF-8
 
