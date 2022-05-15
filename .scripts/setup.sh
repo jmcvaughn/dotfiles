@@ -93,19 +93,6 @@ if [ "$(awk -F ':' "/$USER/ { print \$7 }" /etc/passwd)" != '/bin/zsh' ]; then
 	chsh -s /bin/zsh
 fi
 
-# Configure libvirt-guests
-if [ ! -f /etc/default/libvirt-guests.bak ]; then
-	sudo mv /etc/default/libvirt-guests{,.bak}
-	sudo tee /etc/default/libvirt-guests <<- 'EOF'
-	# See /etc/default/libvirt-guests.bak for documentation and defaults
-	# See /usr/lib/libvirt/libvirt-guests.sh for script defaults
-
-	ON_BOOT=start
-	PARALLEL_SHUTDOWN=10
-	START_DELAY=5
-	EOF
-fi
-
 # Add maas0 network
 if ! sudo virsh net-list --all --name | grep -q maas0; then
 	sudo virsh net-define "$(dirname "$0")"/maas0.xml
@@ -117,8 +104,8 @@ fi
 if ! grep -qE '^ON_BOOT=start$' /etc/default/libvirt-guests; then
 	sudo sed -i '/^#ON_BOOT=ignore$/ a ON_BOOT=start' /etc/default/libvirt-guests
 fi
-if ! grep -qE '^ON_SHUTDOWN=suspend$' /etc/default/libvirt-guests; then
-	sudo sed -i '/^#ON_SHUTDOWN=shutdown$/ a ON_SHUTDOWN=suspend' /etc/default/libvirt-guests
+if ! grep -qE '^START_DELAY=5$' /etc/default/libvirt-guests; then
+	sudo sed -i '/^#START_DELAY=0$/ a START_DELAY=5' /etc/default/libvirt-guests
 fi
 
 # Increase swap
