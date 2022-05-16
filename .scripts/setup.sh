@@ -15,7 +15,7 @@ if grep -q 'vmx' /proc/cpuinfo; then
 	[ "$DISTRIB_RELEASE" = '16.04' ] && libvirt_pkgs='libvirt-bin ovmf qemu-kvm'
 fi
 sudo apt-get -y install apt-file bridge-utils default-jre-headless devscripts jq language-pack-en $libvirt_pkgs nfs-common tree zip zsh
-for i in batcat nvim; do
+for i in nvim; do
 	sudo snap install "$i" --classic
 done
 sudo snap install --channel 18/stable --classic node
