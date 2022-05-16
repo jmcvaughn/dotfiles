@@ -121,8 +121,10 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githu
 # Install packages
 sudo apt-get update
 sudo apt-get -y install ${packages[@]}
-sudo snap install canonical-livepatch docker
-for i in batcat certbot nvim; do
+for i in canonical-livepatch docker; do
+	sudo snap install "$i"
+done
+for i in certbot nvim; do
 	sudo snap install "$i" --classic
 done
 sudo snap install --channel 18/stable --classic node
