@@ -13,7 +13,7 @@ case $hypervisor in
 	'vmware') sudo apt-get -y install open-vm-tools-desktop ;;
 	'virtualbox') sudo apt-get -y install virtualbox-guest-dkms ;;
 esac
-for i in batcat nvim; do
+for i in nvim; do
 	sudo snap install "$i" --classic
 done
 sudo snap install --channel 18/stable --classic node
