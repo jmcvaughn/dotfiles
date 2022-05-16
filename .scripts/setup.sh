@@ -75,8 +75,10 @@ sudo apt-get update
 sudo apt-get -y install --no-install-recommends gnuplot virtinst
 sudo apt-get -y install ${packages[@]}
 sudo snap set system experimental.parallel-instances=true
-sudo snap install canonical-livepatch cmadison docker hotsos maas maas-test-db openstackclients ovs-stat vault
-for i in batcat charm charmcraft juju kubectl nvim; do
+for i in canonical-livepatch cmadison docker maas maas-test-db openstackclients ovs-stat vault; do
+	sudo snap install "$i"
+done
+for i in charm charmcraft hotsos juju kubectl nvim; do
 	sudo snap install "$i" --classic
 done
 sudo snap install --channel 18/stable --classic node
@@ -191,7 +193,6 @@ if [ ! -f /etc/udev/rules.d/95-zfs-none-scheduler.rules ]; then
 fi
 
 # Set Samba password for current user
-sudo mkdir /var/lib/samba/private/
 [ ! -f /var/lib/samba/private/passdb.tdb ] && sudo smbpasswd -a "$USER"
 
 [ "${systemd_reload:-0}" -eq 1 ] && sudo systemctl daemon-reload
