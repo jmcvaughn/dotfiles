@@ -153,8 +153,6 @@ SAVEHIST=10000
 # Editor
 if whence -p nvim &> /dev/null; then
 	export EDITOR='nvim'
-	export MANPAGER='nvim +Man!'  # See ':help Man'
-	export MANWIDTH=999  # Big width so Neovim manages wrapping, allowing resizing
 elif whence -p vim &> /dev/null; then
 	export EDITOR='vim'
 else
