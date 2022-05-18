@@ -78,8 +78,8 @@ Settings:
 
 - Create the "maas0" space and add the 10.188.0.0/16 fabric, and configure/enable DHCP on it
 
-- Set a reserved range for VIPs as per [`VIP_ADDR_START` in my stsstack-bundles fork](https://git.launchpad.net/~jmcvaughn/stsstack-bundles/tree/common/helpers?h=jvaughnserver#n11)
+- Set a reserved range for VIPs as per [`VIP_ADDR_START` in my stsstack-bundles fork](https://github.com/jmcvaughn/stsstack-bundles/blob/jvaughnserver/common/helpers#L10)
 
-- Set a reserved range for OpenStack floating IPs as per [`FIP_RANGE` in my stsstack-bundles fork](https://git.launchpad.net/~jmcvaughn/stsstack-bundles/tree/openstack/profiles/jvaughnserver?h=jvaughnserver#n6)
+- Set a reserved range for OpenStack floating IPs as per [`FIP_RANGE` in my stsstack-bundles fork](https://github.com/jmcvaughn/stsstack-bundles/blob/jvaughnserver/openstack/profiles/jvaughnserver#L6)
 
 Then proceed with any required MAAS configuration as normal, e.g. adding virtual machines using the `jjvm` and `addvm` scripts, setting up Juju.
