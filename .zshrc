@@ -290,6 +290,7 @@ fi
 
 
 # pyenv - amends PATH, environment variables, completion, functions
+[ -d "$HOME/git/pyenv/bin/" ] && export PATH="$HOME/git/pyenv/bin/:$PATH"
 if whence -p pyenv &> /dev/null; then
 	export PYENV_ROOT="$HOME/.pyenv"
 	export PATH="$PYENV_ROOT/bin:$PATH"
