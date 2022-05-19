@@ -17,6 +17,7 @@ packages=(
 	ksmtuned
 	language-pack-en
 	libosinfo-bin
+	libssl-dev
 	libvirt-clients
 	libvirt-daemon-system
 	lnav
