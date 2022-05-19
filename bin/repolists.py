@@ -3,6 +3,10 @@
 # neovim: list of 3-tuples of url, branch, and whether `yarn install` required
 # yarn: list of packages
 # zsh: list of 2-tuples of URL and branch
+git = [
+        ('https://github.com/pyenv/pyenv', 'master', '~/git/pyenv/', [])
+]
+
 neovim = [
     ('https://github.com/morhetz/gruvbox', 'master', False),
     ('https://github.com/neovim/nvim-lspconfig.git', 'master', False),
