@@ -276,7 +276,9 @@ Applications:
 
   Firefox:
     Extensions:
-      - https://addons.mozilla.org/en-GB/firefox/addon/bitwarden-password-manager/
+      - Bitwarden:
+        - https://addons.mozilla.org/en-GB/firefox/addon/bitwarden-password-manager/
+        - Run in Private Windows: True
 
   Google Chrome:
     Menu options:
