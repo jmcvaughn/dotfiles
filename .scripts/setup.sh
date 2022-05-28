@@ -194,8 +194,12 @@ if [ ! -f /etc/udev/rules.d/95-zfs-none-scheduler.rules ]; then
 fi
 
 # Set Samba password for current user
-[ ! -f /var/lib/samba/private/passdb.tdb ] && sudo smbpasswd -a "$USER"
+if ! sudo smbpasswd -e "$USER"; then
+	sudo smbpasswd -a "$USER"
+	sudo systemctl restart smbd.service
+	sudo systemctl enable smdd.service
+fi
 
 [ "${systemd_reload:-0}" -eq 1 ] && sudo systemctl daemon-reload
-sudo systemctl enable --now smbd.service zfs-trim.timer
+sudo systemctl enable --now zfs-trim.timer
 [ "${update_grub:-0}" -eq 1 ] && sudo update-grub
