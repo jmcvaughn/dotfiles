@@ -4,7 +4,7 @@
 # yarn: list of packages
 # zsh: list of 2-tuples of URL and branch
 git = [
-        ('https://github.com/pyenv/pyenv', 'master', '~/git/pyenv/', [])
+    ('https://github.com/pyenv/pyenv', 'master', '~/git/pyenv/', [])
 ]
 
 neovim = [
