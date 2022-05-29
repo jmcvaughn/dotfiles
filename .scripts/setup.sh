@@ -45,6 +45,10 @@ packages=(
 # Set timezone
 sudo timedatectl set-timezone Europe/London
 
+# Enable lingering for current user
+# Allows user units to run even when the user isn't logged in
+sudo loginctl enable-linger "$USER"
+
 # Use the "performance" governor
 echo 'performance' | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
 sudo systemctl disable ondemand.service
@@ -193,6 +197,36 @@ if [ ! -f /etc/udev/rules.d/95-zfs-none-scheduler.rules ]; then
 	sudo udevadm trigger
 fi
 
+# Service to update cloud images
+if [ ! -f "$HOME"/.config/systemd/user/update-cloud-images.service ]; then
+	tee "$HOME"/.config/systemd/user/update-cloud-images.service <<- EOF
+	[Unit]
+	Description=Update cloud images in ~/images/
+
+	[Service]
+	Type=exec
+	ExecStart=/home/$USER/bin/update --images
+	EOF
+	systemd_user_reload=1
+fi
+
+# Timer to run the above service every day at 3:00am
+if [ ! -f "$HOME"/.config/systemd/user/update-cloud-images.timer ]; then
+	tee "$HOME"/.config/systemd/user/update-cloud-images.timer <<- 'EOF'
+	[Unit]
+	Description=Update cloud images periodically
+
+	[Timer]
+	OnCalendar=*-*-* 03:00:00
+	Unit=update-cloud-images.service
+	Persistent=true
+
+	[Install]
+	WantedBy=timers.target
+	EOF
+	systemd_user_reload=1
+fi
+
 # Set Samba password for current user
 if ! sudo smbpasswd -e "$USER"; then
 	sudo smbpasswd -a "$USER"
@@ -202,4 +236,8 @@ fi
 
 [ "${systemd_reload:-0}" -eq 1 ] && sudo systemctl daemon-reload
 sudo systemctl enable --now zfs-trim.timer
+
+[ "${systemd_user_reload:-0}" -eq 1 ] && systemctl --user daemon-reload
+systemctl --user enable --now update-cloud-images.timer
+
 [ "${update_grub:-0}" -eq 1 ] && sudo update-grub

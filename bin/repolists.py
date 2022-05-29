@@ -7,6 +7,12 @@ git = [
     ('https://github.com/pyenv/pyenv', 'master', '~/git/pyenv/', [])
 ]
 
+images = [
+    'https://cloud-images.ubuntu.com/daily/server/bionic/current/bionic-server-cloudimg-amd64.img',
+    'https://cloud-images.ubuntu.com/daily/server/focal/current/focal-server-cloudimg-amd64.img',
+    'https://cloud-images.ubuntu.com/daily/server/jammy/current/jammy-server-cloudimg-amd64.img'
+]
+
 neovim = [
     ('https://github.com/morhetz/gruvbox', 'master', False),
     ('https://github.com/neovim/nvim-lspconfig.git', 'master', False),
