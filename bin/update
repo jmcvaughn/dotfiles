@@ -156,6 +156,22 @@ def apt_packages():
     except subprocess.CalledProcessError as e:
         sys.exit(1)
 
+def download_file(url, path):
+    path = os.path.expanduser(path)
+
+    # Use curl as there is no guarantee the requests library will be installed
+    try:
+        subprocess.run(['curl', '--create-dirs', '--location', url, '--output',
+            path], check=True, text=True)
+    except subprocess.CalledProcessError as e:
+        print('Failed to download file to {}:\n{}'.format(path, e.stderr),
+                file=sys.stderr)
+
+def download_images(urls):
+    for url in urls:
+        print('Downloading image {}:'.format(url))
+        download_file(url, '~/images/' + url.split('/')[-1])
+
 def homebrew_packages():
     try:
         subprocess.run(['brew', 'update'], check=True, capture_output=True,
@@ -257,14 +273,9 @@ def pull_or_clone_zsh_plugins(plugins):
         else:
             plugin.clone()
 
-    try:
-        subprocess.run(['curl', '-L',
-            'https://iterm2.com/shell_integration/zsh', '-o',
-            os.path.expanduser('~/.zsh/iterm2_shell_integration.zsh')],
-            check=True, capture_output=True, text=True)
-    except subprocess.CalledProcessError as e:
-        print('Failed to download iTerm2 integration script:\n' + e.stderr,
-                file=sys.stderr)
+    print('Downloading iTerm2 shell integration for Zsh:')
+    download_file('https://iterm2.com/shell_integration/zsh',
+            '~/.zsh/iterm2_shell_integration.zsh')
 
 def sshebang():
     if not os.path.isdir(os.path.expanduser('~/.ssh/')):
@@ -365,6 +376,9 @@ def main():
     parser.add_argument('-g', '--git',
             help='pull, or clone if not present, Git repositories',
             action='store_true')
+    parser.add_argument('-i', '--images',
+            help='download or update cloud images',
+            action='store_true')
     parser.add_argument('-n', '--neovim',
             help='pull, or clone if not present, Neovim plugins',
             action='store_true')
@@ -395,6 +409,8 @@ def main():
     else:
         if args.git is True and 'git' in vars(repolists):
             pull_or_clone_git_repos(repolists.git)
+        if args.images is True and 'images' in vars(repolists):
+            download_images(repolists.images)
         if args.neovim is True and 'neovim' in vars(repolists):
             pull_or_clone_neovim_plugins(repolists.neovim)
         if args.sshebang is True and sys.platform.startswith('darwin'):
