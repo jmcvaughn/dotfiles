@@ -10,6 +10,10 @@ App Store:
     Numbers: https://apps.apple.com/gb/app/numbers/id409203825
     Pages: https://apps.apple.com/gb/app/pages/id409201541
     WireGuard: https://apps.apple.com/gb/app/wireguard/id1451685025
+    Microsoft Excel: https://apps.apple.com/gb/app/microsoft-excel/id462058435
+    Microsoft OneDrive: https://apps.apple.com/gb/app/onedrive/id823766827
+    Microsoft PowerPoint: https://apps.apple.com/gb/app/microsoft-powerpoint/id462062816
+    Microsoft Word: https://apps.apple.com/gb/app/microsoft-word/id462054704
 
 System Preferences:
   Apple ID:
@@ -55,6 +59,14 @@ System Preferences:
 
   Internet Accounts:
     Canonical:
+      - Mail
+      - Contacts
+      - Calendars
+    DSE:  # As Exchange account
+      - Mail
+      - Contacts
+      - Calendars
+    Personal:
       - Mail
       - Contacts
       - Calendars
@@ -322,7 +334,9 @@ Applications:
             Erase deleted messages: False
       Signatures:
         Canonical:
-          Choose Signature: Default
+          Choose Signature: Canonical
+        DSE:
+          Choose Signature: DSE
       Rules:
         Salesforce Notifications:
           If all of the following conditions are met:
@@ -343,6 +357,9 @@ Applications:
     Follow
     https://github.com/matterhorn-chat/matterhorn/blob/master/docs/sample-config.ini
     to create a Keychain item for the token, called "matterhorn-canonical".
+
+  Microsoft apart from Teams:
+    - Sign in
 
   Microsoft Teams:
     General:
