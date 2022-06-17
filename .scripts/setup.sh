@@ -83,7 +83,7 @@ sudo snap set system experimental.parallel-instances=true
 for i in canonical-livepatch cmadison docker maas maas-test-db openstackclients ovs-stat vault; do
 	sudo snap install "$i"
 done
-for i in charm charmcraft hotsos juju kubectl nvim; do
+for i in charm charmcraft hotsos juju kubectl landscape-api nvim; do
 	sudo snap install "$i" --classic
 done
 sudo snap install --channel 18/stable --classic node
