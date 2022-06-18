@@ -107,6 +107,13 @@ if ! sudo virsh net-list --all --name | grep -q maas0; then
 	sudo virsh net-start maas0
 fi
 
+# Add default-hdd pool
+if ! sudo virsh pool-list --all --name | grep -q default-hdd; then
+	sudo virsh pool-define "$(dirname "$0")"/default-hdd.xml
+	sudo virsh pool-autostart default-hdd
+	sudo virsh pool-start default-hdd
+fi
+
 # Configure libvirt-guests
 if ! grep -qE '^ON_BOOT=start$' /etc/default/libvirt-guests; then
 	sudo sed -i '/^#ON_BOOT=ignore$/ a ON_BOOT=start' /etc/default/libvirt-guests

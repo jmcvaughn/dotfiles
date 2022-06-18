@@ -1,0 +1,11 @@
+<pool type='dir'>
+  <name>default-hdd</name>
+  <target>
+    <path>/var/lib/libvirt/images-hdd</path>
+    <permissions>
+      <mode>0711</mode>
+      <owner>0</owner>
+      <group>0</group>
+    </permissions>
+  </target>
+</pool>
