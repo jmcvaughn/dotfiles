@@ -380,6 +380,10 @@ Applications:
         Active: False
       iCloud: True
 
+  OneDrive:
+    Preferences:
+      Open at Log-in: True
+
   Podcasts:
     Menu options:
       Account:
