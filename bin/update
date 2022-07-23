@@ -400,6 +400,8 @@ def main():
             pull_or_clone_git_repos(repolists.git)
         if 'neovim' in vars(repolists):
             pull_or_clone_neovim_plugins(repolists.neovim)
+        if 'images' in vars(repolists):
+            download_images(repolists.images)
         if sys.platform.startswith('darwin'):
             sshebang()
         if 'zsh' in vars(repolists):
