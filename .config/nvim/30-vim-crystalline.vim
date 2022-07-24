@@ -18,7 +18,7 @@ function! StatusLine(current, width)
   endif
   if a:current
     let l:s .= crystalline#right_sep('', 'Fill')
-    let l:s .= ' %{fugitive#head()}'
+    let l:s .= ' %{fugitive#Head()}'
   endif
 
   let l:s .= '%='  " Right-justify
