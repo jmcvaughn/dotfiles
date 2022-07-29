@@ -446,10 +446,11 @@ Applications:
       Add Zoom to macOS menu bar: False
       Stop my video and audio when my display is off or screen saver begins: True
     Video:
-      Ratio: Original
-      Adjust for low light: True
+      Original ratio: True
+      HD: True
+      Adjust for low light: True/Auto
       Always display participant name on their videos: True
-      Turn off my video when joining a meeting: True
+      Stop my video when joining a meeting: True
     Audio:
       Automatically join computer audio when joining a meeting: True
       Mute my mic when joining a meeting: True
