@@ -124,7 +124,6 @@ System Preferences:
         Personalised Ads: False
 
   Network:
-    - Add Home VPN location with appropriate Wi-Fi DNS/search domain settings
     - Add Google DNS location with appropriate Wi-Fi DNS/search domain settings
 
   Keyboard:
