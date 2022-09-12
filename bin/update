@@ -277,44 +277,6 @@ def pull_or_clone_zsh_plugins(plugins):
     download_file('https://iterm2.com/shell_integration/zsh',
             '~/.zsh/iterm2_shell_integration.zsh')
 
-def sshebang():
-    if not os.path.isdir(os.path.expanduser('~/.ssh/')):
-        print('~/.ssh/ does not exist. Perform the following setup steps '
-                + 'before trying again:\n'
-                + '  - Generate an SSH key and upload it to Launchpad\n'
-                + '  - Run `bzr launchpad-login <USER>\n')
-        sys.exit(1)
-
-    # Check if logged in
-    try:
-        subprocess.run(['bzr', 'launchpad-login'], check=True,
-                capture_output=True, text=True)
-    except subprocess.CalledProcessError as e:
-        sys.exit(e.stderr)
-
-    try:
-        subprocess.run(['bzr', 'branch', 'lp:canonical-sshebang',
-            os.path.expanduser('~/.ssh/sshebang')], check=True,
-            capture_output=True, text=True)
-    except subprocess.CalledProcessError as e:
-        if 'bzr: ERROR: Already a branch:' in e.stderr:
-            pass
-        else:
-            sys.exit(e.stderr)
-
-    try:
-        subprocess.run(['bzr', 'pull', '--directory',
-            os.path.expanduser('~/.ssh/sshebang')], check=True,
-            capture_output=True, text=True)
-    except subprocess.CalledProcessError as e:
-        sys.exit(e.stderr)
-
-    try:
-        subprocess.run(['make', 'bootstack'], check=True, capture_output=True,
-                cwd=os.path.expanduser('~/.ssh/sshebang'), text=True)
-    except subprocess.CalledProcessError as e:
-        sys.exit(e.stderr)
-
 def vagrant_boxes():
     try:
         cmd = subprocess.run(['vagrant', 'box', 'outdated', '--global'],
@@ -385,9 +347,6 @@ def main():
     parser.add_argument('-p', '--packages',
             help='update packages (Homebrew for Mac, apt for Debian/Ubuntu)',
             action='store_true')
-    parser.add_argument('-s', '--sshebang', '--ssh',
-            help='update SSH configuration (Canonical sshebang)',
-            action='store_true')
     parser.add_argument('-v', '--vagrant', help='update Vagrant boxes',
             action='store_true')
     parser.add_argument('-z', '--zsh', help='update Zsh plugins',
@@ -402,8 +361,6 @@ def main():
             pull_or_clone_neovim_plugins(repolists.neovim)
         if 'images' in vars(repolists):
             download_images(repolists.images)
-        if sys.platform.startswith('darwin'):
-            sshebang()
         if 'zsh' in vars(repolists):
             pull_or_clone_zsh_plugins(repolists.zsh)
         packages()
@@ -415,8 +372,6 @@ def main():
             download_images(repolists.images)
         if args.neovim is True and 'neovim' in vars(repolists):
             pull_or_clone_neovim_plugins(repolists.neovim)
-        if args.sshebang is True and sys.platform.startswith('darwin'):
-            sshebang()
         if args.zsh is True and 'zsh' in vars(repolists):
             pull_or_clone_zsh_plugins(repolists.zsh)
         if args.packages is True:
