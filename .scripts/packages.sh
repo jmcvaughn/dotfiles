@@ -1,11 +1,6 @@
 #!/bin/sh
 
 install_packages() {
-	# brew bundle doesn't support --no-quarantine. Note that this disables
-	# Gatekeeper for these Casks; automating this is technically a security
-	# issue!
-	brew cask install --no-quarantine matterhorn
-
 	# Check if Cisco Webex Meetings is already open (i.e. in a meeting),
 	# otherwise we kill it as the installer launches it on install
 	pgrep -q 'Cisco Webex Meetings'
