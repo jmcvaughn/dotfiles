@@ -10,10 +10,6 @@ App Store:
     Numbers: https://apps.apple.com/gb/app/numbers/id409203825
     Pages: https://apps.apple.com/gb/app/pages/id409201541
     WireGuard: https://apps.apple.com/gb/app/wireguard/id1451685025
-    Microsoft Excel: https://apps.apple.com/gb/app/microsoft-excel/id462058435
-    Microsoft OneDrive: https://apps.apple.com/gb/app/onedrive/id823766827
-    Microsoft PowerPoint: https://apps.apple.com/gb/app/microsoft-powerpoint/id462062816
-    Microsoft Word: https://apps.apple.com/gb/app/microsoft-word/id462054704
 
 System Preferences:
   Apple ID:
@@ -42,11 +38,7 @@ System Preferences:
       Allow Notifications: True
     Telegram:
       Allow Notifications: True
-    terminal-notifier:
-      Allow Notifications: True
     Textual:
-      Allow Notifications: True
-    Tunnelblick:
       Allow Notifications: True
     Vagrant Manager:
       Allow Notifications: True
@@ -58,14 +50,6 @@ System Preferences:
       Allow Notifications: True
 
   Internet Accounts:
-    Canonical:
-      - Mail
-      - Contacts
-      - Calendars
-    DSE:  # As Exchange account
-      - Mail
-      - Contacts
-      - Calendars
     Personal:
       - Mail
       - Contacts
@@ -181,9 +165,6 @@ Dock:
   Messages:
     Options:
       Assign To: All Desktops
-  Microsoft Teams:
-    Options:
-      Assign To: All Desktops
   Podcasts:
     Options:
       Assign To: All Desktops
@@ -203,13 +184,6 @@ Dock:
 Applications:
   Safari:
     Preferences:
-      Websites:
-        Page Zoom:
-          canonical.lightning.force.com: 85%
-        Camera:
-          meet.google.com: Allow
-        Microphone:
-          meet.google.com: Allow
       Extensions:
         - AdGuard Advanced Blocking
         - AdGuard Custom
@@ -278,7 +252,6 @@ Applications:
         Sort By: First Name
     Contacts:
       - Delete 'Apple Inc.' contact
-      - Select Canonical Directory as default
 
   Finder:
     View menu options:
@@ -324,41 +297,11 @@ Applications:
       Network Interface: Set to system interface
 
   Mail:
-    Preferences:
-      Accounts:
-        Canonical:
-          Account Information:
-            Download Attachments: False
-          Mailbox Behaviours:
-            Erase deleted messages: False
-      Signatures:
-        Canonical:
-          Choose Signature: Canonical
-        DSE:
-          Choose Signature: DSE
-      Rules:
-        Salesforce Notifications:
-          If all of the following conditions are met:
-            - [ Subject, begins with, '[SFDC]' ]
-          Perform the following actions:
-            - [ Play sound, New Messages Sound ]
-            - [ Send Notification ]
     Smart Mailboxes:
-      Salesforce:
-        Contains messages that match all of the following conditions:
-          - [ Subject, begins with, '[SFDC]' ]
         Include messages from Sent: True
     Mailbox List:
       - Expand Smart Mailboxes and any account mailbox sections
       - Shrink Favourites
-
-  Matterhorn: |
-    Follow
-    https://github.com/matterhorn-chat/matterhorn/blob/master/docs/sample-config.ini
-    to create a Keychain item for the token, called "matterhorn-canonical".
-
-  Microsoft apart from Teams:
-    - Sign in
 
   Microsoft Teams:
     General:
@@ -378,10 +321,6 @@ Applications:
       On My Mac:
         Active: False
       iCloud: True
-
-  OneDrive:
-    Preferences:
-      Open at Log-in: True
 
   Podcasts:
     Menu options:
@@ -421,13 +360,6 @@ Applications:
         General:
           Connect when Textual opens: True
           Perform reconnect on disconnect: True
-
-  Tunnelblick:
-    Configurations: Add Canonical VPN configurations
-    Appearance:
-      Display connection timers: True
-      Display window when Tunnelblick is starting up: False
-      VPN Status windows: False
 
   VMware Fusion:
     General:
