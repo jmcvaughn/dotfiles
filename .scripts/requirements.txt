@@ -8,3 +8,6 @@ hjson
 nose2
 flake8
 pep8-naming
+
+# wee-slack
+websocket-client
