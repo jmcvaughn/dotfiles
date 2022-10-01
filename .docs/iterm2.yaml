@@ -59,10 +59,10 @@ Profiles:
     General:
       Title: Job — Host
       Applications in terminal may change the title: False
-  Matterhorn:
+  WeeChat:
     General:
       Title: Profile
-      Send text at start: ' matterhorn; exit'
+      Send text at start: ' weechat; exit'
       Working Directory: Home directory
     Keys:
       A hotkey opens a dedicated window with this profile: True
