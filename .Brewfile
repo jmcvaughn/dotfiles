@@ -95,6 +95,7 @@ brew 'svn'  # Required by font-source-code-pro
 brew 'terminal-notifier'
 brew 'tree'
 brew 'watch'
+brew 'weechat'
 brew 'wget'
 brew 'xz'
 brew 'yamllint'
