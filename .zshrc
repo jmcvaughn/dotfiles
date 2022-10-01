@@ -267,10 +267,6 @@ tm() {
 
 # Miscellaneous
 alias aria2c='aria2c --seed-time=0'
-whence -p batcat &> /dev/null && alias bat='batcat'
-alias b='bat'
-alias bp='bat -p'
-alias bpp='bat -pp'
 alias ddi='sudo dd bs=16K conv=fsync status=progress'
 alias jj='juju'
 alias oc='openstack --os-cloud'
@@ -285,6 +281,7 @@ alias watch='watch '
 if [[ $os == 'Darwin' ]]; then
 	alias o='open'
 	alias oh='open .'
+	alias weechat='OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES weechat'
 fi
 # }}}
 
@@ -304,8 +301,8 @@ fi
 #-------------------------------------------------------------------------------
 
 # Prompt colour set at line 1
-if [[ $os == 'Darwin' ]] || [[ $os == 'Android' ]]; then
-	# Presume Mac or Android is a local machine, don't show hostname
+if [[ $os == 'Darwin' ]]; then
+	# Presume Mac is a local machine, don't show hostname
 	PROMPT='%F{$PROMPT_COLOUR}%B%3~%b%f ${vcs_info_msg_0_}%B%(?.%#.%F{red}%#%f)%b '
 else
 	# Show full hostname
