@@ -17,7 +17,7 @@ yabai -m config layout bsp
 #-------------------------------------------------------------------------------
 
 # Unmanaged/floating applications
-yabai -m rule --add app='^(Activity Monitor|App Store|Archive Utility|Bitwarden|Calculator|Calendar|Cisco Webex Meetings|Dictionary|Digital Colour Meter|DisplayCAL|FaceTime|Finder|gnuplot_qt|IINA|Install macOS .+|Installer|Konfig|LaunchBar|Linn Kazoo|Messages|Microsoft Teams|Podcasts|Qobuz|Raspberry Pi Imager.*|Sonos.*|SoundSource|System (Information|Preferences)|Telegram|Textual|TV|Vagrant Manager|VirtualBox.*|VMware Fusion.*|WireGuard|WhatsApp|zoom\.us)$' manage=off
+yabai -m rule --add app='^(Activity Monitor|App Store|Archive Utility|Bitwarden|Calculator|Calendar|Dictionary|Digital Colour Meter|DisplayCAL|FaceTime|Finder|IINA|Install macOS .+|Installer|Konfig|LaunchBar|Linn Kazoo|Messages|Podcasts|Qobuz|Raspberry Pi Imager.*|Sonos.*|SoundSource|System (Information|Preferences)|Telegram||TV|Vagrant Manager|VirtualBox.*|VMware Fusion.*|WireGuard|WhatsApp|zoom\.us)$' manage=off
 
 # Unmanaged/floating windows
 yabai -m rule --add app='Firefox' title='^Opening .+' manage=off
@@ -27,6 +27,8 @@ yabai -m rule --add app='Safari' title='^Netflix$' manage=off
 yabai -m rule --add app='Safari' title='^.+ Prime Video$' manage=off
 yabai -m rule --add app='Safari' title='^Start Page, Private Browsing$' manage=off
 yabai -m rule --add app='Safari' title='^.+ - YouTube$' manage=off  # Not a '-'
+## Set as floating by iTerm2 but yabai occasionally tiles it without this rule
+yabai -m rule --add app='iTerm2' title='^WeeChat$' manage=off
 
 
 #-------------------------------------------------------------------------------

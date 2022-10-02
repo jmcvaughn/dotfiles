@@ -1,11 +1,6 @@
 #!/bin/sh
 
 install_packages() {
-	# Check if Cisco Webex Meetings is already open (i.e. in a meeting),
-	# otherwise we kill it as the installer launches it on install
-	pgrep -q 'Cisco Webex Meetings'
-	webex_meetings_running=$?
-
 	# Check if these applications are already installed. They need to run in
 	# order to complete installation; they will only be launched if newly
 	# installed.
@@ -17,9 +12,6 @@ install_packages() {
 
 	# Install packages
 	brew bundle --global --no-lock && hash -r
-
-	# Kill Cisco Webex Meetings unless it was already open
-	[ "$webex_meetings_running" -ne 0 ] && pkill -x 'Cisco Webex Meetings'
 
 	# Configure DisplayCAL here as DisplayCAL's calibration settings (transient)
 	# are stored here
@@ -55,12 +47,6 @@ install_packages() {
 	if ! echo "$cask_before" | ggrep -q Telegram && brew cask list telegram > /dev/null 2>&1; then
 		open -a Telegram && sleep 3 && pkill -x Telegram
 	fi
-
-	# Symlink `whiptail` to `dialog`
-	gln -sf /usr/local/bin/dialog /usr/local/bin/whiptail
-
-	# Use OpenJDK as system Java runtime
-	sudo gln -sfn /usr/local/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
 }
 
 
