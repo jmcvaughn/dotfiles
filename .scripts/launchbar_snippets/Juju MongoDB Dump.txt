@@ -1,1 +1,0 @@
-mongodump --port 37017 --sslAllowInvalidCertificates --ssl --authenticationDatabase admin -u "$(sudo awk '/^tag:/ { print $2 }' /var/lib/juju/agents/machine-*/agent.conf)" -p "$(sudo awk '/^statepassword:/ { print $2 }' /var/lib/juju/agents/machine-*/agent.conf)" --db juju --gzip
