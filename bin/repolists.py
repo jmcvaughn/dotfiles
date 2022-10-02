@@ -4,6 +4,7 @@
 # zsh: list of 2-tuples of URL and branch
 neovim = [
     ('https://github.com/morhetz/gruvbox', 'master', False),
+    ('https://github.com/neovim/nvim-lspconfig.git', 'master', False),
     ('https://github.com/tomtom/tcomment_vim', 'master', False),
     ('https://github.com/rbong/vim-crystalline', 'master', False),
     ('https://github.com/tpope/vim-fugitive', 'master', False),
