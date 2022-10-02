@@ -15,25 +15,18 @@ cask 'launchbar'
 cask 'librecad'
 cask 'libreoffice'
 cask 'libreoffice-language-pack'
-cask 'microsoft-teams'
 cask 'netnewswire'
-cask 'openjdk'
-#cask 'openzfs'
 cask 'qobuz'
 cask 'raspberry-pi-imager'
+cask 'slack'
 cask 'soundsource'
 cask 'telegram'
-cask 'textual'
-cask 'the-unarchiver'
 cask 'vagrant'
 cask 'vagrant-manager'
 cask 'vagrant-vmware-utility'
-cask 'virtualbox'
-cask 'virtualbox-extension-pack'
+cask 'virtualbox'  # Required for Vagrant even if unused
 cask 'vmware-fusion'
-cask 'webex-meetings'
 cask 'whatsapp'
-cask 'xquartz'
 cask 'wkhtmltopdf'  # Used by pandoc to create files
 cask 'zoom'
 
@@ -58,37 +51,26 @@ cask 'font-source-code-pro'
 # Homebrew packages
 #-------------------------------------------------------------------------------
 
-brew 'ansible'
 brew 'aria2'
 brew 'asciinema'
-brew 'curl'
-brew 'dialog'
 brew 'ffmpeg'
-brew 'git'
 brew 'gnupg'
-brew 'gnuplot'
-brew 'htop'
 brew 'ipmitool'
 brew 'iproute2mac'
 brew 'jq'
-brew 'less'
-brew 'libosinfo'
-brew 'miniupnpc'
+brew 'mas'
 brew 'neovim'
 brew 'node'
 brew 'pandoc'
-brew 'picocom'
 brew 'pinentry-mac'
 brew 'pyenv'
 brew 'rsync'
 brew 'sipcalc'
-brew 'socat'
 brew 'speedtest-cli'
 brew 'svn'  # Required by font-source-code-pro
 brew 'tree'
 brew 'watch'
 brew 'weechat'
-brew 'wget'
 brew 'xz'
 brew 'yamllint'
 brew 'yarn'
@@ -102,12 +84,25 @@ brew 'gnu-sed'
 brew 'gnu-tar'
 brew 'grep'
 brew 'gzip'
+brew 'wget'
 
 # Window manager
 tap 'homebrew/services'  # Explicitly tap to keep during `brew bundle cleanup`
 tap 'koekeishiya/formulae'
 brew 'yabai'
 brew 'skhd'
+
+
+#-------------------------------------------------------------------------------
+# Mac App Store
+#-------------------------------------------------------------------------------
+
+mas '1440147259'  # AdGuard for Safari
+mas '1352778147'  # Bitwarden, IIRC only the MAS version has Safari extension
+mas '848937349'   # Linn Kazoo
+mas '409203825'   # Numbers
+mas '409201541'   # Pages
+mas '1451685025'  # WireGuard
 
 
 #-------------------------------------------------------------------------------
@@ -147,3 +142,5 @@ brew 'avr-gcc@8', link: true
 brew 'teensy_loader_cli'
 tap 'qmk/qmk'
 brew 'qmk'
+
+# vim: set expandtab shiftwidth=0 tabstop=2:

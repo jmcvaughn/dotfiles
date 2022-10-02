@@ -3,13 +3,6 @@
 App Store:
   Preferences:
     In-App Ratings \& Reviews: False
-  Install:
-    AdGuard for Safari: https://apps.apple.com/gb/app/adguard-for-safari/id1440147259
-    Bitwarden: https://apps.apple.com/gb/app/bitwarden/id1352778147
-    Linn Kazoo: https://apps.apple.com/gb/app/linn-kazoo/id848937349
-    Numbers: https://apps.apple.com/gb/app/numbers/id409203825
-    Pages: https://apps.apple.com/gb/app/pages/id409201541
-    WireGuard: https://apps.apple.com/gb/app/wireguard/id1451685025
 
 System Preferences:
   Apple ID:
@@ -24,8 +17,6 @@ System Preferences:
     Listen for \"Hey Siri": True
 
   Notifications:
-    Cisco Webex Meetings:
-      Allow Notifications: True
     Firefox:
       Allow Notifications: True
     iTerm:
@@ -37,8 +28,6 @@ System Preferences:
     Qobuz:
       Allow Notifications: True
     Telegram:
-      Allow Notifications: True
-    Textual:
       Allow Notifications: True
     Vagrant Manager:
       Allow Notifications: True
@@ -174,9 +163,6 @@ Dock:
   Telegram:
     Options:
       Assign To: All Desktops
-  Textual:
-    Options:
-      Assign To: All Desktops
   WhatsApp:
     Options:
       Assign To: All Desktops
@@ -303,19 +289,6 @@ Applications:
       - Expand Smart Mailboxes and any account mailbox sections
       - Shrink Favourites
 
-  Microsoft Teams:
-    General:
-      Theme: Dark
-      Enable logging for meeting diagnostics: False
-      Turn off animations: True
-      Show suggested replies in chat: False
-    Privacy:
-      Surveys: False
-      Optional connected experiences: False
-    Notifications:
-      Missed activity emails: False
-      Notification style: Mac
-
   NetNewsWire:
     Accounts:
       On My Mac:
@@ -352,14 +325,6 @@ Applications:
       Bubble Mode: True
       Auto-Night Mode:
         Preferred Dark Theme: System
-
-  Textual:
-    Servers:
-      # https://help.codeux.com/textual/Connecting-to-ZNC-Bouncer.kb
-      Freenode:
-        General:
-          Connect when Textual opens: True
-          Perform reconnect on disconnect: True
 
   VMware Fusion:
     General:
@@ -403,12 +368,9 @@ File associations:
     - .yaml/.yml  # macOS is smart enough to know these are the same
   LibreCAD:
     - .dxf
-  The Unarchiver:
-    - .7z
 
 Licenses:
   - LaunchBar
   - SoundSource
-  - Textual
   - Vagrant VMware provider (https://www.vagrantup.com/docs/providers/vmware/installation)
   - VMware Fusion
