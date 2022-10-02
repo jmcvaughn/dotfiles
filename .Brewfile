@@ -99,6 +99,7 @@ brew 'skhd'
 
 mas '1440147259'  # AdGuard for Safari
 mas '1352778147'  # Bitwarden, IIRC only the MAS version has Safari extension
+mas '1128104033'  # Cato Client (VPN)
 mas '848937349'   # Linn Kazoo
 mas '409203825'   # Numbers
 mas '409201541'   # Pages
