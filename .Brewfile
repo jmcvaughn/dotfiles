@@ -86,16 +86,24 @@ brew 'skhd'
 
 
 #-------------------------------------------------------------------------------
+# Fonts
+#-------------------------------------------------------------------------------
+
+tap 'homebrew/cask-fonts'
+cask 'font-source-code-pro'
+
+
+#-------------------------------------------------------------------------------
 # Mac App Store
 #-------------------------------------------------------------------------------
 
-mas '1440147259'  # AdGuard for Safari
-mas '1352778147'  # Bitwarden, IIRC only the MAS version has Safari extension
-mas '1128104033'  # Cato Client (VPN)
-mas '848937349'   # Linn Kazoo
-mas '409203825'   # Numbers
-mas '409201541'   # Pages
-mas '1451685025'  # WireGuard
+mas 'AdGuard for Safari', id: 1440147259
+mas 'Bitwarden', id: 1352778147  # IIRC only MAS version has Safari extension
+mas 'Cato Client', id: 1128104033
+mas 'Linn Kazoo', id: 848937349
+mas 'Numbers', id: 409203825
+mas 'Pages', id: 409201541
+mas 'WireGuard', id: 1451685025
 
 
 #-------------------------------------------------------------------------------
