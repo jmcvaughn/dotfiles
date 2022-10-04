@@ -281,7 +281,6 @@ alias watch='watch '
 if [[ $os == 'Darwin' ]]; then
 	alias o='open'
 	alias oh='open .'
-	alias weechat='OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES weechat'
 fi
 # }}}
 
