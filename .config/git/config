@@ -1,6 +1,6 @@
 [user]
 	name = James Vaughn
-	email = james.vaughn@canonical.com
+	email = james.vaughn@weka.io
 [merge]
 	tool = vimdiff
 [mergetool]
