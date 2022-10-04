@@ -132,22 +132,23 @@ System Preferences:
       Show Input menu in menu bar: False  # Scriptable, but enabled by changing input sources
 
   Displays:
-    Dispays:
+    Display Settings:
       Built-in Retina Display:
         Resolution:
           Scaled: Looks like 2048x1280
         Automatically adjust brightness: False
         True Tone: False
         Colour profile: Set for display
-      Acer X34:
-        Colour profile: Set for display
-        Refresh Rate (Hz): 100
       Acer B346CK:
+        Use as: Extended display
+        Colour profile: Set for display
+        Rotation: 90
+      Acer X34:
+        Use as: Main display
         Colour profile: Set for display
         Refresh Rate (Hz): 100
     Night Shift:
       Schedule: Sunset to Sunrise
-    Arrangement: Menu bar to external
 
   Sharing:
     Computer Name: Set as appropriate
