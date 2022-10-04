@@ -308,6 +308,9 @@ Applications:
 
   Slack:
     # All settings per-workspace unless specified otherwise
+    Themes:
+      Sync with OS setting: True  # Global
+      Colours: Aubergine (Clean and minimal)
     Messages \& media:
       Theme: Compact
       Names: Full & display names
@@ -319,6 +322,8 @@ Applications:
       Zoom (%): 90  # Global
       Underline links to websites: True
       Automatically play animated GIFs and emoji: False
+    Mark as read:
+      When I view a channel: Start me at the newest message but leave unseen messages unread
     Advanced:
       When typing code \```, Enter should not send the message: True
       Format messages with markup: True
@@ -372,6 +377,8 @@ Applications:
       Stop my video when joining a meeting: True
       Always show video preview dialog when joining a video meeting: False
     Audio:
+      Speaker: Same as System
+      Microphone: Same as System
       Automatically join computer audio when joining a meeting: True
       Mute my mic when joining a meeting: True
     Share Screen:
