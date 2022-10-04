@@ -7,28 +7,36 @@ App Store:
 System Preferences:
   Apple ID:
     iCloud:
-      Photos: False
       Mail: False
       Contacts: False
       Calendars: False
-      News: False
 
   Siri:
     Listen for \"Hey Siri": True
 
   Notifications:
+    CatoClient:
+      Allow Notifications: True
     Firefox:
       Allow Notifications: True
     iTerm:
       Allow Notifications: True
     LaunchBar:
       Allow Notifications: True
+    Mimestream:
+      Allow Notifications: True
     NetNewsWire:
       Allow Notifications: True
     Qobuz:
       Allow Notifications: True
+    Screen Time:
+      Allow Notifications: False
+    Slack:
+      Allow Notifications: True
     Telegram:
       Allow Notifications: True
+    Tips:
+      Allow Notifications: False
     Vagrant Manager:
       Allow Notifications: True
     VMware Fusion:
@@ -40,7 +48,9 @@ System Preferences:
 
   Internet Accounts:
     Personal:
-      - Mail
+      - Contacts
+      - Calendars
+    WEKA:
       - Contacts
       - Calendars
 
@@ -66,16 +76,13 @@ System Preferences:
         Apps:
           - System Services:
             Services:
-              # Disable Wi-Fi Networking
-              - Location-Based Suggestions  # default
-              - Time Zone & System Customisation  # default
-              - Significant Locations  # default
-              - Find My Mac  # default
-              - HomeKit  # default
+              Find My Mac: True
+              Networking \& Wireless: False
       Contacts:
-        - iTerm.app  # For app_settings.sh to configure Contacts.app
+        - iTerm.app  # For app_settings.sh to configure Contacts.app, will only appear when triggered
       Accessibility:
         - LaunchBar.app  # Required for certain features: https://www.obdev.at/products/launchbar/releasenotes.html
+        - Qobuz.app
         - skhd
         - SoundSource.app
         - VMware Fusion.app
@@ -90,11 +97,11 @@ System Preferences:
       Automation:
         iTerm.app:  # Will only appear when triggered
           - System Events.app
-      Analytics \& Improvements:
-        Share Mac Analytics: False  # Might be re-enabled when sharing crash reports
-        Improve Siri \& Dictation: False
       Apple Advertising:
         Personalised Ads: False
+      Analytics \& Improvements:
+        Share Mac Analytics: False  # default, Might be re-enabled when sharing crash reports
+        Improve Siri \& Dictation: False  # default
 
   Network:
     - Add Google DNS location with appropriate Wi-Fi DNS/search domain settings
@@ -125,16 +132,19 @@ System Preferences:
       Show Input menu in menu bar: False  # Scriptable, but enabled by changing input sources
 
   Displays:
-    Display:
+    Dispays:
       Built-in Retina Display:
         Resolution:
           Scaled: Looks like 2048x1280
         Automatically adjust brightness: False
         True Tone: False
+        Colour profile: Set for display
       Acer X34:
+        Colour profile: Set for display
         Refresh Rate (Hz): 100
-    Colour:
-      Display profile: Set profile for each display
+      Acer B346CK:
+        Colour profile: Set for display
+        Refresh Rate (Hz): 100
     Night Shift:
       Schedule: Sunset to Sunrise
     Arrangement: Menu bar to external
@@ -158,6 +168,9 @@ Dock:
     Options:
       Assign To: All Desktops
   Qobuz:
+    Options:
+      Assign To: All Desktops
+  Slack:
     Options:
       Assign To: All Desktops
   Telegram:
@@ -189,24 +202,19 @@ Applications:
       Launch AdGuard for Safari at Login: True
       Show AdGuard for Safari in the menu bar: False
       Notify about extension updates: False
-      Enable hardware acceleration: False
     Filters:
       Allowlist: |
         charmhub.io
         jaas.ai
-      Ad Blocking:
-        Enabled: True  # default
-        AdGuard Base filter: True  # default
-        Peter Lowe's Blocklist: True
       Privacy:
         Enabled: True  # default
-        AdGuard Tracking Protection filter: True  # default
-        EasyPrivacy: True
         Fanboy's Enhanced Tracking List: True
+        EasyPrivacy: True
+        AdGuard Tracking Protection filter: True  # default
+        Peter Lowe's Blocklist: True
       Social Widgets:
         Enabled: True
         AdGuard Social Media filter: True  # default when Social Widgets first enabled
-        Fanboy's Social Blocking List: True
       Annoyances:
         Enabled: True
         AdGuard Annoyances filter: True  # default when Annoyances first enabled
@@ -214,12 +222,14 @@ Applications:
         Web Annoyances Ultralist: True
         Adblock Warning Removal List: True
         I don't care about cookies: True
+        Dandelion Sprout's Annoyances List: True
       Security:
         Enabled: True
         Online Malicious URL Blocklist: True
-        Spam404: True
         NoCoin Filter List: True
-      Language-specific: False
+    Keep AdGuard running in the background?:
+      - Yes (recommended)
+      - Remember my choice: True
 
   asciinema: Run `asciinema auth`
 
@@ -236,8 +246,6 @@ Applications:
     Preferences:
       General:
         Sort By: First Name
-    Contacts:
-      - Delete 'Apple Inc.' contact
 
   Finder:
     View menu options:
@@ -254,6 +262,11 @@ Applications:
         - Run in Private Windows: True
 
   Google Chrome:
+    Settings:
+      You and Google:
+        Sync and Google services:
+          Help improve Chrome's features and performance: False
+      Default browser: False
     Menu options:
       Warn Before Quitting: False
 
@@ -282,30 +295,38 @@ Applications:
     App Settings:
       Network Interface: Set to system interface
 
-  Mail:
-    Smart Mailboxes:
-        Include messages from Sent: True
-    Mailbox List:
-      - Expand Smart Mailboxes and any account mailbox sections
-      - Shrink Favourites
-
   NetNewsWire:
     Accounts:
       On My Mac:
         Active: False
       iCloud: True
 
-  Podcasts:
-    Menu options:
-      Account:
-        Sign In: True
-
   Qobuz:
     Music playing:
       Streaming quality: 16/44.1
 
+  Slack:
+    # All settings per-workspace unless specified otherwise
+    Messages \& media:
+      Theme: Compact
+      Names: Full & display names
+      Show times with 24-hour clock: True
+      Show one-click reactions on messages: My most frequently used emoji
+    Language \& region:
+      Language: English (UK)
+    Accessibility:
+      Zoom (%): 90  # Global
+      Underline links to websites: True
+      Automatically play animated GIFs and emoji: False
+    Advanced:
+      When typing code \```, Enter should not send the message: True
+      Format messages with markup: True
+      Send me occasional channel suggestions via Slackbot: False
+      Send me occasional surveys via Slackbot: False
+      Disable hardware acceleration: True  # Global
+
   SoundSource:
-    - Remove default effects, add Headphone EQ
+    - Remove default effects, set default devices
 
   Telegram:
     # First sign-in doesn't work with proxy
@@ -338,15 +359,17 @@ Applications:
 
   zoom.us:
     General:
+      Always show meeting controls: True
+      Ask me to confirm when I leave a meeting: False
       Show my meeting duration: True
       Add Zoom to macOS menu bar: False
       Stop my video and audio when my display is off or screen saver begins: True
     Video:
       Original ratio: True
       HD: True
-      Adjust for low light: True/Auto
       Always display participant name on their videos: True
       Stop my video when joining a meeting: True
+      Always show video preview dialog when joining a video meeting: False
     Audio:
       Automatically join computer audio when joining a meeting: True
       Mute my mic when joining a meeting: True
@@ -372,5 +395,4 @@ File associations:
 Licenses:
   - LaunchBar
   - SoundSource
-  - Vagrant VMware provider (https://www.vagrantup.com/docs/providers/vmware/installation)
   - VMware Fusion

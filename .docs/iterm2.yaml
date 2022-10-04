@@ -59,16 +59,6 @@ Profiles:
     General:
       Title: Job — Host
       Applications in terminal may change the title: False
-  WeeChat:
-    General:
-      Title: Profile
-      Send text at start: ' weechat; exit'
-      Working Directory: Home directory
-    Keys:
-      A hotkey opens a dedicated window with this profile: True
-      Configure Hotkey Window:
-        Hotkey: Option + d
-        Animate showing and hiding: False
 
 Keys:
   Ctrl + Shift + Tab: Previous Tab
