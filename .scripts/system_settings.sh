@@ -258,6 +258,9 @@ other_preferences(){  # {{{
 
 	# Disable "Do you want to use <VOLUME> to back up with Time Machine?" prompt
 	defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
+
+	# Move windows by holding Cmd + Ctrl + drag
+	defaults write -g NSWindowShouldDragOnGesture -bool true
 }  # }}}
 
 
