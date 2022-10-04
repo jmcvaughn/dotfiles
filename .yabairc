@@ -23,6 +23,7 @@ yabai -m rule --add app='^Archive Utility$' manage=off
 yabai -m rule --add app='^Bitwarden$' manage=off
 yabai -m rule --add app='^Calculator$' manage=off
 yabai -m rule --add app='^Calendar$' manage=off
+yabai -m rule --add app='^CatoClient$' manage=off
 yabai -m rule --add app='^Dictionary$' manage=off
 yabai -m rule --add app='^Digital Colour Meter$' manage=off
 yabai -m rule --add app='^DisplayCAL$' manage=off
@@ -31,6 +32,7 @@ yabai -m rule --add app='^Finder$' manage=off
 yabai -m rule --add app='^IINA$' manage=off
 yabai -m rule --add app='^Install macOS .+' manage=off
 yabai -m rule --add app='^Installer$' manage=off
+yabai -m rule --add app='^Karabiner-Elements$' manage=off
 yabai -m rule --add app='^Konfig$' manage=off
 yabai -m rule --add app='^LaunchBar$' manage=off
 yabai -m rule --add app='^Linn Kazoo$' manage=off
@@ -38,6 +40,7 @@ yabai -m rule --add app='^Messages$' manage=off
 yabai -m rule --add app='^Podcasts$' manage=off
 yabai -m rule --add app='^Qobuz$' manage=off
 yabai -m rule --add app='^Raspberry Pi Imager.*' manage=off
+yabai -m rule --add app='^Slack$' manage=off
 yabai -m rule --add app='^Sonos.*' manage=off
 yabai -m rule --add app='^SoundSource$' manage=off
 yabai -m rule --add app='^System Information$' manage=off

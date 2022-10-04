@@ -60,3 +60,4 @@ alt - m: ~/.yabai/focus_next_display.sh
 #-------------------------------------------------------------------------------
 
 alt - c: osascript -e 'tell application "System Events" to tell process "Control Centre" to tell menu bar item "control centre" of menu bar 1 to click'
+alt - d: ~/.yabai/toggle_slack.sh
