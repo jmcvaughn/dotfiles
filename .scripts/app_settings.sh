@@ -149,24 +149,21 @@ launchbar() {
 	defaults write at.obdev.LaunchBar WelcomeWindowVersion -int 2
 	
 	## Copy custom snippets
+	mkdir -p "$HOME/Library/Application Support/LaunchBar/Snippets/" 2> /dev/null
 	cp "$(gdirname "$0")"/launchbar_snippets/* "$HOME/Library/Application Support/LaunchBar/Snippets/"
 }
 
 
-mail() {
+mimestream() {
 	# Preferences
-	## Fonts & Colours > Fixed-width font: Source Code Pro 11
-	defaults write com.apple.mail NSFixedPitchFont -string 'SourceCodePro-Regular'
-	defaults write com.apple.mail NSFixedPitchFontSize -string '11'
+	## General > Text Size: 3
+	defaults write com.mimestream.Mimestream TextSizeAdjustment -int -1
 
-	## Fonts & Colours > Use fixed-width font for plain text messages: True
-	defaults write com.apple.mail AutoSelectFont -bool true
+	## Composing > Undo Send Delay: 20 seconds
+	defaults write com.mimestream.Mimestream SendCancellationDuration -int 20
 
-	## Fonts & Colours > Colour quoted text: False
-	defaults write com.apple.mail ColorQuoterColorIncoming -bool false
-
-	## Composing > Use the same message format as the original message: True
-	defaults write com.apple.mail AutoReplyFormat -bool true
+	## Labs > Client-side Snoozing: True
+	defaults write com.mimestream.Mimestream enableSnoozing -bool true
 }
 
 
@@ -343,8 +340,8 @@ main() {
 	launchbar
 	pkill -x LaunchBar && open -a LaunchBar
 
-	mail
-	pkill -x Mail && open -a Mail
+	mimestream
+	pkill -x Mimestream && open -a Mimestream
 
 	netnewswire
 	pkill -x NetNewsWire && open -a NetNewsWire
