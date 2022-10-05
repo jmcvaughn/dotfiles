@@ -240,6 +240,10 @@ Applications:
     Require verification for browser integration: True
 
   Calendar:
+    Preferences:
+      Accounts:
+        WEKA:
+          Refresh Calendars: Every 5 minutes
     Calendars:
       - Delete all local calendars (On My Mac)
 
