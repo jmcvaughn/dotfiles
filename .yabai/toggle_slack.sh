@@ -1,15 +1,14 @@
 #!/bin/bash
 
-windows=$(yabai -m query --windows)
-focused=$(echo "$windows" | jq '.[] | select(."app" == "Slack") | ."has-focus"')
-slack_window_id=$(echo "$windows" | jq '.[] | select(."app" == "Slack") | ."id"')
+slack_window=$(yabai -m query --windows | jq '.[] | select(."app" == "Slack")')
+focused=$(echo "$slack_window" | awk -F ': ' '/"has-focus"/ { gsub(",", ""); print $2 }')
+window_id=$(echo "$slack_window" | awk -F ': ' '/"id"/ { gsub(",", ""); print $2 }')
 
-if [ "$slack_window_id" ]; then
-	if ! [ "$focused" = 'true' ]; then
-		yabai -m window --focus "$slack_window_id"
-	else
-		osascript -e 'tell application "Finder" to set visible of every process whose frontmost is true to false'
-	fi
+if [ "$slack_window" ]; then
+	case $focused in
+		'true') skhd -k 'cmd - h' ;;
+		'false') yabai -m window --focus "$window_id" ;;
+	esac
 else
 	open /Applications/Slack.app/
 fi
