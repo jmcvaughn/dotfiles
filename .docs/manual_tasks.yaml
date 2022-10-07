@@ -329,7 +329,6 @@ Applications:
     Mark as read:
       When I view a channel: Start me at the newest message but leave unseen messages unread
     Advanced:
-      When typing code \```, Enter should not send the message: True
       Format messages with markup: True
       Send me occasional channel suggestions via Slackbot: False
       Send me occasional surveys via Slackbot: False
