@@ -387,7 +387,6 @@ Applications:
       Mute my mic when joining a meeting: True
     Share Screen:
       Window size when screen sharing: Maintain current size
-      Side-by-side Mode: True
 
 File associations:
   less.app:
