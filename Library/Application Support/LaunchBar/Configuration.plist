@@ -231,6 +231,14 @@
 				</dict>
 				<dict>
 					<key>name</key>
+					<string>PyPI</string>
+					<key>templateURL</key>
+					<string>https://pypi.org/search/?q=*</string>
+					<key>uuid</key>
+					<string>7C28F656-ADEE-46CF-B6CD-D62A2FF01BD0</string>
+				</dict>
+				<dict>
+					<key>name</key>
 					<string>Reddit</string>
 					<key>templateURL</key>
 					<string>https://www.reddit.com/search/?q=*</string>
