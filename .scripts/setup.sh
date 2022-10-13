@@ -3,40 +3,22 @@
 packages=(
 	apt-file
 	aria2
-	bzr
 	ceph-base
-	default-jre-headless
-	devscripts
-	fio
-	genisoimage
+	devscripts  # Provides rmadison
 	gh
-	git-review
-	iotop
 	ipmitool
 	jq
 	ksmtuned
 	language-pack-en
 	libosinfo-bin
-	libssl-dev
 	libvirt-clients
 	libvirt-daemon-system
-	lnav
-	mongo-tools
 	nfs-kernel-server
 	ovmf
-	packer
-	pylint
-	python-six
-	python3-dev
-	python3-keystoneclient
-	python3-neutronclient
 	qemu-kvm
 	samba
 	smartmontools
-	sysstat
-	tox
 	tree
-	xkcdpass
 	zfsutils-linux
 	zip
 	zsh
@@ -53,6 +35,13 @@ sudo loginctl enable-linger "$USER"
 echo 'performance' | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
 sudo systemctl disable ondemand.service
 
+# Disable AppArmor as it interferes with NVMe virtual disks and libvirt, and
+# setting libvirtd's profile to "complain" doesn't work either
+if [ ! -f /etc/default/grub.d/apparmor_disable.cfg ]; then
+	echo 'GRUB_CMDLINE_LINUX="$GRUB_CMDLINE_LINUX apparmor=0"' | sudo tee /etc/default/grub.d/apparmor_disable.cfg
+	update_grub=1
+fi
+
 # Enable console output
 if [ ! -f /etc/default/grub.d/console.cfg ]; then
 	echo 'GRUB_CMDLINE_LINUX="$GRUB_CMDLINE_LINUX console=ttyS0"' | sudo tee /etc/default/grub.d/console.cfg
@@ -68,26 +57,25 @@ fi
 sudo apt-get update
 
 # Add repositories
-## HashiCorp
-curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+## Docker
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+echo "deb [arch=$(dpkg --print-architecture)] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
 ## GitHub CLI
-curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+curl -fsSL 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2c6106201985b60e6c7ac87323f3d4ea75716059' | sudo apt-key add -
+echo "deb [arch=$(dpkg --print-architecture)] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list
 
 # Install packages
 sudo apt-get update
-sudo apt-get -y install --no-install-recommends gnuplot virtinst
+sudo apt-get -y install --no-install-recommends virtinst
 sudo apt-get -y install ${packages[@]}
 sudo snap set system experimental.parallel-instances=true
-for i in canonical-livepatch cmadison docker maas maas-test-db openstackclients ovs-stat vault; do
-	sudo snap install "$i"
+for package in canonical-livepatch; do
+	sudo snap install "$package"
 done
-for i in charm charmcraft hotsos juju kubectl landscape-api nvim; do
-	sudo snap install "$i" --classic
+for package in nvim; do
+	sudo snap install "$package" --classic
 done
 sudo snap install --channel 18/stable --classic node
-sudo snap connect ovs-stat:removable-media  # See https://snapcraft.io/ovs-stat
 
 # Create Intel One Boot Flash Update (OFU) symlink
 sudo ln -s /usr/bin/flashupdt/flashupdt /usr/local/sbin/
@@ -98,13 +86,6 @@ sudo update-locale LANG=en_GB.UTF-8
 # Set shell to Zsh
 if [ "$(awk -F ':' "/$USER/ { print \$7 }" /etc/passwd)" != '/bin/zsh' ]; then
 	chsh -s /bin/zsh
-fi
-
-# Add maas0 network
-if ! sudo virsh net-list --all --name | grep -q maas0; then
-	sudo virsh net-define "$(dirname "$0")"/maas0.xml
-	sudo virsh net-autostart maas0
-	sudo virsh net-start maas0
 fi
 
 # Add default-hdd pool
