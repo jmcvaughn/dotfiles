@@ -1,0 +1,6 @@
+[Unit]
+Description=Update cloud images in ~/images/
+
+[Service]
+Type=exec
+ExecStart=/home/jamesvaughn/bin/update --images
