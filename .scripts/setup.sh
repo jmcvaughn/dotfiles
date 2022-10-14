@@ -10,14 +10,12 @@ wg0_address=''  # Without subnet mask or CIDR
 znc_port=''
 
 packages=(
-	apparmor-utils
 	apt-file
 	aria2
 	default-jre-headless
-	devscripts
+	devscripts  # Provides rmadison
 	dnscrypt-proxy
 	dnsmasq
-	gh
 	ipmitool
 	iptables-persistent
 	jq
@@ -111,12 +109,15 @@ fi
 # Set timezone
 sudo timedatectl set-timezone Europe/London
 
-sudo apt-get update
+# Use the "performance" governor
+if [ ! -f /etc/udev/rules.d/10-cpu-scheduler.rules ]; then
+	sudo tee /etc/udev/rules.d/10-cpu-scheduler.rules <<- 'EOF'
+	KERNEL=="cpu*", ATTR{cpufreq/scaling_governor}="performance"
+	EOF
+	sudo udevadm trigger
+fi
 
-# Add repositories
-## GitHub CLI
-curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+sudo apt-get update
 
 # Install packages
 sudo apt-get update
