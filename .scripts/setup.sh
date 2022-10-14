@@ -32,25 +32,17 @@ sudo timedatectl set-timezone Europe/London
 sudo loginctl enable-linger "$USER"
 
 # Use the "performance" governor
-echo 'performance' | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
-sudo systemctl disable ondemand.service
+if [ ! -f /etc/udev/rules.d/10-cpu-scheduler.rules ]; then
+	sudo tee /etc/udev/rules.d/10-cpu-scheduler.rules <<- 'EOF'
+	KERNEL=="cpu*", ATTR{cpufreq/scaling_governor}="performance"
+	EOF
+	sudo udevadm trigger
+fi
 
 # Disable AppArmor as it interferes with NVMe virtual disks and libvirt, and
 # setting libvirtd's profile to "complain" doesn't work either
 if [ ! -f /etc/default/grub.d/apparmor_disable.cfg ]; then
 	echo 'GRUB_CMDLINE_LINUX="$GRUB_CMDLINE_LINUX apparmor=0"' | sudo tee /etc/default/grub.d/apparmor_disable.cfg
-	update_grub=1
-fi
-
-# Enable console output
-if [ ! -f /etc/default/grub.d/console.cfg ]; then
-	echo 'GRUB_CMDLINE_LINUX="$GRUB_CMDLINE_LINUX console=ttyS0"' | sudo tee /etc/default/grub.d/console.cfg
-	update_grub=1
-fi
-
-# Set rootdelay due to SATA initialisation delay
-if [ ! -f /etc/default/grub.d/rootdelay.cfg ]; then
-	echo 'GRUB_CMDLINE_LINUX="$GRUB_CMDLINE_LINUX rootdelay=60"' | sudo tee /etc/default/grub.d/rootdelay.cfg
 	update_grub=1
 fi
 
@@ -189,7 +181,7 @@ fi
 if ! sudo smbpasswd -e "$USER"; then
 	sudo smbpasswd -a "$USER"
 	sudo systemctl restart smbd.service
-	sudo systemctl enable smdd.service
+	sudo systemctl enable smbd.service
 fi
 
 [ "${systemd_reload:-0}" -eq 1 ] && sudo systemctl daemon-reload
