@@ -5,6 +5,8 @@ packages=(
 	aria2
 	ceph-base
 	devscripts  # Provides rmadison
+	docker-ce
+	docker-compose-plugin
 	gh
 	ipmitool
 	jq
@@ -183,6 +185,9 @@ if ! sudo smbpasswd -e "$USER"; then
 	sudo systemctl restart smbd.service
 	sudo systemctl enable smbd.service
 fi
+
+# Add current user to docker group
+sudo usermod -aG docker "$USER"
 
 [ "${systemd_reload:-0}" -eq 1 ] && sudo systemctl daemon-reload
 sudo systemctl enable --now zfs-trim.timer
