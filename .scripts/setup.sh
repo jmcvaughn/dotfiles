@@ -21,9 +21,16 @@ packages=(
 	samba
 	smartmontools
 	tree
+	vagrant
 	zfsutils-linux
 	zip
 	zsh
+
+	# vagrant-libvirt
+	libxml2-dev
+	libxslt-dev
+	ruby-dev
+	zlib1g-dev
 )
 
 # Set timezone
@@ -52,16 +59,23 @@ sudo apt-get update
 
 # Add repositories
 ## Docker
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-echo "deb [arch=$(dpkg --print-architecture)] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/docker.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/trusted.gpg.d/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
 ## GitHub CLI
-curl -fsSL 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2c6106201985b60e6c7ac87323f3d4ea75716059' | sudo apt-key add -
-echo "deb [arch=$(dpkg --print-architecture)] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list
+curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/trusted.gpg.d/githubcli-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/trusted.gpg.d/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list
+## Hashicorp
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/hashicorp-archive-keyring.gpg
+echo "deb [signed-by=/etc/apt/trusted.gpg.d/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+
+# Enable deb-src entries (vagrant-libvirt)
+sudo sed -i 's|^# deb-src|deb-src|g' /etc/apt/sources.list
 
 # Install packages
 sudo apt-get update
 sudo apt-get -y install --no-install-recommends virtinst
 sudo apt-get -y install ${packages[@]}
+sudo apt-get -y build-dep vagrant ruby-libvirt
 sudo snap set system experimental.parallel-instances=true
 for package in canonical-livepatch; do
 	sudo snap install "$package"
@@ -70,6 +84,9 @@ for package in nvim; do
 	sudo snap install "$package" --classic
 done
 sudo snap install --channel 18/stable --classic node
+
+# Install Vagrant plugins
+vagrant plugin install vagrant-libvirt
 
 # Create Intel One Boot Flash Update (OFU) symlink
 sudo ln -s /usr/bin/flashupdt/flashupdt /usr/local/sbin/
