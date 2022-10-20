@@ -23,6 +23,8 @@ System Preferences:
       Allow Notifications: True
     LaunchBar:
       Allow Notifications: True
+    Maps:
+      Allow Notifications: True
     Mimestream:
       Allow Notifications: True
     NetNewsWire:
@@ -184,6 +186,9 @@ Dock:
 Applications:
   Safari:
     Preferences:
+      Websites:
+        Page Zoom:
+          wekaio.lightning.force.com (%): 85
       Extensions:
         - AdGuard Advanced Blocking
         - AdGuard Custom
@@ -386,6 +391,7 @@ Applications:
       Mute my mic when joining a meeting: True
     Share Screen:
       Window size when screen sharing: Maintain current size
+      When I share directly to a Zoom Room: Show all sharing options
 
 File associations:
   less.app:
