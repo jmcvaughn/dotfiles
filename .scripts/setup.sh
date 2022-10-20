@@ -213,5 +213,9 @@ if ! systemctl --user is-enabled update-cloud-images.timer > /dev/null; then
 	systemctl --user daemon-reload
 	systemctl --user enable update-cloud-images.timer
 fi
+if ! systemctl --user is-enabled update-vagrant-boxes.timer > /dev/null; then
+	systemctl --user daemon-reload
+	systemctl --user enable update-vagrant-boxes.timer
+fi
 
 [ "${update_grub:-0}" -eq 1 ] && sudo update-grub

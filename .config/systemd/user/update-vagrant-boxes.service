@@ -1,0 +1,6 @@
+[Unit]
+Description=Update Vagrant boxes
+
+[Service]
+Type=exec
+ExecStart=/home/jamesvaughn/bin/update --vagrant
