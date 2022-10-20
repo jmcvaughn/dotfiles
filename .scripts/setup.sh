@@ -16,6 +16,8 @@ packages=(
 	devscripts  # Provides rmadison
 	dnscrypt-proxy
 	dnsmasq
+	docker-ce
+	docker-compose-plugin
 	ipmitool
 	iptables-persistent
 	jq
@@ -119,10 +121,15 @@ fi
 
 sudo apt-get update
 
+# Add repositories
+## Docker
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/docker.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/trusted.gpg.d/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
+
 # Install packages
 sudo apt-get update
 sudo apt-get -y install ${packages[@]}
-for i in canonical-livepatch docker; do
+for i in canonical-livepatch; do
 	sudo snap install "$i"
 done
 for i in certbot nvim; do
@@ -261,7 +268,7 @@ if ! sudo ls /etc/wireguard/wg0.conf > /dev/null 2>&1; then
 fi
 
 # Create Unifi Controller Docker container directories
-mkdir -p "$HOME"/unifi/{data,log}/ 2> /dev/null
+sudo mkdir -p /srv/unifi/{data,log}/ 2> /dev/null
 
 # Add ZNC TLS certificate update script
 sudo mkdir -p /etc/letsencrypt/renewal-hooks/deploy/ > /dev/null 2>&1
@@ -277,6 +284,9 @@ if [ ! -f /etc/letsencrypt/renewal-hooks/deploy/znc.sh ]; then
 	EOF
 fi
 sudo chmod 0755 /etc/letsencrypt/renewal-hooks/deploy/znc.sh
+
+# Add current user to docker group
+sudo usermod -aG docker "$USER"
 
 # Enable ZNC
 ## ZNC home directory is set to /var/lib/znc/, which means that

@@ -40,6 +40,8 @@ There are three main tasks to make turn this into a fully-fledged home gateway/r
 
 - Add any peers to WireGuard's wg0 configuration.
 
+- Log out and back in to allow new groups to take effect (e.g. `docker`).
+
 ### dnsmasq
 
 By default, `dnsmasq` reads configuration files in /etc/dnsmasq.d/, leaving it to the user to choose how to lay out these files.
@@ -183,7 +185,7 @@ Run `sudo certbot certonly --standalone`.
 Run the following as your user, replacing `IP` with the internal IP address of the machine:
 
 ```shell
-sudo docker run \
+docker run \
   --init \
   -p IP:6789:6789 \
   -p IP:8080:8080 \
@@ -194,7 +196,7 @@ sudo docker run \
   -p IP:3478:3478/udp \
   -p IP:10001:10001/udp \
   -e TZ='Europe/London' \
-  -v ~/unifi:/unifi \
+  -v /srv/unifi:/unifi \
   --name unifi \
   --detach \
   --restart unless-stopped \
