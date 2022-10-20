@@ -204,9 +204,9 @@ if [ ! -f /etc/systemd/system/dynamic-dns.timer ]; then
 	sudo systemctl enable --now dynamic-dns.timer
 fi
 
-# Modify WireGuard service to restart whenever iptables service is restarted,
-# as this adds its own rules
-for service in 'wg-quick@'; do
+# Modify Docker and WireGuard services to restart whenever iptables service is
+# restarted, as these add their own rules
+for service in 'docker' 'wg-quick@'; do
 	if [ ! -f /etc/systemd/system/"$service".service.d/override.conf ]; then
 		sudo mkdir /etc/systemd/system/"$service".service.d/ 2> /dev/null
 		sudo tee /etc/systemd/system/"$service".service.d/override.conf <<- 'EOF'
