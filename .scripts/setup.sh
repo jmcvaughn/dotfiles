@@ -17,6 +17,7 @@ packages=(
 	libvirt-daemon-system
 	nfs-kernel-server
 	ovmf
+	python3-venv
 	qemu-kvm
 	samba
 	smartmontools
@@ -86,7 +87,7 @@ done
 sudo snap install --channel 18/stable --classic node
 
 # Install Vagrant plugins
-vagrant plugin install vagrant-libvirt
+vagrant plugin install vagrant-libvirt vagrant-scp
 
 # Create Intel One Boot Flash Update (OFU) symlink
 sudo ln -s /usr/bin/flashupdt/flashupdt /usr/local/sbin/
