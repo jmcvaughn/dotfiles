@@ -207,6 +207,14 @@ fi
 # Add current user to docker group
 sudo usermod -aG docker "$USER"
 
+# Enable passwordless sudo for current user
+if sudo [ ! -f /etc/sudoers.d/"$USER" ]; then
+	sudo tee /etc/sudoers.d/"$USER" <<- EOF
+	$USER ALL = (ALL) NOPASSWD: ALL
+	EOF
+	sudo chmod 0440 /etc/sudoers.d/"$USER"
+fi
+
 [ "${systemd_reload:-0}" -eq 1 ] && sudo systemctl daemon-reload
 sudo systemctl enable --now zfs-trim.timer
 
