@@ -138,6 +138,8 @@ fi
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 ## Unconditional menu completion
 zstyle ':completion:*' menu select
+## Rehash automatically (particularly useful for venvs)
+zstyle ':completion:*' rehash true
 # }}}
 
 
