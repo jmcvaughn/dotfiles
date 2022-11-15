@@ -39,7 +39,7 @@ if [[ $os == 'Darwin' ]]; then
 elif [[ $os == 'GNU/Linux' ]]; then
 	PATH="$PATH:/snap/bin"  # Canonical snaps
 fi
-export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"  # ~/.local/bin/ for pip
 export CDPATH="$HOME"
 # }}}
 
