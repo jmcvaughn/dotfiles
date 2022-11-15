@@ -17,6 +17,7 @@ packages=(
 	libvirt-daemon-system
 	nfs-kernel-server
 	ovmf
+	python3-pip
 	python3-venv
 	qemu-kvm
 	samba
