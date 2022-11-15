@@ -167,7 +167,6 @@ export LESS='--ignore-case --RAW-CONTROL-CHARS --chop-long-lines --hilite-unread
 if [[ "$(less --version | awk '{ print $2; exit }')" > 551 ]]; then
 	export LESS="$LESS --mouse"
 fi
-export BAT_CONFIG_PATH="$HOME/.config/bat/config"  # Mainly for Snap
 
 if [[ $os == 'Darwin' ]]; then
 	# Homebrew
