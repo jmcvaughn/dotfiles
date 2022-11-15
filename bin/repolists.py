@@ -1,6 +1,7 @@
 # git: list of 4-tuples of URL, branch, directory, list of 2-tuples of remotes
 # images: list of URLs
 # neovim: list of 3-tuples of url, branch, and whether `yarn install` required
+# yarn: list of packages
 # zsh: list of 2-tuples of URL and branch
 neovim = [
     ('https://github.com/morhetz/gruvbox', 'master', False),

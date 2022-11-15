@@ -342,6 +342,42 @@ def vagrant_boxes():
         sys.exit('Failed to prune unused versions of Vagrant boxes:\n'
                  + e.stderr)
 
+def yarn_packages(packages):
+    yarn_base_cmd = ['yarn', 'global']
+    if sys.platform.startswith('linux'):
+        yarn_base_cmd.insert(0, 'sudo')
+
+    # List of installed packages
+    ## Doesn't require elevated privileges
+    try:
+        cmd = subprocess.run(yarn_base_cmd + ['list'], check=True,
+                             capture_output=True, text=True)
+    except subprocess.CalledProcessError as e:
+        sys.exit('Failed to get installed Node.js packages from Yarn:\n'
+                 + e.stderr)
+
+    installed_packages = cmd.stdout.splitlines()
+    installed_packages = [line.removeprefix('info "').rpartition('@')[0] for
+                          line in installed_packages if 'info "' in line]
+
+    # Install packages if missing
+    missing_packages = [package for package in packages if package not in
+                        installed_packages]
+    if len(missing_packages) > 0:
+        try:
+            cmd = subprocess.run(yarn_base_cmd + ['add'] + missing_packages,
+                    check=True, capture_output=True, text=True)
+        except subprocess.CalledProcessError as e:
+            sys.exit('Failed to install missing Node.js packages:\n'
+                     + e.stderr)
+
+    # Update packages
+    try:
+        cmd = subprocess.run(yarn_base_cmd + ['upgrade'], check=True,
+                capture_output=True, text=True)
+    except subprocess.CalledProcessError as e:
+        sys.exit('Failed to update Node.js packages:\n' + e.stderr)
+
 def main():
     parser = argparse.ArgumentParser()
 
@@ -360,6 +396,8 @@ def main():
             action='store_true')
     parser.add_argument('-v', '--vagrant', help='update Vagrant boxes',
             action='store_true')
+    parser.add_argument('-y', '--yarn', help='install or update Yarn packages',
+            action='store_true')
     parser.add_argument('-z', '--zsh', help='update Zsh plugins',
             action='store_true')
     args = parser.parse_args()
@@ -371,6 +409,8 @@ def main():
             pull_or_clone_git_repos(repolists.git)
         if 'neovim' in vars(repolists):
             pull_or_clone_neovim_plugins(repolists.neovim)
+        if 'yarn' in vars(repolists):
+            yarn_packages(repolists.yarn)
         if 'zsh' in vars(repolists):
             pull_or_clone_zsh_plugins(repolists.zsh)
         packages()
