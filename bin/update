@@ -26,7 +26,8 @@ class GitRepo(object):
                 subprocess.run(['git', '-C', self.directory, 'remote', 'add',
                     name, url], check=True)
             except subprocess.CalledProcessError as e:
-                sys.exit(e.stderr)
+                sys.exit('Failed to add remote to {}:\n{}'.format(
+                        self.directory, e.stderr))
         return 0
 
     def checkout(self):
@@ -34,7 +35,8 @@ class GitRepo(object):
             subprocess.run(['git', '-C', self.directory, 'checkout',
                 self.branch], check=True, capture_output=True, text=True)
         except subprocess.CalledProcessError as e:
-            sys.exit(e.stderr)
+            sys.exit('Failed to checkout Git repository {}:\n{}'.format(
+                self.directory, e.stderr))
         return 0
 
     def clone(self):
@@ -42,7 +44,8 @@ class GitRepo(object):
             subprocess.run(['git', 'clone', self.url, self.directory],
                     check=True)
         except subprocess.CalledProcessError as e:
-            sys.exit(e.stderr)
+            sys.exit('Failed to clone {} to {}:\n{}'.format(self.url,
+                    self.directory, e.stderr))
         self.add_remotes()
         return 0
 
@@ -51,13 +54,15 @@ class GitRepo(object):
             subprocess.run(['git', '-C', self.directory, 'checkout',
                 self.branch], check=True, capture_output=True, text=True)
         except subprocess.CalledProcessError as e:
-            sys.exit(e.stderr)
+            sys.exit('Failed to checkout {}:\n{}'.format(self.directory,
+                                                         e.stderr))
 
         try:
             subprocess.run(['git', '-C', self.directory, 'pull'], check=True,
                     capture_output=True, text=True)
         except subprocess.CalledProcessError as e:
-            sys.exit(e.stderr)
+            sys.exit('Failed to pull {} branch of {}:\n{}'.format(
+                        self.branch, self.directory, e.stderr))
 
     def is_present(self):
         try:
@@ -72,11 +77,11 @@ class GitRepo(object):
                 sys.exit('Error: ' + self.directory
                         + ' already exists but is not a git repository')
             else:
-                sys.exit(e.stderr)
+                sys.exit('Failed to check if {} is a Git'
+                         + 'repository:\n{}'.format(self.directory, e.stderr))
         if cmd.stdout.strip() != self.url:
-            sys.exit('Error: ' + self.directory
-                    + ' already exists but configured remote does not match '
-                    + self.url)
+            sys.exit('Error: {} already exists but configured remote does not'
+                     + ' match {}'.format(self.directory, self.url))
         return True
 
     def stash(self):
@@ -84,7 +89,8 @@ class GitRepo(object):
             cmd = subprocess.run(['git', '-C', self.directory, 'stash'],
                     check=True, capture_output=True, text=True)
         except subprocess.CalledProcessError as e:
-            sys.exit(e.stderr)
+            sys.exit('Failed to stash {}:\n{}'.format(self.directory,
+                                                      e.stderr))
         if cmd.stdout.strip() != 'No local changes to save':
             print(self.directory + ':\n' + cmd.stdout)
         return 0
@@ -105,7 +111,8 @@ class NeovimPlugin(GitRepo):
             subprocess.run(['yarn', 'install'], check=True,
                     capture_output=True, cwd=self.directory, text=True)
         except subprocess.CalledProcessError as e:
-            sys.exit(e.stderr)
+            sys.exit('Failed to `yarn install` Neovim plugin at '
+                     + '{}:\n{}'.format(self.directory, e.stderr))
 
 class ZshPlugin(GitRepo):
     def __init__(self, url, branch='master'):
@@ -136,8 +143,9 @@ class VagrantBox(object):
             try:
                 subprocess.run(['vagrant', 'box', 'add', '--clean',
                     '--provider', self.provider, self.name], check=True)
-            except subprocess.CalledProcessError:
-                sys.exit(1)
+            except subprocess.CalledProcessError as e:
+                sys.exit('Failed to install latest version of Vagrant box'
+                         + '{}:\n{}'.format(self.name, e.stderr))
 
     def installed_versions(self):
         return self.installed_versions
@@ -147,14 +155,13 @@ def apt_packages():
         subprocess.run(['sudo', 'apt-get', 'update'], check=True,
                 capture_output=True, text=True)
     except subprocess.CalledProcessError as e:
-        print('Error running `sudo apt-get update`:\n' + e.stderr)
-        sys.exit(1)
+        sys.exit('Failed to update APT package index files:\n' + e.stderr)
 
     try:
         subprocess.run(['sudo', 'apt-get', '--yes', 'dist-upgrade'],
                 check=True)
     except subprocess.CalledProcessError as e:
-        sys.exit(1)
+        sys.exit('Failed to update packages:\n' + e.stderr)
 
 def download_file(url, path):
     path = os.path.expanduser(path)
@@ -164,8 +171,8 @@ def download_file(url, path):
         subprocess.run(['curl', '--create-dirs', '--location', url, '--output',
             path], check=True, text=True)
     except subprocess.CalledProcessError as e:
-        print('Failed to download file to {}:\n{}'.format(path, e.stderr),
-                file=sys.stderr)
+        print('Failed to download {} to {}:\n{}'.format(url, path, e.stderr),
+              file=sys.stderr)
 
 def download_images(urls):
     for url in urls:
@@ -177,14 +184,14 @@ def homebrew_packages():
         subprocess.run(['brew', 'update'], check=True, capture_output=True,
                 text=True)
     except subprocess.CalledProcessError as e:
-        sys.exit('Error running `brew update`:\n' + e.stderr)
+        sys.exit('Failed to fetch latest version of Homebrew and formulae:\n'
+                 + e.stderr)
 
     try:
         cmd = subprocess.run(['brew', 'outdated', '--json'], check=True,
                 capture_output=True, text=True) 
     except subprocess.CalledProcessError as e:
-        sys.exit('Error checking outdated packages using `brew outdated`:\n'
-                + e.stderr)
+        sys.exit('Failed to get list of outdated packages:\n' + e.stderr)
 
     outdated = json.loads(cmd.stdout)
 
@@ -205,9 +212,11 @@ def homebrew_packages():
         print('\n'.join(casks))
 
     try:
-        subprocess.run(['brew', 'upgrade'], check=True)
-    except subprocess.CalledProcessError:
-        sys.exit(1)
+        subprocess.run(['brew', 'upgrade'], check=True, capture_output=True,
+                       text=True)
+    except subprocess.CalledProcessError as e:
+        sys.exit('Failed to update packages (read the error carefully; this '
+              'may not truly be an error):\n' + e.stderr)
 
 def packages():
     if sys.platform.startswith('darwin'):
@@ -229,7 +238,7 @@ def pull_or_clone_git_repos(repos):
     try:
         os.makedirs(os.path.expanduser('~/git/'), exist_ok=True)
     except:
-        sys.exit(1)
+        sys.exit('Failed to create ~/git/')
 
     for url, branch, directory, remotes in repos:
         repo = GitRepo(url, branch, directory, remotes)
@@ -245,7 +254,8 @@ def pull_or_clone_neovim_plugins(plugins):
         os.makedirs(os.path.expanduser(
             '~/.local/share/nvim/site/pack/plugins/start/'), exist_ok=True)
     except:
-        sys.exit(1)
+        sys.exit('Failed to create'
+                 + '~/.local/share/nvim/site/pack/plugins/start/')
 
     for url, branch, yarn_install_required in plugins:
         plugin = NeovimPlugin(url, branch, yarn_install_required)
@@ -262,7 +272,7 @@ def pull_or_clone_zsh_plugins(plugins):
     try:
         os.makedirs(os.path.expanduser('~/.zsh/'), exist_ok=True)
     except:
-        sys.exit(1)
+        sys.exit('Failed to create ~/.zsh/')
 
     for url, branch in plugins:
         plugin = ZshPlugin(url, branch)
@@ -281,8 +291,8 @@ def vagrant_boxes():
     try:
         cmd = subprocess.run(['vagrant', 'box', 'outdated', '--global'],
                 check=True, capture_output=True, text=True)
-    except subprocess.CalledProcessError:
-        print('vagrant not found, skipping...', file=sys.stderr)
+    except subprocess.CalledProcessError as e:
+        sys.exit('Failed to get installed Vagrant boxes:\n' + e.stderr)
 
     # Strip characters from Vagrant output. Lines (not yet split) will resemble
     # one of either:
@@ -328,8 +338,9 @@ def vagrant_boxes():
     try:
         subprocess.run(['vagrant', 'box', 'prune', '--force',
             '--keep-active-boxes'], check=True)
-    except subprocess.CalledProcessError:
-        sys.exit(1)
+    except subprocess.CalledProcessError as e:
+        sys.exit('Failed to prune unused versions of Vagrant boxes:\n'
+                 + e.stderr)
 
 def main():
     parser = argparse.ArgumentParser()
@@ -371,12 +382,14 @@ def main():
             download_images(repolists.images)
         if args.neovim is True and 'neovim' in vars(repolists):
             pull_or_clone_neovim_plugins(repolists.neovim)
+        if args.yarn is True and 'yarn' in vars(repolists):
+            yarn_packages(repolists.yarn)
         if args.zsh is True and 'zsh' in vars(repolists):
             pull_or_clone_zsh_plugins(repolists.zsh)
-        if args.packages is True:
-            packages()
         if args.vagrant is True:
             vagrant_boxes()
+        if args.packages is True:
+            packages()
 
 if __name__ == "__main__":
     main()
