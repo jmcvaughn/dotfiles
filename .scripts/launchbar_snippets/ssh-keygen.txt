@@ -1,1 +1,1 @@
-ssh-keygen -b 4096 -t rsa -N '' -f "$HOME"/.ssh/id_rsa
+ssh-keygen -b 4096 -t rsa -N '' -f ~/.ssh/id_rsa && cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
