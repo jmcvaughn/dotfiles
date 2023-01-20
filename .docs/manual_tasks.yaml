@@ -61,11 +61,12 @@ System Preferences:
   Extensions:
     Share Menu:
       - Add to Reading List  # Always first in Safari Share Menu
-      - Telegram
-      - Mail
-      - Messages
       - AirDrop
       - iCloud Sharing
+      - Mail
+      - Messages
+      - Mimestream
+      - Telegram
 
   Security \& Privacy:
     General:
