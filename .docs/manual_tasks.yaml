@@ -313,8 +313,11 @@ Applications:
       iCloud: True
 
   Qobuz:
-    Music playing:
-      Streaming quality: 16/44.1
+    Menu:
+      Synchronise with OS settings: True
+    Settings:
+      Music playing:
+        Streaming quality: 16/44.1
 
   Slack:
     # All settings per-workspace unless specified otherwise
