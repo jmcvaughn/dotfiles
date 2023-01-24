@@ -3,6 +3,8 @@
 #-------------------------------------------------------------------------------
 
 tap 'homebrew/cask'  # Explicitly tap to keep during `brew bundle cleanup`
+cask 'anydesk'
+cask 'catoclient'
 cask 'coconutbattery'
 cask 'displaycal'
 cask 'drawio'
@@ -47,6 +49,7 @@ brew 'aria2'
 brew 'asciinema'
 brew 'ffmpeg'
 brew 'gh'
+brew 'git'
 brew 'gnupg'
 brew 'ipmitool'
 brew 'iproute2mac'
@@ -100,7 +103,6 @@ cask 'font-source-code-pro'
 
 mas 'AdGuard for Safari', id: 1440147259
 mas 'Bitwarden', id: 1352778147  # IIRC only MAS version has Safari extension
-mas 'Cato Client', id: 1128104033
 mas 'Linn Kazoo', id: 848937349
 mas 'Numbers', id: 409203825
 mas 'Pages', id: 409201541
