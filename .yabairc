@@ -62,8 +62,6 @@ yabai -m rule --add app='Safari' title='^Netflix$' manage=off
 yabai -m rule --add app='Safari' title='^.+ Prime Video$' manage=off
 yabai -m rule --add app='Safari' title='^Start Page, Private Browsing$' manage=off
 yabai -m rule --add app='Safari' title='^.+ - YouTube$' manage=off  # Not a '-'
-## Set as floating by iTerm2 but yabai occasionally tiles it without this rule
-yabai -m rule --add app='iTerm2' title='^WeeChat$' manage=off
 
 
 #-------------------------------------------------------------------------------
