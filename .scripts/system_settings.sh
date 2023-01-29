@@ -1,13 +1,32 @@
 #!/bin/sh
 
-system_preferences() {  # {{{
+system_settings() {  # {{{
 	#-----------------------------------------------------------------------------
-	# General {{{
+	# Sound {{{
 	#-----------------------------------------------------------------------------
 
-	# System Preferences
+	# System Settings
+	## Sound Effects > Alert volume: 50%
+	defaults write -g com.apple.sound.beep.volume -float 0.6065307
+
+	## Sound Effects > Play sound on startup: False
+	sudo nvram StartupMute=%01
+
+	## Sound Effects > Play user interface sound effects: False
+	defaults write -g com.apple.sound.uiaudio.enabled -int 0
+	# }}}
+
+
+	#-----------------------------------------------------------------------------
+	# Appearance {{{
+	#-----------------------------------------------------------------------------
+
+	# System Settings
 	## Appearance: Dark
 	defaults write -g AppleInterfaceStyle -string 'Dark'
+
+	## Allow wallpaper tinting in windows: False
+	defaults write -g AppleReduceDesktopTinting -bool true
 
 	## Show scroll bars: Always
 	defaults write -g AppleShowScrollBars -string 'Always'
@@ -18,69 +37,97 @@ system_preferences() {  # {{{
 
 
 	#-----------------------------------------------------------------------------
-	# Desktop & Screen Saver {{{
+	# Accessibility {{{
 	#-----------------------------------------------------------------------------
 
-	# System Preferences
-	## Screen Saver > Hot Corners > Bottom Left: Put Display to Sleep
-	defaults write com.apple.dock wvous-bl-corner -int 10
-	defaults write com.apple.dock wvous-bl-modifier -int 0
+	# System Settings
+	# Pointer Control > Spring-loading delay: Short
+	defaults write -g com.apple.springing.delay -float 0
+
+	## Pointer Control > Mouse & Trackpad > Trackpad Options > Use trackpad for dragging: True
+	## Pointer Control > Mouse & Trackpad > Trackpad Options > Dragging style: Three-Finger Drag
+	defaults -currentHost write -g com.apple.trackpad.threeFingerDragGesture -bool true
+	defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool true
+	defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerDrag -bool true
 	# }}}
 
 
 	#-----------------------------------------------------------------------------
-	# Dock & Menu Bar {{{
+	# Control Centre {{{
 	#-----------------------------------------------------------------------------
 
 	# Remove com.apple.controlcenter plist; this will be automatically populated
 	defaults delete com.apple.controlcenter 2> /dev/null
 
-	# System Preferences
-	## Dock & Menu Bar > Size: 80
-	defaults write com.apple.dock tilesize -float 80
-
-	## Dock & Menu Bar > Minimise windows using: Scale effect
-	defaults write com.apple.dock mineffect -string 'scale'
-
-	## Dock & Menu Bar > Double-click a window's title bar to: minimise
-	defaults write -g AppleActionOnDoubleClick -string 'Minimize'
-
-	## Dock & Menu Bar > Automatically hide and show the Dock: True
-	defaults write com.apple.dock autohide -bool true
-
-	## Dock & Menu Bar > Show recent applications in Dock: False
-	defaults write com.apple.dock show-recents -bool false
-
-	## Wi-Fi > Show in Menu Bar: False
+	# System Settings
+	## Control Centre Modules > Wi-Fi: Don't Show in Menu Bar
 	defaults -currentHost write com.apple.controlcenter WiFi -int 8
+	defaults write com.apple.controlcenter 'NSStatusItem Visible WiFi' -bool false
 
-	## Screen Mirroring > Show in Menu Bar: False
+	## Control Centre Modules > Screen Mirroring: Don't Show in Menu Bar
+	defaults -currentHost write com.apple.controlcenter ScreenMirroring -int 8
 	defaults write com.apple.airplay showInMenuBarIfPresent -bool false
 
-	## Display > Show in Menu Bar: False
+	## Control Centre Modules > Display: Don't Show in Menu Bar
 	defaults -currentHost write com.apple.controlcenter Display -int 8
 
-	## Sound > Show in Menu Bar: False
+	## Control Centre Modules > Sound: Don't Show in Menu Bar
 	defaults -currentHost write com.apple.controlcenter Sound -int 8
 
-	## Battery > Show Percentage: True
+	## Other Modules > Battery > Show Percentage: True
 	defaults -currentHost write com.apple.controlcenter BatteryShowPercentage -bool true
 
-	## Clock:
-	##   Date options
-	##     Show the day of the week: True  # default
-	##     Show date: True
-	##   Time options:
-	##     Use a 24-hour clock: True  # default
-	##     Display the time with seconds: True
-	defaults write com.apple.menuextra.clock DateFormat -string 'EEE d MMM	HH:mm:ss'
+	## Menu Bar Only > Clock > Clock Options > Show the day of the week: True
+	### Should be default on fresh install but not if dict is deleted
+	defaults write com.apple.menuextra.clock ShowDayOfWeek -bool true
 
-	## Spotlight > Show in Menu Bar: False
-	defaults delete com.apple.Spotlight 'NSStatusItem Visible Item-0' 2> /dev/null
+	## Menu Bar Only > Clock > Clock Options > Show date: When Space Allows
+	defaults write com.apple.menuextra.clock ShowDate -int 0
+
+	## Menu Bar Only > Clock > Clock Options > Display the time with seconds: True
+	defaults write com.apple.menuextra.clock ShowSeconds -bool true
+
+	## Menu Bar Only > Spotlight: Don't Show in Menu Bar
 	defaults -currentHost write com.apple.Spotlight MenuItemHidden -bool true
+	defaults delete com.apple.Spotlight 'NSStatusItem Visible Item-0' 2> /dev/null
 
-	## Siri > Show in Menu Bar: False
+	## Menu Bar Only > Siri: Don't Show in Menu Bar
 	defaults write com.apple.Siri StatusMenuVisible -bool false
+	# }}}
+
+
+	#-----------------------------------------------------------------------------
+	# Desktop & Dock {{{
+	#-----------------------------------------------------------------------------
+
+	# System Settings
+	## Dock > Size: 80
+	defaults write com.apple.dock tilesize -float 80
+
+	## Dock > Minimise windows using: Scale effect
+	defaults write com.apple.dock mineffect -string 'scale'
+
+	## Dock > Double-click a window's title bar to: Minimise
+	defaults write -g AppleActionOnDoubleClick -string 'Minimize'
+
+	## Dock > Automatically hide and show the Dock: True
+	defaults write com.apple.dock autohide -bool true
+
+	## Dock > Show recent applications in Dock: False
+	defaults write com.apple.dock show-recents -bool false
+
+	## Mission Control > Automatically rearrange Spaces based on most recent use: False
+	defaults write com.apple.dock mru-spaces -bool false
+
+	## Mission Control > When switching to an application, switch to a Space with open windows for the application: False
+	defaults write -g AppleSpacesSwitchOnActivate -bool false
+
+	## Mission Control > Group windows by application: True
+	defaults write com.apple.dock expose-group-apps -bool true
+
+	## Hot Corners > Bottom Left: Command + Put Display to Sleep
+	defaults write com.apple.dock wvous-bl-corner -int 10
+	defaults write com.apple.dock wvous-bl-modifier -int 1048576
 
 	# Other
 	## Remove delay showing the Dock
@@ -99,46 +146,28 @@ system_preferences() {  # {{{
 
 
 	#-----------------------------------------------------------------------------
-	# Mission Control {{{
+	# Lock Screen {{{
 	#-----------------------------------------------------------------------------
 
-	# System Preferences
-	## Automatically rearrange Spaces based on most recent use: False
-	defaults write com.apple.dock mru-spaces -bool false
+	# System Settings
+	## Turn display off on battery when active: For 5 minutes
+	sudo pmset -b displaysleep 5
+	sudo pmset -b sleep 5
 
-	## When switching to an application, switch to a Space with open windows for the
-	## application: False
-	defaults write -g AppleSpacesSwitchOnActivate -bool false
-
-	## Group windows by application: True
-	defaults write com.apple.dock expose-group-apps -bool true
+	## Turn display off on power adapter when inactive: For 15 minutes (custom)
+	sudo pmset -c displaysleep 15
 	# }}}
 
 
 	#-----------------------------------------------------------------------------
-	# Accessibility {{{
+	# Displays {{{
 	#-----------------------------------------------------------------------------
 
-	# System Preferences
-	# Pointer Control > Spring-loading delay: Short
-	defaults write -g com.apple.springing.delay -float 0
+	## Advanced > Slightly dim the display while on battery: False
+	sudo pmset -b lessbright 0
 
-	## Pointer Control > Mouse & Trackpad > Trackpad Options > Enable dragging: three finger drag
-	defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool true
-	defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerDrag -bool true
-	# }}}
-
-
-	#-----------------------------------------------------------------------------
-	# Sound {{{
-	#-----------------------------------------------------------------------------
-
-	# System Preferences
-	## Sound Effects > Play sound on startup: False
-	sudo nvram StartupMute=%01
-
-	## Sound Effects > Play user interface sound effects: False
-	defaults write -g com.apple.sound.uiaudio.enabled -int 0
+	## Advanced > Prevent computer from sleeping automatically on power adapter when the display is off: True
+	sudo pmset -c sleep 0
 	# }}}
 
 
@@ -146,12 +175,20 @@ system_preferences() {  # {{{
 	# Keyboard {{{
 	#-----------------------------------------------------------------------------
 
-	# System Preferences
-	## Keyboard > Key repeat: Fastest, Delay Until Repeat: Shortest
+	# System Settings
+	## Key repeat: Fastest, Delay Until Repeat: Shortest
 	defaults write -g InitialKeyRepeat -int 15  # Seems to adjust both
 	defaults write -g KeyRepeat -int 2  # Seems to always be set to 2
 
-	## Keyboard > Customise Control Strip: Mute, Volume Slider, Brightness Slider, Night Shift
+	## Keyboard navigation: True
+	defaults write -g AppleKeyboardUIMode -int 2
+
+	## Touch Bar Settings > Show typing suggestions: False
+	### Only appears when lid open
+	defaults write -g NSAutomaticTextCompletionEnabled -bool false
+
+	## Touch Bar Settings > Customise Control Strip: Mute, Volume Slider, Brightness Slider, Night Shift
+	### Only appears when lid open
 	controlstrip_plist="$HOME/Library/Preferences/com.apple.controlstrip.plist"
 	/usr/libexec/PlistBuddy -c 'Delete :MiniCustomized' "$controlstrip_plist" > /dev/null 2>&1
 	/usr/libexec/PlistBuddy -c 'Add :MiniCustomized array' "$controlstrip_plist"
@@ -159,24 +196,19 @@ system_preferences() {  # {{{
 		/usr/libexec/PlistBuddy -c "Add :MiniCustomized: string com.apple.system.$item" "$controlstrip_plist"
 	done
 
-	## Text > Correct spelling automatically: False
+	## Text Input > Input Sources > Edit > All Input Sources > Correct spelling automatically: False
 	defaults write -g NSAutomaticSpellingCorrectionEnabled -bool false
+	defaults write -g WebAutomaticSpellingCorrectionEnabled -bool false
 
-	## Text > Capitalise words automatically: False
+	## Text Input > Input Sources > Edit > All Input Sources > Capitalise words automatically: False
 	defaults write -g NSAutomaticCapitalizationEnabled -bool false
 
-	## Text > Add full stop with double space: False
+	## Text Input > Input Sources > Edit > All Input Sources > Add full stop with double space: False
 	defaults write -g NSAutomaticPeriodSubstitutionEnabled -bool false
 
-	## Text > Touch Bar typing suggestions: False
-	defaults write -g NSAutomaticTextCompletionEnabled -bool false
-
-	## Text > Use smart quotes and dashes: False
-	defaults write -g NSAutomaticQuoteSubstitutionEnabled -bool false
+	## Text Input > Input Sources > Edit > All Input Sources > Use smart quotes and dashes: False
 	defaults write -g NSAutomaticDashSubstitutionEnabled -bool false
-
-	## Shortcuts > Use keyboard navigation to move focus between controls: True
-	defaults write -g AppleKeyboardUIMode -int 2
+	defaults write -g NSAutomaticQuoteSubstitutionEnabled -bool false
 	# }}}
 
 
@@ -184,20 +216,35 @@ system_preferences() {  # {{{
 	# Trackpad {{{
 	#-----------------------------------------------------------------------------
 
-	# System Preferences
+	# System Settings
+	## Point & Click > Tracking speed: 5
+	defaults write -g com.apple.trackpad.scaling -float 0.875
+
 	## Point & Click > Click: Light
 	defaults write com.apple.AppleMultitouchTrackpad FirstClickThreshold -int 0
 	defaults write com.apple.AppleMultitouchTrackpad SecondClickThreshold -int 0
 
-	## Point & Click > Tracking speed: 5
-	defaults write -g com.apple.trackpad.scaling -float 0.875
+	## Point & Click > Tap to click: False
+	defaults -currentHost write -g com.apple.mouse.tapBehavior -int 0
+	defaults write com.apple.AppleMultitouchTrackpad Clicking -bool false
+	defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool false
 
-	## More Gestures > Swipe between full-screen apps: Swipe left or right with four fingers
-	defaults write com.apple.AppleMultitouchTrackpad TrackpadFourFingerHorizSwipeGesture -int 2
+	## More Gestures > Swipe between full-screen applications: Swipe Left or Right with Four Fingers
 	defaults -currentHost write -g com.apple.trackpad.fourFingerHorizSwipeGesture -int 2
+	defaults write com.apple.AppleMultitouchTrackpad TrackpadFourFingerHorizSwipeGesture -int 2
+	defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadFourFingerHorizSwipeGesture -int 2
 
-	## More Gestures > Mission Control: Swipe up with four fingers
+	## More Gestures > Mission Control: Swipe Up with Four Fingers
+	defaults -currentHost write -g com.apple.trackpad.fourFingerVertSwipeGesture -int 2
+	defaults write com.apple.MultitouchTrackpad TrackpadFourFingerVertSwipeGesture -int 2
+	defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadFourFingerVertSwipeGesture -int 2
 	defaults write com.apple.dock showMissionControlGestureEnabled -bool true
+
+	## More Gestures > App Expose: Swipe Down with Four Fingers
+	defaults -currentHost write -g com.apple.trackpad.fourFingerVertSwipeGesture -int 2
+	defaults write com.apple.MultitouchTrackpad TrackpadFourFingerVertSwipeGesture -int 2
+	defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadFourFingerVertSwipeGesture -int 2
+	defaults write com.apple.dock showAppExposeGestureEnabled -bool true
 
 	## More Gestures > Launchpad: False
 	defaults write com.apple.dock showLaunchpadGestureEnabled -bool false
@@ -206,47 +253,25 @@ system_preferences() {  # {{{
 
 	#-----------------------------------------------------------------------------
 	# Mouse {{{
+	# Only appears when a mouse is connected
 	#-----------------------------------------------------------------------------
 
-	# System Preferences
+	# System Settings
 	## Tracking speed: Slowest (eliminates acceleration but slows tracking)
 	defaults write -g com.apple.mouse.scaling -float 0
 
 	## Scrolling speed: Slowest (eliminates acceleration but slows tracking)
 	defaults write -g com.apple.scrollwheel.scaling -float 0
 	# }}}
-
-
-	#-----------------------------------------------------------------------------
-	# Battery {{{
-	#-----------------------------------------------------------------------------
-
-	# System Preferences
-	## Battery > Turn display off after: 5 minutes
-	sudo pmset -b displaysleep 5
-	sudo pmset -b sleep 5
-
-	## Battery > Slightly dim the display while on battery power: False
-	sudo pmset -b lessbright 0
-
-	## Power Adapter > Turn display off after: 15 minutes
-	sudo pmset -c displaysleep 15
-
-	## Power Adapter > Prevent computer from sleeping automatically when the display is off: True
-	sudo pmset -c sleep 0
-	# }}}
 }  # }}}
 
 
-other_preferences(){  # {{{
+other_settings(){  # {{{
 	# Disable special key pop-up on press-and-hold
 	defaults write -g ApplePressAndHoldEnabled -bool false
 
-	# Expand panels
+	# Expand "Save" panel for all applications
 	defaults write -g NSNavPanelExpandedStateForSaveMode -bool true
-	defaults write -g NSNavPanelExpandedStateForSaveMode2 -bool true
-	defaults write -g PMPrintingExpandedStateForPrint -bool true
-	defaults write -g PMPrintingExpandedStateForPrint2 -bool true
 
 	# Unhide /Volumes/
 	sudo chflags nohidden /Volumes/
@@ -265,8 +290,8 @@ other_preferences(){  # {{{
 
 
 main() {  # {{{
-	system_preferences
-	other_preferences
+	system_settings
+	other_settings
 }  # }}}
 
 main

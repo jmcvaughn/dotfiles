@@ -1,20 +1,25 @@
 # Note that tasks can't necessarily be followed in order
 
-App Store:
-  Preferences:
-    In-App Ratings \& Reviews: False
-
-System Preferences:
+System Settings:
   Apple ID:
     iCloud:
-      Mail: False
+      iCloud Mail: False
+      Password \& Keychain: False  # Might be default
       Contacts: False
       Calendars: False
 
-  Siri:
-    Listen for \"Hey Siri": True
+  Network:
+    Firewall:
+      Firewall: True
+    Other Services:
+      - Add Google DNS location with appropriate Wi-Fi DNS/search domain settings
+
+  General:
+    About:
+      Name: Set as appropriate
 
   Notifications:
+    Allow notifications when the display is sleeping: False
     CatoClient:
       Allow Notifications: True
     Firefox:
@@ -48,31 +53,10 @@ System Preferences:
     zoom.us:
       Allow Notifications: True
 
-  Internet Accounts:
-    Personal:
-      - Contacts
-      - Calendars
-    WEKA:
-      - Contacts
-      - Calendars
+  Siri:
+    Listen for \"Hey Siri": True
 
-  Touch ID: Add fingerprints
-
-  Extensions:
-    Share Menu:
-      - Add to Reading List  # Always first in Safari Share Menu
-      - AirDrop
-      - iCloud Sharing
-      - Mail
-      - Messages
-      - Mimestream
-      - Telegram
-
-  Security \& Privacy:
-    General:
-      Require password after sleep or screen saver begins: 5 seconds
-    Firewall:
-      Firewall: True
+  Privacy \& Security:
     Privacy:
       Location Services:
         Enabled: True
@@ -80,9 +64,13 @@ System Preferences:
           - System Services:
             Services:
               Find My Mac: True
-              Networking \& Wireless: False
+              Networking and wireless: False
+              Mac Analytics: False
       Contacts:
         - iTerm.app  # For app_settings.sh to configure Contacts.app, will only appear when triggered
+      Full Disk Access:
+        - LaunchBar.app  # Required for certain indexing rules: https://www.obdev.at/products/launchbar/releasenotes.html
+        - iTerm.app
       Accessibility:
         - LaunchBar.app  # Required for certain features: https://www.obdev.at/products/launchbar/releasenotes.html
         - Qobuz.app
@@ -94,51 +82,30 @@ System Preferences:
         - karabiner_grabber
         - karabiner_observer
         - iTerm.app
-      Full Disk Access:
-        - LaunchBar.app  # Required for certain indexing rules: https://www.obdev.at/products/launchbar/releasenotes.html
-        - iTerm.app
       Automation:
         iTerm.app:  # Will only appear when triggered
           - System Events.app
-      Apple Advertising:
-        Personalised Ads: False
       Analytics \& Improvements:
         Share Mac Analytics: False  # default, Might be re-enabled when sharing crash reports
         Improve Siri \& Dictation: False  # default
-
-  Network:
-    - Add Google DNS location with appropriate Wi-Fi DNS/search domain settings
-
-  Keyboard:
-    Keyboard:
-      Adjust keyboard brightness in low light: False
-      Modifier Keys:
-        Planck:
-          Option: Command
-          Command: Option
-    Shortcuts:
-      Mission Control:
-        Mission Control: Alt + Ctrl + M
-        Show Notification Center: Alt + N
-        Turn Do Not Disturb On/Off: Alt + Shift + N
-        Application windows: Alt + A
-        Move left a space: False
-        Move right a space: False
-        Switch to Desktop \[1-10]: Alt + [q-p]
-      Keyboard:
-        Move focus to the next window: Alt + Tab
-      Spotlight:
-        Show Spotlight search: False
-    Input Sources:
-      Sources:
-        - British - PC
-      Show Input menu in menu bar: False  # Scriptable, but enabled by changing input sources
+      Apple Advertising:
+        Personalised Ads: False
+      Others:
+        Extensions:
+          Sharing:
+            - Contact Suggestions  # default
+            - Add to Reading List  # Always first in Safari Share Menu
+            - AirDrop
+            - Mail
+            - Messages
+            - Mimestream
+            - NetNewsWire
+            - Telegram
 
   Displays:
     Display Settings:
-      Built-in Retina Display:
-        Resolution:
-          Scaled: Looks like 2048x1280
+      Built-in Retina Display:  # Requires lid open
+        Resolution: More Space  # 2048x1280
         Automatically adjust brightness: False
         True Tone: False
         Colour profile: Set for display
@@ -153,8 +120,49 @@ System Preferences:
     Night Shift:
       Schedule: Sunset to Sunrise
 
-  Sharing:
-    Computer Name: Set as appropriate
+  Lock Screen:
+    Require password after screen saver begins or display is turned off: After 5 seconds
+
+  Touch ID \& Password:
+    Touch ID: Add fingerprints
+    Use Touch ID for purchases in iTunes Store, App Store and Apple Books: True
+
+  Internet Accounts:
+    Personal:
+      - Contacts
+      - Calendars
+    WEKA:
+      - Contacts
+      - Calendars
+
+  Keyboard:
+    Keyboard:
+      Adjust keyboard brightness in low light: False
+    Keyboard Shortcuts:
+      Mission Control:
+        Mission Control: Alt + Ctrl + M
+        Show Notification Center: Alt + N
+        Turn Do Not Disturb On/Off: Alt + Shift + N
+        Application windows: Alt + A
+        Move left a space: False
+        Move right a space: False
+        Switch to Desktop \[1-10]: Alt + [q-p]
+      Keyboard:
+        Move focus to the next window: Alt + Tab
+      Spotlight:
+        Show Spotlight search: False
+      Modifier Keys:
+        Planck:
+          Option: Command
+          Command: Option
+    Input Sources:
+      Edit:
+        Sources:
+          - British - PC
+        All Input Sources:
+          # Scriptable, but enabled by changing input sources, so do this
+          # afterwards
+          Show Input menu in menu bar: False
 
 # Using 'All Desktops' instead of yabai rules means no SIP changes needed
 # Using PlistBuddy/defaults to set com.apple.spaces[app-bindings] doesn't work
@@ -185,8 +193,12 @@ Dock:
       Assign To: All Desktops
 
 Applications:
+  App Store:
+    Settings:
+      In-App Ratings \& Reviews: False
+
   Safari:
-    Preferences:
+    Settings:
       Websites:
         Page Zoom:
           wekaio.lightning.force.com (%): 85
@@ -246,7 +258,7 @@ Applications:
     Require verification for browser integration: True
 
   Calendar:
-    Preferences:
+    Settings:
       Accounts:
         WEKA:
           Refresh Calendars: Every 5 minutes
@@ -254,7 +266,7 @@ Applications:
       - Delete all local calendars (On My Mac)
 
   Contacts:
-    Preferences:
+    Settings:
       General:
         Sort By: First Name
 
@@ -311,6 +323,13 @@ Applications:
       On My Mac:
         Active: False
       iCloud: True
+
+  Podcasts:
+    Settings:
+      General:
+        Automatically Download: 2 Latest Episodes per Show
+      Playback:
+        Headphone Controls: Forward/Back
 
   Qobuz:
     Menu:
