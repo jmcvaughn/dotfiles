@@ -11,7 +11,7 @@ calculator() {
 
 
 calendar() {
-	# Preferences
+	# Settings
 	## General > Day starts at: 09:00
 	defaults write com.apple.iCal 'first minute of work hours' -int 540
 
@@ -45,7 +45,7 @@ calendar() {
 
 
 finder() {
-	# Finder Preferences
+	# Finder Settings
 	## General > Show these items on the desktop
 	defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
 
@@ -106,7 +106,7 @@ finder() {
 
 
 iina() {
-	# Preferences
+	# Settings
 	## General > When launched: Do nothing
 	defaults write com.colliderli.iina actionAfterLaunch -int 2
 
@@ -116,7 +116,7 @@ iina() {
 
 
 launchbar() {
-	# Preferences
+	# Settings
 	## General > Open Location > Prefer secure URL schemes: True
 	defaults write at.obdev.LaunchBar OpenLocationPreferSecureSchemes -bool true
 
@@ -155,7 +155,7 @@ launchbar() {
 
 
 mimestream() {
-	# Preferences
+	# Settings
 	## General > Text Size: 3
 	defaults write com.mimestream.Mimestream TextSizeAdjustment -int -1
 
@@ -168,14 +168,14 @@ mimestream() {
 
 
 netnewswire() {
-	# Preferences
+	# Settings
 	## General > Article Text Size: Medium
 	defaults write com.ranchero.NetNewsWire-Evergreen articleTextSize -int 2
 }
 
 
 notes() {
-	# Preferences
+	# Settings
 	## Automatically sort ticked items: True
 	defaults write com.apple.Notes ICChecklistAutoSortEnabledDefaultsKey -bool true
 }
@@ -188,19 +188,6 @@ pages() {
 }
 
 
-podcasts() {
-	# Preferences
-	## General > Refresh Podcasts: Every 6 Hours
-	defaults write com.apple.podcasts MTPodcastUpdateIntervalDefault -int 1
-
-	## General > Automatically Download Episodes: Never
-	defaults write com.apple.podcasts MTPodcastAutoDownloadStateDefaultKey -int 0
-
-	## Playback > Headphone Controls: Skip Forward / Skip Back
-	defaults write com.apple.podcasts MTRemoteSkipInsteadOfNextTrackDefault -bool true
-}
-
-
 preview() {
 	# Menu options
 	## View > Show Tab Bar: True
@@ -209,7 +196,7 @@ preview() {
 
 
 safari() {
-	# Preferences
+	# Settings
 	## General > Open "safe" files after downloading: False
 	defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
 
@@ -268,7 +255,7 @@ safari() {
 
 
 soundsource() {
-	# Preferences
+	# Settings
 	## Audio > Super Volume Keys: True
 	defaults write com.rogueamoeba.soundsource keyboardVolume -bool true
 
@@ -314,7 +301,7 @@ vagrant_manager() {
 
 
 vmware_fusion() {
-	# Preferences
+	# Settings
 	## General > Applications menu > Show in menu bar: Never
 	defaults write com.vmware.fusion showStartMenu3 -int 0
 
@@ -357,9 +344,6 @@ main() {
 	pages
 	pkill -x Pages && open -a Pages
 
-	podcasts
-	pkill -x Podcasts && open -a Podcasts
-
 	preview
 	pkill -x Preview && open -a Preview
 
@@ -371,7 +355,7 @@ main() {
 		pkill -x Safari
 	fi
 	safari
-	pkill -x Safari && open -a Safari
+	pkill -x Safari && sleep 1 && open -a Safari
 
 	soundsource
 	pkill -x soundsource && open -a SoundSource
