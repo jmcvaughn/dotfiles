@@ -376,13 +376,13 @@ Applications:
         Show notifications: True
     Data and Storage:
       Storage Usage:
-        Keep Media: 1 month
         Maximum Cache Size: 16GB
+        Auto-Remove Cached Media:
+          Private Chats: 1 month
       Download Folder: ~/Downloads/Telegram/
     Appearance:
+      Color Theme: System
       Bubble Mode: True
-      Auto-Night Mode:
-        Preferred Dark Theme: System
 
   VMware Fusion:
     General:
