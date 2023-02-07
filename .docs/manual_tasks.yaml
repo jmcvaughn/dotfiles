@@ -318,6 +318,10 @@ Applications:
     App Settings:
       Network Interface: Set to system interface
 
+  Maps:
+    Always use light map appearance: True
+    Use Large Labels: True
+
   NetNewsWire:
     Accounts:
       On My Mac:
@@ -325,11 +329,10 @@ Applications:
       iCloud: True
 
   Podcasts:
-    Settings:
-      General:
-        Automatically Download: 2 Latest Episodes per Show
-      Playback:
-        Headphone Controls: Forward/Back
+    General:
+      Automatically Download: 2 Latest Episodes per Show
+    Playback:
+      Headphone Controls: Forward/Back
 
   Qobuz:
     Menu:
