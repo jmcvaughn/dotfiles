@@ -2,12 +2,14 @@
 
 packages=(
 	apt-file
+	aptly
 	aria2
 	ceph-base
 	devscripts  # Provides rmadison
 	docker-ce
 	docker-compose-plugin
 	gh
+	hwloc-nox
 	ipmitool
 	jq
 	ksmtuned
@@ -16,6 +18,7 @@ packages=(
 	libvirt-clients
 	libvirt-daemon-system
 	nfs-kernel-server
+	numactl
 	ovmf
 	python3-pip
 	python3-venv
