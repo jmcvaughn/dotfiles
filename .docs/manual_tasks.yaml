@@ -265,6 +265,12 @@ Applications:
     Calendars:
       - Delete all local calendars (On My Mac)
 
+  Citrix Workspace:
+    General:
+      Menu bar: False
+      Auto Start: False
+      High DPI: True
+
   Contacts:
     Settings:
       General:
