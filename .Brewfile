@@ -5,6 +5,7 @@
 tap 'homebrew/cask'  # Explicitly tap to keep during `brew bundle cleanup`
 cask 'anydesk'
 cask 'catoclient'
+cask 'citrix-workspace'
 cask 'coconutbattery'
 cask 'displaycal'
 cask 'drawio'
