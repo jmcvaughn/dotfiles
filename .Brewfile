@@ -48,6 +48,7 @@ cask 'sonos-s1-controller'
 
 brew 'aria2'
 brew 'asciinema'
+brew 'awscli'
 brew 'ffmpeg'
 brew 'gh'
 brew 'git'
