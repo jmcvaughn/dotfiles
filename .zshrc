@@ -124,13 +124,22 @@ precmd() {
 autoload -Uz compinit
 [[ $os == 'Darwin' ]] && compinit -u || compinit
 
-# Load Juju completion
 if [[ $PRETTY_NAME == 'Ubuntu'* ]]; then
 	autoload -Uz bashcompinit
 	bashcompinit
+
+	# Load Juju completion
 	if [ -f /usr/share/bash-completion/completions/juju ]; then
 		source /usr/share/bash-completion/completions/juju
 	fi
+
+	# Load aws-cli snap completion
+	aws_completer='/snap/aws-cli/current/bin/aws_completer'
+	if [ -f "$aws_completer" ]; then
+		complete -C "$aws_completer" aws-cli.aws
+		complete -C "$aws_completer" aws
+	fi
+	unset aws_completer
 fi
 
 # Completion system configuration
