@@ -90,6 +90,7 @@ for package in nvim; do
 	sudo snap install "$package" --classic
 done
 sudo snap install --channel 18/stable --classic node
+sudo snap install --channel v2/candidate --classic aws-cli
 
 # Install Python 3 packages
 pip3 install -r "$(dirname "$0")"/requirements.txt
