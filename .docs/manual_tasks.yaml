@@ -53,8 +53,9 @@ System Settings:
     zoom.us:
       Allow Notifications: True
 
-  Siri:
+  Siri \& Spotlight:
     Listen for \"Hey Siri": True
+    Siri Voice: British (Voice 1)
 
   Privacy \& Security:
     Privacy:
