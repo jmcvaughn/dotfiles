@@ -44,7 +44,7 @@ yabai -m rule --add app='^Slack$' manage=off
 yabai -m rule --add app='^Sonos.*' manage=off
 yabai -m rule --add app='^SoundSource$' manage=off
 yabai -m rule --add app='^System Information$' manage=off
-yabai -m rule --add app='^System Preferences$' manage=off
+yabai -m rule --add app='^System Settings$' manage=off
 yabai -m rule --add app='^Telegram$' manage=off
 yabai -m rule --add app='^TV$' manage=off
 yabai -m rule --add app='^Vagrant Manager$' manage=off
