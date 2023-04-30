@@ -226,6 +226,9 @@ Applications:
       Allowlist: |
         charmhub.io
         jaas.ai
+        docs.ansible.com
+        www.notion.so
+        home.weka.io
       Privacy:
         Enabled: True  # default
         Fanboy's Enhanced Tracking List: True
