@@ -4,7 +4,6 @@
 
 tap 'homebrew/cask'  # Explicitly tap to keep during `brew bundle cleanup`
 cask 'anydesk'
-cask 'catoclient'
 cask 'citrix-workspace'
 cask 'coconutbattery'
 cask 'displaycal'
@@ -21,7 +20,6 @@ cask 'libreoffice-language-pack'
 cask 'netnewswire'
 cask 'qobuz'
 cask 'raspberry-pi-imager'
-cask 'slack'
 cask 'soundsource'
 cask 'vagrant'
 cask 'vagrant-manager'
