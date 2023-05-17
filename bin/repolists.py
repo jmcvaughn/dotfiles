@@ -24,6 +24,12 @@ neovim = [
     ('https://github.com/tpope/vim-unimpaired', 'master', False)
 ]
 
+yarn = [
+    '@ansible/ansible-language-server',
+    'bash-language-server',
+    'pyright'
+]
+
 zsh = [
     ('https://github.com/zsh-users/zsh-autosuggestions', 'master'),
     ('https://github.com/zsh-users/zsh-completions', 'master'),
