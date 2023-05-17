@@ -40,15 +40,11 @@ System Settings:
       Allow Notifications: False
     Slack:
       Allow Notifications: True
-    Telegram:
-      Allow Notifications: True
     Tips:
       Allow Notifications: False
     Vagrant Manager:
       Allow Notifications: True
     VMware Fusion:
-      Allow Notifications: True
-    WhatsApp:
       Allow Notifications: True
     zoom.us:
       Allow Notifications: True
@@ -101,7 +97,6 @@ System Settings:
             - Messages
             - Mimestream
             - NetNewsWire
-            - Telegram
 
   Displays:
     Display Settings:
@@ -168,9 +163,6 @@ System Settings:
 # Using 'All Desktops' instead of yabai rules means no SIP changes needed
 # Using PlistBuddy/defaults to set com.apple.spaces[app-bindings] doesn't work
 Dock:
-  Bitwarden:
-    Options:
-      Assign To: All Desktops
   Calendar:
     Options:
       Assign To: All Desktops
@@ -184,12 +176,6 @@ Dock:
     Options:
       Assign To: All Desktops
   Slack:
-    Options:
-      Assign To: All Desktops
-  Telegram:
-    Options:
-      Assign To: All Desktops
-  WhatsApp:
     Options:
       Assign To: All Desktops
 
@@ -212,8 +198,6 @@ Applications:
         - AdGuard Safari Icon
         - AdGuard Security
         - AdGuard Social
-        - Bitwarden:
-          - Always Allow on Every Website
       Advanced:
         Show Develop menu in menu bar: True
 
@@ -256,11 +240,6 @@ Applications:
 
   asciinema: Run `asciinema auth`
 
-  Bitwarden:
-    Unlock with Touch ID: True  # Requires Touch ID to be accessible, i.e. lid open
-    Enable browser integration: True
-    Require verification for browser integration: True
-
   Calendar:
     Settings:
       Accounts:
@@ -287,12 +266,6 @@ Applications:
       Show Path Bar: True  # While in Finder window
     Sidebar:
       - Add Home folder above default user folders
-
-  Firefox:
-    Extensions:
-      - Bitwarden:
-        - https://addons.mozilla.org/en-GB/firefox/addon/bitwarden-password-manager/
-        - Run in Private Windows: True
 
   Google Chrome:
     Settings:
@@ -377,25 +350,6 @@ Applications:
 
   SoundSource:
     - Remove default effects, set default devices
-
-  Telegram:
-    # First sign-in doesn't work with proxy
-    General:
-      Show Icon in Menu Bar: False
-    Notifications and Sounds:
-      Message Preview: False
-      Notification Tone: Tremolo
-      When app is in focus:
-        Show notifications: True
-    Data and Storage:
-      Storage Usage:
-        Maximum Cache Size: 16GB
-        Auto-Remove Cached Media:
-          Private Chats: 1 month
-      Download Folder: ~/Downloads/Telegram/
-    Appearance:
-      Color Theme: System
-      Bubble Mode: True
 
   VMware Fusion:
     General:
