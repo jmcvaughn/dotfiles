@@ -229,12 +229,11 @@ safari() {
 	defaults write com.apple.Safari ShowOverlayStatusBar -bool true
 
 	# Other
-	## Toolbar: Sidebar, Back/Forward, Flexible Space, Bitwarden, Address and Search, Privacy Report, AdGuard for Safari, Flexible Space, Share
+	## Toolbar: Sidebar, Back/Forward, Flexible Space, Address and Search, Privacy Report, AdGuard for Safari, Flexible Space, Share
 	defaults write com.apple.Safari 'NSToolbar Configuration BrowserStandaloneTabBarToolbarIdentifier' -dict 'TB Item Identifiers' '(
 		SidebarToolbarIdentifier,
 		BackForwardToolbarIdentifier,
 		NSToolbarFlexibleSpaceItem,
-		"WebExtension-com.bitwarden.desktop.safari (LTZ2PFU5D6)",
 		InputFieldsToolbarIdentifier,
 		PrivacyReportToolbarIdentifier,
 		"com.adguard.safari.AdGuard.Extension (TC3Q7MAJXF) Button",
@@ -245,7 +244,6 @@ safari() {
 		'SidebarToolbarIdentifier' \
 		'BackForwardToolbarIdentifier' \
 		'NSToolbarFlexibleSpaceItem' \
-		"'WebExtension-com.bitwarden.desktop.safari (LTZ2PFU5D6)'" \
 		'InputFieldsToolbarIdentifier' \
 		'PrivacyReportToolbarIdentifier' \
 		"'com.adguard.safari.AdGuard.Extension (TC3Q7MAJXF) Button'" \
