@@ -4,13 +4,13 @@ This branch was copied and modified from my old [mac\_setup](https://github.com/
 
 ## macOS intial setup
 
-It is presumed during the setup process that where possible, "Set Up Later" or "Not Now" was selected. Otherwise, if "Customise Settings" is available, it is presumed that defaults (i.e. "Continue") were used. It is also presumed that "Enable Ask Siri" is untouched (i.e. enabled).
+It is presumed during the setup process that where possible, "Set Up Later" or "Not Now" was selected, aside from for Location Settings (as this is required to enable NTP). Otherwise, if "Customise Settings" is available, it is presumed that defaults (i.e. "Continue") were used. It is also presumed that "Enable Ask Siri" is untouched (i.e. enabled).
 
 ## Usage
 
 Note that some of the manual tasks in particular might need to be performed out of order, and that some tasks *can* be performed out of order. However, as a general gist:
 
-1) Go to System Preferences > Security & Privacy > Privacy and give Terminal "Full Disk Access". During the installation process and in general operation you may be prompted to grant Terminal access to Contacts and to control System Events; allow these.
+1) Go to System Settings > Privacy & Security > Full Disk Access and enable this for Terminal. During the installation process and in general operation you may be prompted to grant Terminal access to Contacts and to control System Events; allow these.
 1) Install SSH key pair or set up new key pair on GitHub (`ssh-keygen -b 4096 -t rsa -N '' -f ~/.ssh/id_rsa`)
 1) Install Xcode Command Line Tools by running `xcode-select --install`
 1) Follow the cloning instructions in the main repository [README](../README.md)
@@ -24,4 +24,4 @@ Note that some of the manual tasks in particular might need to be performed out 
 1) Install Python packages: `pip3 install -r ../.scripts/requirements.txt`
 1) Run `../bin/update` to pull all Git repositories and Neovim/Zsh plugins
 1) Run `helptags ALL` in nvim to generate helptags
-1) Go to System Preferences > Security & Privacy > Privacy and remove Terminal from "Full Disk Access".
+1) Go to System Settings > Privacy & Security > Full Disk Access and remove Terminal.
