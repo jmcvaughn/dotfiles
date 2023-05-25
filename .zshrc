@@ -16,25 +16,23 @@ os=$(uname --operating-system 2> /dev/null || uname)  # GNU coreutils | BSD
 
 # Paths
 if [[ $os == 'Darwin' ]]; then
-	PATH="/usr/local/sbin:$PATH"  # Mainly for brew doctor
-	# curl
-	PATH="/usr/local/opt/curl/bin:$PATH"
-	MANPATH="/usr/local/opt/curl/share/man:$MANPATH"
+	eval "$(/opt/homebrew/bin/brew shellenv)"
+	PATH="/opt/homebrew/sbin:$PATH"  # Mainly for brew doctor
 	# GNU coreutils
-	PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-	MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+	PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+	MANPATH="/opt/homebrew/opt/coreutils/libexec/gnuman:$MANPATH"
 	# GNU findutils
-	PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
-	MANPATH="/usr/local/opt/findutils/libexec/gnuman:$MANPATH"
+	PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH"
+	MANPATH="/opt/homebrew/opt/findutils/libexec/gnuman:$MANPATH"
 	# GNU grep
-	PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
-	MANPATH="/usr/local/opt/grep/libexec/gnuman:$MANPATH"
+	PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
+	MANPATH="/opt/homebrew/opt/grep/libexec/gnuman:$MANPATH"
 	# GNU sed
-	PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
-	MANPATH="/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH"
+	PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
+	MANPATH="/opt/homebrew/opt/gnu-sed/libexec/gnuman:$MANPATH"
 	# GNU tar
-	PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
-	MANPATH="/usr/local/opt/gnu-tar/libexec/gnuman:$MANPATH"
+	PATH="/opt/homebrew/opt/gnu-tar/libexec/gnubin:$PATH"
+	MANPATH="/opt/homebrew/opt/gnu-tar/libexec/gnuman:$MANPATH"
 	export MANPATH
 elif [[ $os == 'GNU/Linux' ]]; then
 	PATH="$PATH:/snap/bin"  # Canonical snaps
