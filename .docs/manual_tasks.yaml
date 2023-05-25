@@ -12,10 +12,6 @@ System Settings:
     Firewall:
       Firewall: True
 
-  General:
-    About:
-      Name: Set as appropriate
-
   Notifications:
     Allow notifications when the display is sleeping: False
     CatoClient:
@@ -115,15 +111,12 @@ System Settings:
     Night Shift:
       Schedule: Sunset to Sunrise
 
-  Lock Screen:
-    Require password after screen saver begins or display is turned off: After 5 seconds
-
   Touch ID \& Password:
     Touch ID: Add fingerprints
     Use Touch ID for purchases in iTunes Store, App Store and Apple Books: True
 
   Internet Accounts:
-    Personal:
+    WEKA:
       - Mail
       - Contacts
       - Calendars
@@ -137,8 +130,9 @@ System Settings:
         Show Notification Center: Alt + N
         Turn Do Not Disturb On/Off: Alt + Shift + N
         Application windows: Alt + A
-        Move left a space: False
-        Move right a space: False
+        Mission Control (dropdown):
+          Move left a space: False
+          Move right a space: False
         Switch to Desktop \[1-10]: Alt + [q-p]
       Keyboard:
         Move focus to next window: Alt + Tab
@@ -186,6 +180,20 @@ Applications:
 
   Safari:
     Settings:
+      General:
+        Open "safe" files after downloading: False
+        Remove download list items: When Safari quits
+        AutoFill:
+          Using information from my contacts: False
+          Usernames and passwords: False
+          Credit cards: False
+          Other forms: False
+   	  Search:
+        Search engine: DuckDuckGo
+      Websites:
+        Page Zoom:
+          docs.weka.io (%): 85
+          wekaio.lightning.force.com (%): 85
       Extensions:
         - AdGuard Advanced Blocking
         - AdGuard Custom
@@ -197,6 +205,18 @@ Applications:
         - AdGuard Social
       Advanced:
         Show Develop menu in menu bar: True
+    View Menu:
+      Always Show Tab Bar: True
+      Show status bar: True
+    Toolbar:
+      - Sidebar
+      - Back/Forward
+      - Flexible Space
+      - Address and Search
+      - Privacy Report
+      - AdGuard for Safari
+      - Flexible Space
+      - Share
 
   AdGuard for Safari:
     General:
@@ -293,8 +313,6 @@ Applications:
       iCloud: True
 
   Podcasts:
-    General:
-      Automatically Download: 2 Latest Episodes per Show
     Playback:
       Headphone Controls: Forward/Back
 
