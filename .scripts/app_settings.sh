@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -x
+
 calculator() {
 	# Menu options
 	## View > Show Thousands Separators: True
@@ -182,63 +184,6 @@ preview() {
 }
 
 
-safari() {
-	# Settings
-	## General > Open "safe" files after downloading: False
-	defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
-
-	## General > Remove download list items: When Safari quits
-	defaults write com.apple.Safari DownloadsClearingPolicy -int 1
-
-	## AutoFill > Using information from my contacts: False
-	defaults write com.apple.Safari AutoFillFromAddressBook -bool false
-
-	## AutoFill > Usernames and passwords: False
-	defaults write com.apple.Safari AutoFillPasswords -bool false
-
-	## AutoFill > Credit cards: False
-	defaults write com.apple.Safari AutoFillCreditCardData -bool false
-
-	## AutoFill > Other forms: False
-	defaults write com.apple.Safari AutoFillMiscellaneousForms -bool false
-
-	## Search > Search engine: DuckDuckGo
-	defaults write com.apple.Safari SearchProviderIdentifier -string 'com.duckduckgo'
-
-	## Search > Enable Quick Website search
-	defaults write com.apple.Safari WebsiteSpecificSearchEnabled -bool false
-
-	# Menu options
-	## View > Show Tab Bar: True
-	defaults write com.apple.Safari AlwaysShowTabBar -bool true
-
-	## View > Show status bar: True
-	defaults write com.apple.Safari ShowOverlayStatusBar -bool true
-
-	# Other
-	## Toolbar: Sidebar, Back/Forward, Flexible Space, Address and Search, Privacy Report, AdGuard for Safari, Flexible Space, Share
-	defaults write com.apple.Safari 'NSToolbar Configuration BrowserStandaloneTabBarToolbarIdentifier' -dict 'TB Item Identifiers' '(
-		SidebarToolbarIdentifier,
-		BackForwardToolbarIdentifier,
-		NSToolbarFlexibleSpaceItem,
-		InputFieldsToolbarIdentifier,
-		PrivacyReportToolbarIdentifier,
-		"com.adguard.safari.AdGuard.Extension (TC3Q7MAJXF) Button",
-		NSToolbarFlexibleSpaceItem,
-		ShareToolbarIdentifier
-	)'
-	defaults write com.apple.Safari 'OrderedToolbarItemIdentifiers' -array \
-		'SidebarToolbarIdentifier' \
-		'BackForwardToolbarIdentifier' \
-		'NSToolbarFlexibleSpaceItem' \
-		'InputFieldsToolbarIdentifier' \
-		'PrivacyReportToolbarIdentifier' \
-		"'com.adguard.safari.AdGuard.Extension (TC3Q7MAJXF) Button'" \
-		'NSToolbarFlexibleSpaceItem' \
-		'ShareToolbarIdentifier'
-}
-
-
 soundsource() {
 	# Settings
 	## Audio > Super Volume Keys: True
@@ -328,16 +273,6 @@ main() {
 
 	preview
 	pkill -x Preview && open -a Preview
-
-	# Start Safari if not running to create fresh plist; required for toolbar
-	# configuration
-	if ! pgrep -qx Safari; then
-		open -a Safari
-		sleep 5
-		pkill -x Safari
-	fi
-	safari
-	pkill -x Safari && sleep 1 && open -a Safari
 
 	soundsource
 	pkill -x soundsource && open -a SoundSource
