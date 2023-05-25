@@ -154,19 +154,6 @@ launchbar() {
 }
 
 
-mimestream() {
-	# Settings
-	## General > Text Size: 3
-	defaults write com.mimestream.Mimestream TextSizeAdjustment -int -1
-
-	## Composing > Undo Send Delay: 20 seconds
-	defaults write com.mimestream.Mimestream SendCancellationDuration -int 20
-
-	## Labs > Client-side Snoozing: True
-	defaults write com.mimestream.Mimestream enableSnoozing -bool true
-}
-
-
 netnewswire() {
 	# Settings
 	## General > Article Text Size: Medium
@@ -324,9 +311,6 @@ main() {
 
 	launchbar
 	pkill -x LaunchBar && open -a LaunchBar
-
-	mimestream
-	pkill -x Mimestream && open -a Mimestream
 
 	netnewswire
 	pkill -x NetNewsWire && open -a NetNewsWire
