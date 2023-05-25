@@ -79,8 +79,9 @@ set_login_items() {
 	osascript -e 'tell application "System Events" to make login item at end with properties {name: "SoundSource", path: "/Applications/SoundSource.app", hidden: true}' > /dev/null
 
 	# Enable skhd and yabai at login
-	brew services start skhd
-	brew services start yabai
+	gmkdir "$HOME"/Library/LaunchAgents/ 2> /dev/null
+	skhd --start-service
+	yabai --start-service
 }
 
 
