@@ -183,19 +183,6 @@ system_settings() {  # {{{
 	## Keyboard navigation: True
 	defaults write -g AppleKeyboardUIMode -int 2
 
-	## Touch Bar Settings > Show typing suggestions: False
-	### Only appears when lid open
-	defaults write -g NSAutomaticTextCompletionEnabled -bool false
-
-	## Touch Bar Settings > Customise Control Strip: Mute, Volume Slider, Brightness Slider, Night Shift
-	### Only appears when lid open
-	controlstrip_plist="$HOME/Library/Preferences/com.apple.controlstrip.plist"
-	/usr/libexec/PlistBuddy -c 'Delete :MiniCustomized' "$controlstrip_plist" > /dev/null 2>&1
-	/usr/libexec/PlistBuddy -c 'Add :MiniCustomized array' "$controlstrip_plist"
-	for item in mute volume brightness night-shift; do
-		/usr/libexec/PlistBuddy -c "Add :MiniCustomized: string com.apple.system.$item" "$controlstrip_plist"
-	done
-
 	## Text Input > Input Sources > Edit > All Input Sources > Correct spelling automatically: False
 	defaults write -g NSAutomaticSpellingCorrectionEnabled -bool false
 	defaults write -g WebAutomaticSpellingCorrectionEnabled -bool false
