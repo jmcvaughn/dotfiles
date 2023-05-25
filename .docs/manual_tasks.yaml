@@ -11,8 +11,6 @@ System Settings:
   Network:
     Firewall:
       Firewall: True
-    Other Services:
-      - Add Google DNS location with appropriate Wi-Fi DNS/search domain settings
 
   General:
     About:
@@ -29,8 +27,6 @@ System Settings:
     LaunchBar:
       Allow Notifications: True
     Maps:
-      Allow Notifications: True
-    Mimestream:
       Allow Notifications: True
     NetNewsWire:
       Allow Notifications: True
@@ -53,9 +49,13 @@ System Settings:
     zoom.us:
       Allow Notifications: True
 
+  Sound:
+    Play sound effects through: Selected Sound Output Device
+
   Siri \& Spotlight:
+    Ask Siri: True
     Listen for \"Hey Siri": True
-    Siri Voice: British (Voice 1)
+    Keyboard shortcut: Hold Command Space
 
   Privacy \& Security:
     Privacy:
@@ -99,14 +99,13 @@ System Settings:
             - AirDrop
             - Mail
             - Messages
-            - Mimestream
             - NetNewsWire
             - Telegram
 
   Displays:
     Display Settings:
       Built-in Retina Display:  # Requires lid open
-        Resolution: More Space  # 2048x1280
+        Resolution: More Space
         Automatically adjust brightness: False
         True Tone: False
         Colour profile: Set for display
@@ -130,9 +129,7 @@ System Settings:
 
   Internet Accounts:
     Personal:
-      - Contacts
-      - Calendars
-    WEKA:
+      - Mail
       - Contacts
       - Calendars
 
@@ -149,7 +146,10 @@ System Settings:
         Move right a space: False
         Switch to Desktop \[1-10]: Alt + [q-p]
       Keyboard:
-        Move focus to the next window: Alt + Tab
+        Move focus to next window: Alt + Tab
+      Input Sources:
+        Select the previous input source: False
+        Select next source in Input menu: False
       Spotlight:
         Show Spotlight search: False
       Modifier Keys:
@@ -200,9 +200,6 @@ Applications:
 
   Safari:
     Settings:
-      Websites:
-        Page Zoom:
-          wekaio.lightning.force.com (%): 85
       Extensions:
         - AdGuard Advanced Blocking
         - AdGuard Custom
@@ -229,28 +226,12 @@ Applications:
         docs.ansible.com
         www.notion.so
         home.weka.io
-      Privacy:
-        Enabled: True  # default
-        Fanboy's Enhanced Tracking List: True
-        EasyPrivacy: True
-        AdGuard Tracking Protection filter: True  # default
-        Peter Lowe's Blocklist: True
-      Social Widgets:
-        Enabled: True
-        AdGuard Social Media filter: True  # default when Social Widgets first enabled
-      Annoyances:
-        Enabled: True
-        AdGuard Annoyances filter: True  # default when Annoyances first enabled
-        Fanboy's Annoyances: True
-        Web Annoyances Ultralist: True
-        Adblock Warning Removal List: True
-        I don't care about cookies: True
-        Dandelion Sprout's Annoyances List: True
-      Security:
-        Enabled: True
-        Online Malicious URL Blocklist: True
-        NoCoin Filter List: True
-    Keep AdGuard running in the background?:
+      Enable filters in the following categories using best judgement:  # No overlaps etc.
+        - Privacy
+        - Social Widgets
+        - Annoyances
+        - Security
+    Keep AdGuard running in the background?
       - Yes (recommended)
       - Remember my choice: True
 
@@ -376,7 +357,11 @@ Applications:
       Disable hardware acceleration: True  # Global
 
   SoundSource:
-    - Remove default effects, set default devices
+    Settings:
+      Audio:
+        Super Volume Keys: True  # Requires Accessibility access
+    Other:
+      - Remove default effects, set default devices
 
   Telegram:
     # First sign-in doesn't work with proxy
@@ -411,7 +396,7 @@ Applications:
     General:
       Always show meeting controls: True
       Ask me to confirm when I leave a meeting: False
-      Show my meeting duration: True
+      Show meeting timers: True
       Add Zoom to macOS menu bar: False
       Stop my video and audio when my display is off or screen saver begins: True
     Video:
@@ -419,12 +404,12 @@ Applications:
       HD: True
       Always display participant name on their videos: True
       Stop my video when joining a meeting: True
-      Always show video preview dialog when joining a video meeting: False
+      Always show video preview dialog when joining: False
     Audio:
       Speaker: Same as System
       Microphone: Same as System
-      Automatically join computer audio when joining a meeting: True
-      Mute my mic when joining a meeting: True
+      Automatically join computer audio when joining: True
+      Mute my mic when joining: True
     Share Screen:
       Window size when screen sharing: Maintain current size
       When I share directly to a Zoom Room: Show all sharing options
@@ -441,8 +426,6 @@ File associations:
     - .txt
     - .xml
     - .yaml/.yml  # macOS is smart enough to know these are the same
-  LibreCAD:
-    - .dxf
 
 Licenses:
   - LaunchBar

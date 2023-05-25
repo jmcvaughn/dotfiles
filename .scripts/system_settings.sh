@@ -286,6 +286,13 @@ other_settings(){  # {{{
 
 	# Move windows by holding Cmd + Ctrl + drag
 	defaults write -g NSWindowShouldDragOnGesture -bool true
+
+	# Add Google DNS network location (removed from Ventura GUI but still
+	# switchable using LaunchBar)
+	networksetup -createlocation 'Google DNS' populate
+	networksetup -switchtolocation 'Google DNS'
+	networksetup -setdnsservers 'Wi-Fi' 8.8.8.8 8.8.4.4
+	networksetup -switchtolocation Automatic
 }  # }}}
 
 
