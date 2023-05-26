@@ -41,6 +41,10 @@ System Settings:
     zoom.us:
       Allow Notifications: True
 
+  General:
+    Storage:
+      - Remove GarageBand and related components
+
   Sound:
     Play sound effects through: Selected Sound Output Device
 
