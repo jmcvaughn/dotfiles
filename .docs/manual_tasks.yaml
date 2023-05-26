@@ -251,7 +251,7 @@ Applications:
   Calendar:
     Settings:
       Accounts:
-        WEKA:
+        Personal:
           Refresh Calendars: Every 5 minutes
     Calendars:
       - Delete all local calendars (On My Mac)
