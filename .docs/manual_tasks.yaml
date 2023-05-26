@@ -371,7 +371,7 @@ Applications:
     Accessibility:
       Zoom (%): 90  # Global
       Underline links to websites: True
-      Automatically play animated GIFs and emoji: False
+      Automatically play animations in Slack: False
     Mark as read:
       When I view a channel: Start me at the newest message but leave unseen messages unread
     Advanced:
