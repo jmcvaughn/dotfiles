@@ -22,6 +22,8 @@ System Settings:
       Allow Notifications: True
     LaunchBar:
       Allow Notifications: True
+    Mail:
+      Allow Notifications: True
     Maps:
       Allow Notifications: True
     NetNewsWire:
@@ -305,6 +307,24 @@ Applications:
   Linn Kazoo:
     App Settings:
       Network Interface: Set to system interface
+
+  Mail:
+    Preferences:
+      Accounts:
+        WEKA:
+          Account Information:
+            Download Attachments: False
+          Mailbox Behaviours:
+            Erase deleted messages: False
+      Fonts \& Colours:
+        Fixed-width font: Source Code Pro Regular 11
+        Use fixed-width font for plain text messages: True
+        Colour quoted text: False
+      Composing:
+        Use the same message format as the original message: True
+    Mailbox List:
+      - Expand Smart Mailboxes and any account mailbox sections
+      - Shrink Favourites
 
   Maps:
     Always use light map appearance: True
