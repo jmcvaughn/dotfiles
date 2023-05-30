@@ -169,6 +169,9 @@ Dock:
   Messages:
     Options:
       Assign To: All Desktops
+  Microsoft Teams:
+    Options:
+      Assign To: All Desktops        
   Podcasts:
     Options:
       Assign To: All Desktops
@@ -329,6 +332,18 @@ Applications:
   Maps:
     Always use light map appearance: True
     Use Large Labels: True
+
+  Microsoft Teams:
+    General:
+      Theme: Dark
+      Turn off animations: True
+      Show suggested replies in chat: False
+    Privacy:
+      Surveys: False
+      Optional connected experiences: False
+    Notifications:
+      Missed activity emails: False
+      Notification style: Mac
 
   NetNewsWire:
     Accounts:
