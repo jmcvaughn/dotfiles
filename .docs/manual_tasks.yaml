@@ -325,6 +325,7 @@ Applications:
         Colour quoted text: False
       Composing:
         Use the same message format as the original message: True
+        Undo send delay (seconds): 30
     Mailbox List:
       - Expand Smart Mailboxes and any account mailbox sections
       - Shrink Favourites
