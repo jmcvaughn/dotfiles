@@ -31,10 +31,6 @@ cask 'vmware-fusion'
 cask 'wkhtmltopdf'  # Used by pandoc to create files
 cask 'zoom'
 
-# Drivers
-tap 'homebrew/cask-drivers'
-cask 'linn-konfig'  # Not a driver, here due to Cask rules: https://git.io/fjb4S
-
 # Alternative versions
 tap 'homebrew/cask-versions'
 cask 'sonos-s1-controller'
