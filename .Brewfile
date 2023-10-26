@@ -28,6 +28,7 @@ cask 'vagrant-manager'
 cask 'vagrant-vmware-utility'
 cask 'virtualbox'  # Required for Vagrant even if unused
 cask 'vmware-fusion'
+cask 'whatsapp'
 cask 'wkhtmltopdf'  # Used by pandoc to create files
 cask 'zoom'
 
@@ -54,6 +55,7 @@ brew 'mas'
 brew 'neovim'
 brew 'node'
 brew 'oci-cli'
+brew 'p7zip'
 brew 'pandoc'
 brew 'pdsh'
 brew 'pinentry-mac'

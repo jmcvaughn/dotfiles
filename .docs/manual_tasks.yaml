@@ -40,6 +40,8 @@ System Settings:
       Allow Notifications: True
     VMware Fusion:
       Allow Notifications: True
+    WhatsApp:
+      Allow Notifications: True
     zoom.us:
       Allow Notifications: True
 
