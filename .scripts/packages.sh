@@ -61,6 +61,18 @@ install_vagrant_plugins() {
 }
 
 
+install_markdown_service_tools() {
+	if [ ! -d "$HOME/Library/Services/md - Code - Make Code Block.workflow/" ]; then
+		gmkdir "$HOME"/Library/Services/ 2> /dev/null
+		cd "$HOME"/Library/Services/
+		curl -LO https://cdn3.brettterpstra.com/downloads/MarkdownServiceTools3.0.3.zip
+		unzip MarkdownServiceTools3.0.3.zip
+		gmv MarkdownServiceTools3.0.3/* .
+		grm -rf MarkdownServiceTools*
+	fi
+}
+
+
 set_login_items() {
 	# Note: AppleScript only uses double quotes
 
@@ -97,6 +109,7 @@ main() {
 
 	install_packages
 	install_vagrant_plugins
+	install_markdown_service_tools
 	set_login_items
 }
 
