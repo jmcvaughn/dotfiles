@@ -41,6 +41,7 @@ cask 'sonos-s1-controller'
 # Homebrew packages
 #-------------------------------------------------------------------------------
 
+brew 'ansible'
 brew 'aria2'
 brew 'asciinema'
 brew 'awscli'
