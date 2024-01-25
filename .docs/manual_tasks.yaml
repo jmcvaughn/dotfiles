@@ -34,6 +34,8 @@ System Settings:
       Allow Notifications: False
     Slack:
       Allow Notifications: True
+    Telegram:
+      Allow Notifications: True
     Tips:
       Allow Notifications: False
     Vagrant Manager:
@@ -100,6 +102,7 @@ System Settings:
             - Mail
             - Messages
             - NetNewsWire
+            - Telegram
 
   Displays:
     Display Settings:
@@ -395,6 +398,25 @@ Applications:
         Super Volume Keys: True  # Requires Accessibility access
     Other:
       - Remove default effects, set default devices
+
+  Telegram:
+    # First sign-in doesn't work with proxy
+    General:
+      Show Icon in Menu Bar: False
+    Notifications and Sounds:
+      Message Preview: False
+      Notification Tone: Tremolo
+      When app is in focus:
+        Show notifications: True
+    Data and Storage:
+      Storage Usage:
+        Maximum Cache Size: 16GB
+        Auto-Remove Cached Media:
+          Private Chats: 1 month
+      Download Folder: ~/Downloads/Telegram/
+    Appearance:
+      Color Theme: System
+      Bubble Mode: True
 
   VMware Fusion:
     General:
