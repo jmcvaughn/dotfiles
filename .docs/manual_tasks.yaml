@@ -186,6 +186,12 @@ Dock:
   Slack:
     Options:
       Assign To: All Desktops
+  Telegram:
+    Options:
+      Assign To: All Desktops
+  WhatsApp:
+    Options:
+      Assign To: All Desktops
 
 Applications:
   App Store:
