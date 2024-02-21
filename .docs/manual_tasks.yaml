@@ -48,6 +48,16 @@ System Settings:
       Allow Notifications: True
 
   General:
+    Allow in the Background:
+      Cato Networks Ltd: False
+      Citrix Systems, Inc.: False
+      Citrix Workspace: False
+      Google LLC: False
+      Google Updater: False
+      Microsoft AutoUpdate: False
+      Microsoft Office Licensing: False
+      Microsoft Teams: False
+      Zoom: False
     Storage:
       - Remove GarageBand and related components
 
@@ -382,7 +392,7 @@ Applications:
     Language \& region:
       Language: English (UK)
     Accessibility:
-      Zoom (%): 90  # Global
+      Zoom (%): 80  # Global
       Underline links to websites: True
       Automatically play animations in Slack: False
     Mark as read:
