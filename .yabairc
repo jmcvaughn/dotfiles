@@ -36,7 +36,7 @@ yabai -m rule --add app='^Karabiner-Elements$' manage=off
 yabai -m rule --add app='^Konfig$' manage=off
 yabai -m rule --add app='^LaunchBar$' manage=off
 yabai -m rule --add app='^Linn Kazoo$' manage=off
-yabai -m rule --add app='^Microsoft Teams$' manage=off
+yabai -m rule --add app='^Microsoft Teams \(work or school)$' manage=off
 yabai -m rule --add app='^Messages$' manage=off
 yabai -m rule --add app='^Podcasts$' manage=off
 yabai -m rule --add app='^Qobuz$' manage=off
