@@ -68,4 +68,5 @@ yabai -m rule --add app='Safari' title='^.+ - YouTube$' manage=off  # Not a '-'
 # Signal domain
 #-------------------------------------------------------------------------------
 
+yabai -m signal --add event=display_added action="$HOME/.yabai/move_apps_display2.sh"
 yabai -m signal --add event=window_created action="$HOME/.yabai/float_default_size.sh" app='Finder'
