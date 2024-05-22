@@ -31,6 +31,7 @@ cask 'vagrant-manager'
 cask 'vagrant-vmware-utility'
 cask 'virtualbox'  # Required for Vagrant even if unused
 cask 'vmware-fusion'
+cask 'vmware-horizon-client'
 cask 'whatsapp'
 cask 'wkhtmltopdf'  # Used by pandoc to create files
 cask 'zoom'
@@ -110,6 +111,7 @@ mas 'AdGuard for Safari', id: 1440147259
 mas 'Linn Kazoo', id: 848937349
 mas 'Numbers', id: 409203825
 mas 'Pages', id: 409201541
+mas 'PiPifier', id: 1160374471
 mas 'WireGuard', id: 1451685025
 
 

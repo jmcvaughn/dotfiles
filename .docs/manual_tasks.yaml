@@ -225,6 +225,7 @@ Applications:
           docs.weka.io (%): 85
           wekaio.lightning.force.com (%): 85
       Extensions:
+        # Allow all in Private Browsing
         - AdGuard Advanced Blocking
         - AdGuard Custom
         - AdGuard General
@@ -233,6 +234,7 @@ Applications:
         - AdGuard Safari Icon
         - AdGuard Security
         - AdGuard Social
+        - PiPifier
       Advanced:
         Show Develop menu in menu bar: True
     View Menu:
@@ -245,6 +247,7 @@ Applications:
       - Address and Search
       - Privacy Report
       - AdGuard for Safari
+      - PiPifier
       - Flexible Space
       - Share
 
