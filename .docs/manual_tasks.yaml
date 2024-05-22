@@ -278,6 +278,8 @@ Applications:
           Refresh Calendars: Every 5 minutes
     Calendars:
       - Delete all local calendars (On My Mac)
+    View menu options:
+      Show Declined Events: True
 
   Citrix Workspace:
     General:
