@@ -1,5 +1,8 @@
 #!/bin/bash
 
+interface='eno1'
+ip_address=''
+
 packages=(
 	apt-file
 	aptly
@@ -10,6 +13,7 @@ packages=(
 	docker-compose-plugin
 	gh
 	hwloc-nox
+	iperf
 	ipmitool
 	jq
 	ksmtuned
@@ -38,6 +42,22 @@ packages=(
 	ruby-dev
 	zlib1g-dev
 )
+
+# Set interface to static but obtain all configuration information via DHCP
+## Ensures that if the router goes down, local access still works
+if [ ! -f /etc/netplan/"$interface".yaml ]; then
+	sudo mv /etc/netplan/00-installer-config.yaml{,.bak}
+	sudo tee /etc/netplan/"$interface".yaml <<- EOF
+	network:
+	  ethernets:
+	    $interface:
+	      dhcp4: True
+	      addresses:
+	        - $ip_address
+	EOF
+	sudo chmod 0600 /etc/netplan/*.yaml
+	sudo netplan apply
+fi
 
 # Set timezone
 sudo timedatectl set-timezone Europe/London
