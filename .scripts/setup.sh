@@ -7,7 +7,7 @@ subnets=''
 wan_interface=enp2s0
 wg0_port=''
 wg0_address=''  # Without subnet mask or CIDR
-znc_port=''
+ha_port=''
 
 packages=(
 	apt-file
@@ -18,6 +18,7 @@ packages=(
 	dnsmasq
 	docker-ce
 	docker-compose-plugin
+	iperf
 	ipmitool
 	iptables-persistent
 	jq
@@ -30,64 +31,27 @@ packages=(
 	tree
 	wireguard
 	zip
-	znc
 	zsh
 )
 
 sudo systemctl disable --now {systemd-resolved,ufw}.service
 
+if [ ! -f /etc/netplan/"$wan_interface".yaml ]; then
+	sudo tee /etc/netplan/"$wan_interface".yaml <<- EOF
+	network:
+	  ethernets:
+	    $wan_interface:
+	      dhcp4: yes
+	  version: 2
+	EOF
+	sudo chown 0600 /etc/netplan/*.yaml
+	sudo netplan apply
+fi
+
 # Enable forwarding
 if [ ! -f /etc/sysctl.d/99-z-forwarding.conf ]; then
 	echo 'net.ipv4.conf.all.forwarding = 1' | sudo tee /etc/sysctl.d/99-z-forwarding.conf
 	sudo sysctl -p /etc/sysctl.d/99-z-forwarding.conf
-fi
-
-# Create script to prevent dhclient from modifying /etc/resolv.conf
-sudo tee /etc/dhcp/dhclient-enter-hooks.d/resolvconf_null << 'EOF'
-#!/bin/bash
-
-make_resolv_conf() {
-	exit 0
-}
-EOF
-sudo chmod +x /etc/dhcp/dhclient-enter-hooks.d/resolvconf_null
-
-# Configure dhclient for WAN interface
-[ ! -f /etc/dhcp/dhclient."$wan_interface".conf ] && sudo tee /etc/dhcp/dhclient."$wan_interface".conf << 'EOF'
-option rfc3442-classless-static-routes code 121 = array of unsigned integer 8;
-
-request broadcast-address,
-	interface-mtu,
-	routers,
-	rfc3442-classless-static-routes,
-	subnet-mask;
-
-# anything@skydsl|anything
-send dhcp-client-identifier 61:6e:79:74:68:69:6e:67:40:73:6b:79:64:73:6c:7c:61:6e:79:74:68:69:6e:67;
-EOF
-
-# Create systemd template service for dhclient and start dhclient service for
-# WAN interface
-if [ ! -f /etc/systemd/system/dhclient@.service ]; then
-	sudo tee /etc/systemd/system/dhclient@.service <<- 'EOF'
-	[Unit]
-	Description=Run dhclient for interface %I
-	Wants=network.target
-	BindsTo=sys-subsystem-net-devices-%i.device
-	Before=network.target
-	After=sys-subsystem-net-devices-%i.device
-
-	[Service]
-	PIDFile=dhclient.%I.pid
-	ExecStart=/usr/sbin/dhclient -4 -d -cf /etc/dhcp/dhclient.%I.conf -lf /var/lib/dhcp/dhclient.%I.leases -pf /run/dhclient.%I.pid %I
-	Restart=always
-
-	[Install]
-	WantedBy=multi-user.target
-	EOF
-	sudo systemctl daemon-reload
-	sudo systemctl enable dhclient@"$wan_interface".service
-	sudo systemctl restart dhclient@"$wan_interface".service
 fi
 
 # Enable discard for the root ('/') file system, remount
@@ -228,7 +192,7 @@ if [ ! -f /etc/iptables/rules.v4 ]; then
 	--append INPUT --in-interface $wan_interface --protocol icmp --icmp-type fragmentation-needed --jump ACCEPT
 	--append INPUT --in-interface $wan_interface --protocol icmp --icmp-type time-exceeded --jump ACCEPT
 	--append INPUT --in-interface $wan_interface --protocol tcp --dport 80 --match conntrack --ctstate NEW --jump ACCEPT --match comment --comment letsencrypt
-	--append INPUT --in-interface $wan_interface --protocol tcp --dport $znc_port --match conntrack --ctstate NEW --jump ACCEPT --match comment --comment znc
+	--append INPUT --in-interface $wan_interface --protocol tcp --dport $ha_port --match conntrack --ctstate NEW --jump ACCEPT --match comment --comment ha
 	--append INPUT --jump REJECT
 
 	--append FORWARD --match conntrack --ctstate ESTABLISHED,RELATED,DNAT --jump ACCEPT
@@ -270,31 +234,29 @@ fi
 # Create Unifi Controller Docker container directories
 sudo mkdir -p /srv/unifi/{data,log}/ 2> /dev/null
 
-# Add ZNC TLS certificate update script
+# Add script to copy certificates for Docker containers
 sudo mkdir -p /etc/letsencrypt/renewal-hooks/deploy/ > /dev/null 2>&1
-if [ ! -f /etc/letsencrypt/renewal-hooks/deploy/znc.sh ]; then
-	sudo tee /etc/letsencrypt/renewal-hooks/deploy/znc.sh <<- EOF
+if [ ! -f /etc/letsencrypt/renewal-hooks/deploy/copy-certs.sh ]; then
+	sudo tee /etc/letsencrypt/renewal-hooks/deploy/copy-certs.sh <<- EOF
 	#!/bin/bash
 
 	domain='$domain'
 
 	if [ "\$RENEWED_LINEAGE" = /etc/letsencrypt/live/"\$domain" ]; then
-		cat /etc/letsencrypt/live/"\$domain"/{privkey,fullchain}.pem > /var/lib/znc/znc.pem
+	  # For containers that use the default Let's Encrypt naming scheme
+	  # Docker volumes don't allow symlinks to be resolved
+	  sudo mkdir -p /srv/ssl/ > /dev/null 2>&1
+	  sudo cp -r --dereference /etc/letsencrypt/live/"\$domain"/* /srv/ssl/
+
+	  # Restart all Docker containers
+	  sudo docker restart \$(sudo docker ps | awk '!/CONTAINER ID/ { print \$1 }')
 	fi
 	EOF
+	sudo chmod +x /etc/letsencrypt/renewal-hooks/deploy/copy-certs.sh
 fi
-sudo chmod 0755 /etc/letsencrypt/renewal-hooks/deploy/znc.sh
 
 # Add current user to docker group
 sudo usermod -aG docker "$USER"
-
-# Enable ZNC
-## ZNC home directory is set to /var/lib/znc/, which means that
-## `znc --makeconfig` writes to /var/lib/znc/.znc/. However, znc.service uses
-## /var/lib/znc/, so symlinking the former to the latter is convenient.
-sudo ln -sf /var/lib/znc/ /var/lib/znc/.znc
-sudo chmod 0700 /var/lib/znc/
-sudo systemctl enable znc.service
 
 # Clone dotfiles
 git clone --bare git@github.com:jmcvaughn/dotfiles.git "$HOME"/.dotfiles/
