@@ -41,7 +41,7 @@ Profiles:
       Cursor text: Background
     Text:
       Enable subpixel anti-aliasing: True  # Affects all profiles
-      Font: Source Code Pro Regular 12
+      Font: SauceCodePro Nerd Font Regular 12
     Window:
       Columns: 180
       Rows: 65

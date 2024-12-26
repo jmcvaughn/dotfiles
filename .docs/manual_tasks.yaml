@@ -38,6 +38,8 @@ System Settings:
       Allow Notifications: True
     Tips:
       Allow Notifications: False
+    Twingate:
+      Allow Notifications: True
     Vagrant Manager:
       Allow Notifications: True
     VMware Fusion:
@@ -337,11 +339,14 @@ Applications:
       Accounts:
         WEKA:
           Account Information:
+            Email Address:
+              Edit Email Addresses:
+                - Set "Full Name" correctly
             Download Attachments: False
           Mailbox Behaviours:
             Erase deleted messages: False
       Fonts \& Colours:
-        Fixed-width font: Source Code Pro Regular 11
+        Fixed-width font: SauceCodePro NF Regular 11
         Use fixed-width font for plain text messages: True
         Colour quoted text: False
       Composing:

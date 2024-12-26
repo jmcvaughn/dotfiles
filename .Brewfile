@@ -25,7 +25,9 @@ cask 'qobuz'
 cask 'raspberry-pi-imager'
 cask 'slack'
 cask 'soundsource'
+cask 'tailscale'
 cask 'telegram'
+cask 'tunnelblick'
 cask 'vagrant'
 cask 'vagrant-manager'
 cask 'vagrant-vmware-utility'
@@ -50,12 +52,16 @@ brew 'aria2'
 brew 'asciinema'
 brew 'awscli'
 brew 'ffmpeg'
+brew 'exiftool'
+brew 'font-sauce-code-pro-nerd-font'
 brew 'gh'
 brew 'git'
 brew 'gnupg'
+brew 'imagemagick'
 brew 'ipmitool'
 brew 'iproute2mac'
 brew 'jq'
+brew 'luarocks'
 brew 'mas'
 brew 'neovim'
 brew 'node'
@@ -69,8 +75,7 @@ brew 'pylint'
 brew 'rsync'
 brew 'sipcalc'
 brew 'speedtest-cli'
-brew 'svn'  # Required by font-source-code-pro
-brew 'terraform'
+brew 'teleport'
 brew 'tree'
 brew 'watch'
 brew 'xz'
@@ -88,19 +93,20 @@ brew 'grep'
 brew 'gzip'
 brew 'wget'
 
+# Kubernetes
+brew 'helm'
+brew 'k9s'
+brew 'kubectl'
+
 # Window manager
 tap 'homebrew/services'  # Explicitly tap to keep during `brew bundle cleanup`
 tap 'koekeishiya/formulae'
 brew 'yabai'
 brew 'skhd'
 
-
-#-------------------------------------------------------------------------------
-# Fonts
-#-------------------------------------------------------------------------------
-
-tap 'homebrew/cask-fonts'
-cask 'font-source-code-pro'
+# Hashicorp Terraform
+tap 'hashicorp/tap'
+brew 'hashicorp/tap/terraform'
 
 
 #-------------------------------------------------------------------------------
@@ -113,6 +119,7 @@ mas 'Numbers', id: 409203825
 mas 'Pages', id: 409201541
 mas 'PiPifier', id: 1160374471
 mas 'WireGuard', id: 1451685025
+mas 'Twingate', id: 1501592214
 
 
 #-------------------------------------------------------------------------------
