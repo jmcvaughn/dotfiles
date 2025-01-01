@@ -2,12 +2,18 @@
 
 domain=''
 duckdns_token=''
-lan_interface=eno1
+lan_interface='eno1'
 subnets=''
-wan_interface=enp2s0
+wan_interface='enp2s0'
+ha_port=''
+
+# WireGuard (remote access)
 wg0_port=''
 wg0_address=''  # Without subnet mask or CIDR
-ha_port=''
+
+# WireGuard (outward tunnel)
+wg1_peer=''
+wg1_address=''
 
 packages=(
 	apt-file
@@ -26,6 +32,8 @@ packages=(
 	language-pack-en
 	net-tools
 	nfs-common
+	python3-venv
+	python3-intelhex  # For Zigbee dongle firmware updates
 	smartmontools
 	speedtest-cli
 	tree
@@ -33,6 +41,9 @@ packages=(
 	zip
 	zsh
 )
+
+lan_address=$(ip a show dev "$lan_interface" | awk '/inet / { print $2 }')
+wg1_peer_shortname=${wg1_peer%%.*}
 
 sudo systemctl disable --now {systemd-resolved,ufw}.service
 
@@ -134,7 +145,7 @@ fi
 
 # Disable password authentication for SSH
 if [ ! -f /etc/ssh/sshd_config.d/password_auth.conf ]; then
-	sudo tee /etc/ssh/sshd_config.d/password_auth.conf <<- 'EOF' 
+	sudo tee /etc/ssh/sshd_config.d/password_auth.conf <<- 'EOF'
 	PasswordAuthentication no
 	EOF
 	sudo systemctl restart sshd.service
@@ -212,7 +223,7 @@ fi
 
 sudo systemctl enable --now iptables.service
 
-# Configure WireGuard
+# Configure WireGuard (remote access)
 if ! sudo ls /etc/wireguard/wg0.conf > /dev/null 2>&1; then
 	sudo tee /etc/wireguard/wg0.conf <<- EOF
 	[Interface]
@@ -229,6 +240,41 @@ if ! sudo ls /etc/wireguard/wg0.conf > /dev/null 2>&1; then
 	PostDown = iptables --delete FORWARD --in-interface %i --jump ACCEPT --match comment --comment 'WireGuard %i'
 	EOF
 	sudo systemctl enable --now wg-quick@wg0.service
+fi
+
+# Add iproute2 table for outward tunnel
+echo "200 $wg1_peer_shortname" | sudo tee /etc/iproute2/rt_tables.d/"$wg1_peer_shortname".conf
+
+# Configure WireGuard (outward tunnel)
+if ! sudo ls /etc/wireguard/wg1.conf > /dev/null 2>&1; then
+	sudo tee /etc/wireguard/wg1.conf <<- EOF
+	[Interface]
+	PrivateKey = $(wg genkey)
+	Address = $wg1_address/32
+	Table = off
+
+	PostUp = iptables --table nat --insert POSTROUTING 2 --source ${lan_address%.*}.0/24 --out-interface wg1 --jump MASQUERADE --match comment --comment '$wg1_peer_shortname'
+	PostUp = ip route add default via $wg1_address dev wg1 table $wg1_peer_shortname
+	EOF
+	for ip in {51..100}; do
+		echo "PostUp = ip rule add from ${lan_address%.*}.$ip table $wg1_peer_shortname" | sudo tee -a /etc/wireguard/wg1.conf
+	done
+	sudo tee -a /etc/wireguard/wg1.conf <<- EOF
+
+	PostDown = iptables --table nat --delete POSTROUTING --source ${lan_address%.*}.0/24 --out-interface wg1 --jump MASQUERADE --match comment --comment '$wg1_peer_shortname'
+	PostDown = ip route del default via $wg1_address dev wg1 table $wg1_peer_shortname
+	EOF
+	for ip in {51..100}; do
+		echo "PostDown = ip rule del from ${lan_address%.*}.$ip table $wg1_peer_shortname" | sudo tee -a /etc/wireguard/wg1.conf
+	done
+	sudo tee -a /etc/wireguard/wg1.conf <<- EOF
+
+	#[Peer]
+	#PublicKey =
+	#AllowedIPs = 0.0.0.0/0
+	#Endpoint = $wg1_peer
+	EOF
+	sudo systemctl enable --now wg-quick@wg1.service
 fi
 
 # Create Unifi Controller Docker container directories
