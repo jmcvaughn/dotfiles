@@ -67,9 +67,9 @@ System Settings:
     Play sound effects through: Selected Sound Output Device
 
   Siri \& Spotlight:
-    Ask Siri: True
-    Listen for \"Hey Siri": True
-    Keyboard shortcut: Hold Command Space
+    Siri: True
+    Listen for: "Siri" or "Hey Siri"
+    Keyboard shortcut: Press Either Command Key Twice
 
   Privacy \& Security:
     Privacy:

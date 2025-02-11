@@ -131,8 +131,8 @@ launchbar() {
 	## Shortcuts > Keyboard Shortcuts > Search in Spotlight: False
 	defaults write at.obdev.LaunchBar SpotlightHotKeyEnabled -bool false
 
-	## Shortcuts > Modifier Taps > Instant Send: Double Command
-	defaults write at.obdev.LaunchBar ModifierTapInstantSend -int 21
+	## Shortcuts > Modifier Taps > Instant Send: Double Option
+	defaults write at.obdev.LaunchBar ModifierTapInstantSend -int 22
 
 	## Shortcuts > Browsing > Instant Info Browsing: True
 	defaults write at.obdev.LaunchBar InstantInfoBrowsing -bool true
