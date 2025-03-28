@@ -66,10 +66,14 @@ System Settings:
   Sound:
     Play sound effects through: Selected Sound Output Device
 
-  Siri \& Spotlight:
+  Apple Intelligence \& Siri:
+    Apple Intelligence: True
     Siri: True
-    Listen for: "Siri" or "Hey Siri"
+    Listen for: \"Siri" or "Hey Siri"
     Keyboard shortcut: Press Either Command Key Twice
+    Extensions:
+      ChatGPT:
+        Use ChatGPT: True
 
   Privacy \& Security:
     Privacy:
@@ -121,7 +125,6 @@ System Settings:
       Built-in Retina Display:  # Requires lid open
         Resolution: More Space
         Automatically adjust brightness: False
-        True Tone: False
         Colour profile: Set for display
       Acer B346CK:
         Use as: Extended display
@@ -131,8 +134,6 @@ System Settings:
         Use as: Main display
         Colour profile: Set for display
         Refresh Rate (Hz): 100
-    Night Shift:
-      Schedule: Sunset to Sunrise
 
   Touch ID \& Password:
     Touch ID: Add fingerprints
@@ -188,7 +189,7 @@ Dock:
       Assign To: All Desktops
   Microsoft Teams:
     Options:
-      Assign To: All Desktops        
+      Assign To: All Desktops
   Podcasts:
     Options:
       Assign To: All Desktops
@@ -220,12 +221,12 @@ Applications:
           Usernames and passwords: False
           Credit cards: False
           Other forms: False
-   	  Search:
+      Search:
         Search engine: DuckDuckGo
       Websites:
         Page Zoom:
-          docs.weka.io (%): 85
-          wekaio.lightning.force.com (%): 85
+          docs.weka.io (%): 75
+        When visiting other websites (%): 85
       Extensions:
         # Allow all in Private Browsing
         - AdGuard Advanced Blocking
@@ -270,7 +271,7 @@ Applications:
         - Social Widgets
         - Annoyances
         - Security
-    Keep AdGuard running in the background?
+    Keep AdGuard running in the background?:
       - Yes (recommended)
       - Remember my choice: True
 
