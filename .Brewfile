@@ -49,12 +49,15 @@ cask 'sonos-s1-controller'
 #-------------------------------------------------------------------------------
 
 brew 'ansible'
+brew 'ansible-lint'
 brew 'aria2'
 brew 'asciinema'
 brew 'awscli'
 brew 'ffmpeg'
 brew 'exiftool'
+brew 'fd'  # fzf-lua (LazyVim)
 brew 'font-sauce-code-pro-nerd-font'
+brew 'fzf'  # fzf-lua (LazyVim)
 brew 'gh'
 brew 'git'
 brew 'gnupg'
@@ -73,6 +76,7 @@ brew 'pdsh'
 brew 'pinentry-mac'
 brew 'pyenv'
 brew 'pylint'
+brew 'ripgrep'  # fzf-lua (LazyVim)
 brew 'rsync'
 brew 'sipcalc'
 brew 'speedtest-cli'
@@ -114,12 +118,14 @@ brew 'hashicorp/tap/terraform'
 # Mac App Store
 #-------------------------------------------------------------------------------
 
+mas 'Actions', id: 1586435171  # For developing iOS Shortcuts on Mac
 mas 'AdGuard for Safari', id: 1440147259
 mas 'Linn Kazoo', id: 848937349
 mas 'Numbers', id: 409203825
 mas 'Pages', id: 409201541
 mas 'PiPifier', id: 1160374471
 mas 'WireGuard', id: 1451685025
+mas 'WiseStamp', id: id1589168316
 mas 'Twingate', id: 1501592214
 
 
