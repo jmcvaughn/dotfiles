@@ -48,6 +48,7 @@ Profiles:
       Use transparency: False
     Terminal:
       Unlimited scrollback: True
+      Disable session-initiated window resizing: False
       Notification Center Alerts: False
     Session:
       \"Undo" can revive a session that has been closed for up to: 10 seconds
