@@ -15,13 +15,8 @@ cask 'iterm2'
 cask 'karabiner-elements'
 cask 'launchbar'
 cask 'librecad'
-cask 'microsoft-excel'
-cask 'microsoft-powerpoint'
-cask 'microsoft-remote-desktop'
 cask 'microsoft-teams'
-cask 'microsoft-word'
 cask 'netnewswire'
-cask 'onedrive'
 cask 'qobuz'
 cask 'raspberry-pi-imager'
 cask 'slack'
@@ -111,7 +106,7 @@ brew 'skhd'
 
 # Hashicorp Terraform
 tap 'hashicorp/tap'
-brew 'hashicorp/tap/terraform'
+brew 'hashicorp/tap/terraform'  # Run `terraform -install-autocomplete` afterwards
 
 
 #-------------------------------------------------------------------------------
@@ -120,13 +115,21 @@ brew 'hashicorp/tap/terraform'
 
 mas 'Actions', id: 1586435171  # For developing iOS Shortcuts on Mac
 mas 'AdGuard for Safari', id: 1440147259
-mas 'Linn Kazoo', id: 848937349
+mas 'Linn', id: 1292218680
 mas 'Numbers', id: 409203825
 mas 'Pages', id: 409201541
 mas 'PiPifier', id: 1160374471
 mas 'WireGuard', id: 1451685025
-mas 'WiseStamp', id: id1589168316
+mas 'Unread', id: 1363637349
 mas 'Twingate', id: 1501592214
+
+# Microsoft
+mas 'Microsoft Excel', id: 462058435
+mas 'Microsoft Powerpoint', id: 462062816
+mas 'Microsoft Word', id: 462054704
+mas 'Okta Verify', id: 490179405
+mas 'OneDrive', id: 823766827
+mas 'Windows App', id: 1295203466
 
 
 #-------------------------------------------------------------------------------

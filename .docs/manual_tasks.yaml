@@ -388,7 +388,7 @@ Applications:
       Synchronise with OS settings: True
     Settings:
       Music playing:
-        Streaming quality: 16/44.1
+        Favorite Audio Output: WH-1000XM3
 
   Slack:
     # All settings per-workspace unless specified otherwise
