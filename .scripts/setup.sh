@@ -32,6 +32,8 @@ packages=(
 	language-pack-en
 	net-tools
 	nfs-common
+	npm
+	pppoeconf
 	python3-venv
 	python3-intelhex  # For Zigbee dongle firmware updates
 	smartmontools
@@ -46,17 +48,24 @@ lan_address=$(ip a show dev "$lan_interface" | awk '/inet / { print $2 }')
 wg1_peer_shortname=${wg1_peer%%.*}
 
 sudo systemctl disable --now {systemd-resolved,ufw}.service
+sudo systemctl mask {systemd-resolved,ufw}.service
 
-if [ ! -f /etc/netplan/"$wan_interface".yaml ]; then
-	sudo tee /etc/netplan/"$wan_interface".yaml <<- EOF
-	network:
-	  ethernets:
-	    $wan_interface:
-	      dhcp4: yes
-	  version: 2
+# Create pppd service
+if [ ! -f /etc/systemd/system/pppd@.service ]; then
+	cat <<- 'EOF' | sudo tee /etc/systemd/system/pppd@.service
+	[Unit]
+	Description=PPP link to %i
+	Before=network.target
+
+	[Service]
+	Type=notify
+	ExecStart=/usr/sbin/pppd call %i nodetach nolog up_sdnotify
+
+	[Install]
+	WantedBy=multi-user.target
 	EOF
-	sudo chown 0600 /etc/netplan/*.yaml
-	sudo netplan apply
+	sudo systemctl daemon-reload
+	sudo systemctl enable pppd@dsl-provider.service
 fi
 
 # Enable forwarding
@@ -110,7 +119,7 @@ done
 for i in certbot nvim; do
 	sudo snap install "$i" --classic
 done
-sudo snap install --channel 18/stable --classic node
+# sudo snap install --channel 18/stable --classic node
 
 # Set locale
 sudo update-locale LANG=en_GB.UTF-8
@@ -130,9 +139,9 @@ if [ ! -f /etc/dnsmasq.d/jmcvaughn-dotfiles ]; then
 fi
 
 # Move to local nameserver now that dnsmasq is running
-if ! grep -q 'nameserver 127.0.0.1' /etc/resolv.conf; then
+if ! grep -q "nameserver ${lan_address%/*}" /etc/resolv.conf; then
 	sudo tee /etc/resolv.conf <<- EOF
-	nameserver 127.0.0.1
+	nameserver ${lan_address%/*}
 	search $domain
 	EOF
 fi
@@ -177,6 +186,35 @@ if [ ! -f /etc/systemd/system/dynamic-dns.timer ]; then
 	EOF
 	sudo systemctl daemon-reload
 	sudo systemctl enable --now dynamic-dns.timer
+fi
+
+# Create Home Assistant restarter service
+if [ ! -f /etc/systemd/system/restart-home-assistant.service ]; then
+	sudo tee /etc/systemd/system/restart-home-assistant.service <<- 'EOF'
+	[Unit]
+	Description=Restart Home Assistant containers
+	After=multi-user.target
+	[Service]
+	WorkingDirectory=/srv/home_assistant
+	ExecStart=docker compose restart
+	EOF
+	sudo systemctl daemon-reload
+fi
+
+# Timer to run the above service at 03:45 every morning
+if [ ! -f /etc/systemd/system/restart-home-assistant.timer ]; then
+	sudo tee /etc/systemd/system/restart-home-assistant.timer <<- 'EOF'
+	[Unit]
+	Description=Restart Home Assistant containers at 03:45
+	[Timer]
+	OnCalendar=*-*-* 03:45
+	Unit=restart-home-assistant.service
+	Persistent=true
+	[Install]
+	WantedBy=timers.target
+	EOF
+	sudo systemctl daemon-reload
+	sudo systemctl enable --now restart-home-assistant.timer
 fi
 
 # Modify Docker and WireGuard services to restart whenever iptables service is
@@ -254,7 +292,7 @@ if ! sudo ls /etc/wireguard/wg1.conf > /dev/null 2>&1; then
 	Table = off
 
 	PostUp = iptables --table nat --insert POSTROUTING 2 --source ${lan_address%.*}.0/24 --out-interface wg1 --jump MASQUERADE --match comment --comment '$wg1_peer_shortname'
-	PostUp = ip route add default via $wg1_address dev wg1 table $wg1_peer_shortname
+	PostUp = ip route add default dev wg1 table $wg1_peer_shortname
 	EOF
 	for ip in {51..100}; do
 		echo "PostUp = ip rule add from ${lan_address%.*}.$ip table $wg1_peer_shortname" | sudo tee -a /etc/wireguard/wg1.conf
@@ -262,7 +300,7 @@ if ! sudo ls /etc/wireguard/wg1.conf > /dev/null 2>&1; then
 	sudo tee -a /etc/wireguard/wg1.conf <<- EOF
 
 	PostDown = iptables --table nat --delete POSTROUTING --source ${lan_address%.*}.0/24 --out-interface wg1 --jump MASQUERADE --match comment --comment '$wg1_peer_shortname'
-	PostDown = ip route del default via $wg1_address dev wg1 table $wg1_peer_shortname
+	PostDown = ip route del default dev wg1 table $wg1_peer_shortname
 	EOF
 	for ip in {51..100}; do
 		echo "PostDown = ip rule del from ${lan_address%.*}.$ip table $wg1_peer_shortname" | sudo tee -a /etc/wireguard/wg1.conf
