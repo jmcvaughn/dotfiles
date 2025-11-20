@@ -18,6 +18,7 @@ wg1_address=''
 packages=(
 	apt-file
 	aria2
+	bluez
 	default-jre-headless
 	devscripts  # Provides rmadison
 	dnscrypt-proxy
