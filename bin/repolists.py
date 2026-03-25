@@ -13,10 +13,6 @@ git = [
     )
 ]
 
-neovim = [
-    ('https://github.com/iamcco/markdown-preview.nvim', 'master', True),
-]
-
 zsh = [
     ('https://github.com/zsh-users/zsh-autosuggestions', 'master'),
     ('https://github.com/zsh-users/zsh-completions', 'master'),
