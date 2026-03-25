@@ -1,5 +1,2 @@
-vim.cmd([[
-  for file in split(glob('~/.config/nvim/*-*.lua'))
-    execute 'source ' . file
-  endfor
-]])
+-- bootstrap lazy.nvim, LazyVim and your plugins
+require("config.lazy")
