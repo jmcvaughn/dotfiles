@@ -122,15 +122,15 @@ precmd() {
 autoload -Uz compinit
 [[ $os == 'Darwin' ]] && compinit -u || compinit
 
+autoload -Uz bashcompinit
+bashcompinit
+
+if [[ $os == 'Darwin' ]]; then
+	# Load Terraform completions
+	complete -o nospace -C /opt/homebrew/bin/terraform terraform
+fi
+
 if [[ $PRETTY_NAME == 'Ubuntu'* ]]; then
-	autoload -Uz bashcompinit
-	bashcompinit
-
-	# Load Juju completion
-	if [ -f /usr/share/bash-completion/completions/juju ]; then
-		source /usr/share/bash-completion/completions/juju
-	fi
-
 	# Load aws-cli snap completion
 	aws_completer='/snap/aws-cli/current/bin/aws_completer'
 	if [ -f "$aws_completer" ]; then
@@ -182,9 +182,6 @@ if [[ $os == 'Darwin' ]]; then
 	## Don't create Brewfile.lock.json
 	## (https://github.com/Homebrew/homebrew-bundle#install)
 	export HOMEBREW_BUNDLE_NO_LOCK=1
-
-	# Use VMware Fusion as the default Vagrant provider
-	export VAGRANT_DEFAULT_PROVIDER='vmware_desktop'
 fi
 # }}}
 
@@ -280,7 +277,6 @@ alias jj='juju'
 alias oc='openstack --os-cloud'
 alias os='openstack'
 alias ucomment="grep -vE '^([[:space:]]*(#|/|;)|$)'"
-alias va='vagrant'
 alias virsh='virsh -c qemu:///system'
 for tool in virt-clone virt-convert virt-install virt-xml; do
 	alias $tool="$tool --connect qemu:///system"
