@@ -156,6 +156,44 @@ launchbar() {
 }
 
 
+microsoft_outlook() {
+	# Settings
+	## General > Theme: Green
+	defaults write com.microsoft.Outlook UserPreference_AppTheming -int 5
+
+	## General > Density preference: Compact
+	defaults write com.microsoft.Outlook UserPreference_DisplayDensity -int 0
+
+	## General > Text display size: Smaller
+	defaults write com.microsoft.Outlook TextSize -int 1
+
+	## Reading > Left swipe: Delete
+	defaults write com.microsoft.Outlook MessageListTrailingSwipeAction -int 1
+
+	## Reading > Right swipe: Archive
+	defaults write com.microsoft.Outlook MessageListLeadingSwipeAction -int 2
+
+	## Reading > Download external images: My contacts, organisation(s) and safe senders
+	defaults write com.microsoft.Outlook AutomaticallyDownloadExternalContent -int 1
+
+	## Reading > Quick Actions: Delete, Archive, Snooze
+	defaults write com.microsoft.Outlook MessageListHoverActions -array 'hoverActionDelete' 'hoverActionArchive' 'hoverActionPin' 'hoverActionSnooze'
+
+	## Composing > Show CC field by default: True
+	defaults write com.microsoft.Outlook Show_CC_By_Default -bool true
+
+	## Calendar > Show week numbers: True
+	defaults write com.microsoft.Outlook OLCalendarViewShowWeekNumberInHeaders -bool true
+
+	## Calendar > Show second time zone in Day and Week view: (UTC-05:00) Eastern Time (US & Canada)
+	defaults write com.microsoft.Outlook CalendarGridSecondTimeZoneID -int 4
+	defaults write com.microsoft.Outlook CalendarGridShowSecondTimeZone -bool true
+
+	## My Day > Show My Day in menu bar: False
+	defaults write com.microsoft.Outlook Show_Peek -bool false
+}
+
+
 netnewswire() {
 	# Settings
 	## General > Article Text Size: Medium
@@ -256,6 +294,9 @@ main() {
 
 	launchbar
 	pkill -x LaunchBar && open -a LaunchBar
+
+	microsoft_outlook
+	pkill -x 'Microsoft Outlook' && sleep 5 && open -a 'Microsoft Outlook'
 
 	netnewswire
 	pkill -x NetNewsWire && open -a NetNewsWire
