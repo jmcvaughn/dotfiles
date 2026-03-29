@@ -3,8 +3,8 @@
 System Settings:
   Apple ID:
     iCloud:
-      iCloud Mail: False
       Password \& Keychain: False  # Might be default
+      iCloud Mail: False
       Contacts: False
       Calendars: False
 
@@ -12,59 +12,23 @@ System Settings:
     Firewall:
       Firewall: True
 
-  Notifications:
-    Allow notifications when the display is sleeping: False
-    CatoClient:
-      Allow Notifications: True
-    Firefox:
-      Allow Notifications: True
-    iTerm:
-      Allow Notifications: True
-    LaunchBar:
-      Allow Notifications: True
-    Mail:
-      Allow Notifications: True
-    Maps:
-      Allow Notifications: True
-    NetNewsWire:
-      Allow Notifications: True
-    Qobuz:
-      Allow Notifications: True
-    Screen Time:
-      Allow Notifications: False
-    Slack:
-      Allow Notifications: True
-    Telegram:
-      Allow Notifications: True
-    Tips:
-      Allow Notifications: False
-    Twingate:
-      Allow Notifications: True
-    Vagrant Manager:
-      Allow Notifications: True
-    VMware Fusion:
-      Allow Notifications: True
-    WhatsApp:
-      Allow Notifications: True
-    zoom.us:
-      Allow Notifications: True
-
   General:
-    Allow in the Background:
-      Cato Networks Ltd: False
-      Citrix Systems, Inc.: False
-      Citrix Workspace: False
-      Google LLC: False
-      Google Updater: False
-      Microsoft AutoUpdate: False
-      Microsoft Office Licensing: False
-      Microsoft Teams: False
-      Zoom: False
+    Software Update:
+      Automatic Updates:
+        Install macOS Updates: False
+        Install application updates from the App Store: True
     Storage:
       - Remove GarageBand and related components
-
-  Sound:
-    Play sound effects through: Selected Sound Output Device
+    Login Items & Extensions:
+      Extensions:
+        Sharing:
+          - Add to Reading List  # Always first in Safari Share Menu
+          - AirDrop
+          - Contact Suggestions  # default
+          - Mail
+          - Messages
+          - Subscribe in Unread
+          - Telegram
 
   Apple Intelligence \& Siri:
     Apple Intelligence: True
@@ -74,50 +38,6 @@ System Settings:
     Extensions:
       ChatGPT:
         Use ChatGPT: True
-
-  Privacy \& Security:
-    Privacy:
-      Location Services:
-        Enabled: True
-        Apps:
-          - System Services:
-            Services:
-              Find My Mac: True
-              Networking and wireless: False
-              Mac Analytics: False
-      Contacts:
-        - iTerm.app  # For app_settings.sh to configure Contacts.app, will only appear when triggered
-      Full Disk Access:
-        - LaunchBar.app  # Required for certain indexing rules: https://www.obdev.at/products/launchbar/releasenotes.html
-        - iTerm.app
-      Accessibility:
-        - AeroSpace.app
-        - LaunchBar.app  # Required for certain features: https://www.obdev.at/products/launchbar/releasenotes.html
-        - Qobuz.app
-        - SoundSource.app
-        - VMware Fusion.app
-      Input Monitoring:
-        - karabiner_grabber
-        - karabiner_observer
-        - iTerm.app
-      Automation:
-        iTerm.app:  # Will only appear when triggered
-          - System Events.app
-      Analytics \& Improvements:
-        Share Mac Analytics: False  # default, Might be re-enabled when sharing crash reports
-        Improve Siri \& Dictation: False  # default
-      Apple Advertising:
-        Personalised Ads: False
-      Others:
-        Extensions:
-          Sharing:
-            - Contact Suggestions  # default
-            - Add to Reading List  # Always first in Safari Share Menu
-            - AirDrop
-            - Mail
-            - Messages
-            - NetNewsWire
-            - Telegram
 
   Displays:
     Display Settings:
@@ -134,29 +54,56 @@ System Settings:
         Colour profile: Set for display
         Refresh Rate (Hz): 100
 
+  Notifications:
+    Allow notifications when the display is sleeping: False
+
+  Sound:
+    Play sound effects through: Selected Sound Output Device
+
+  Privacy \& Security:
+    Location Services:
+      Enabled: True
+      System Services:
+        Find My Mac: True
+        Networking and wireless: False
+        Mac Analytics: False
+    Contacts:
+      - iTerm.app  # For app_settings.sh to configure Contacts.app, will only appear when triggered
+    Full Disk Access:
+      - LaunchBar.app  # Required for certain indexing rules: https://www.obdev.at/products/launchbar/releasenotes.html
+      - iTerm.app
+    Accessibility:
+      - AeroSpace.app
+      - LaunchBar.app  # Required for certain features: https://www.obdev.at/products/launchbar/releasenotes.html
+      - SoundSource.app
+    Input Monitoring:
+      - karabiner_grabber
+      - karabiner_observer
+      - iTerm.app
+    Automation:
+      iTerm.app:  # Will only appear when triggered
+        - System Events.app
+    Analytics \& Improvements:
+      Share Mac Analytics: False  # default, Might be re-enabled when sharing crash reports
+      Improve Siri \& Dictation: False  # default
+    Apple Advertising:
+      Personalised Ads: False
+
   Touch ID \& Password:
     Touch ID: Add fingerprints
     Use Touch ID for purchases in iTunes Store, App Store and Apple Books: True
 
-  Internet Accounts:
-    WEKA:
-      - Mail
-      - Contacts
-      - Calendars
+  Internet Accounts: Configure as appropriate
 
   Keyboard:
-    Keyboard:
-      Adjust keyboard brightness in low light: False
+    Adjust keyboard brightness in low light: False
     Keyboard Shortcuts:
       Mission Control:
         Mission Control: Alt + Ctrl + M
         Show Notification Center: Alt + N
         Turn Do Not Disturb On/Off: Alt + Shift + N
         Application windows: Alt + A
-        Mission Control (dropdown):
-          Move left a space: False
-          Move right a space: False
-        Switch to Desktop \[1-10]: Alt + [q-p]
+        Mission Control: False
       Keyboard:
         Move focus to next window: Alt + Tab
       Input Sources:
@@ -195,8 +142,6 @@ Applications:
       Search:
         Search engine: DuckDuckGo
       Websites:
-        Page Zoom:
-          docs.weka.io (%): 75
         When visiting other websites (%): 85
       Extensions:
         # Allow all in Private Browsing
@@ -232,11 +177,8 @@ Applications:
       Notify about extension updates: False
     Filters:
       Allowlist: |
-        charmhub.io
-        jaas.ai
         docs.ansible.com
         www.notion.so
-        home.weka.io
       Enable filters in the following categories using best judgement:  # No overlaps etc.
         - Privacy
         - Social Widgets
@@ -251,18 +193,12 @@ Applications:
   Calendar:
     Settings:
       Accounts:
-        WEKA:
+        Work:
           Refresh Calendars: Every 5 minutes
     Calendars:
       - Delete all local calendars (On My Mac)
     View menu options:
       Show Declined Events: True
-
-  Citrix Workspace:
-    General:
-      Menu bar: False
-      Auto Start: False
-      High DPI: True
 
   Contacts:
     Settings:
@@ -302,14 +238,10 @@ Applications:
     bswinnerton/launchbar-github:
       - Grant access: https://github.com/bswinnerton/launchbar-github#github-access-token
 
-  Linn Kazoo:
-    App Settings:
-      Network Interface: Set to system interface
-
   Mail:
     Preferences:
       Accounts:
-        WEKA:
+        Work:
           Account Information:
             Email Address:
               Edit Email Addresses:
@@ -331,24 +263,6 @@ Applications:
   Maps:
     Always use light map appearance: True
     Use Large Labels: True
-
-  Microsoft Teams:
-    General:
-      Theme: Dark
-      Turn off animations: True
-      Show suggested replies in chat: False
-    Privacy:
-      Surveys: False
-      Optional connected experiences: False
-    Notifications:
-      Missed activity emails: False
-      Notification style: Mac
-
-  NetNewsWire:
-    Accounts:
-      On My Mac:
-        Active: False
-      iCloud: True
 
   Podcasts:
     Playback:
@@ -411,12 +325,20 @@ Applications:
       Color Theme: System
       Bubble Mode: True
 
-  VMware Fusion:
+  Unread:
     General:
-      When closing a virtual machine:
-        Confirm before closing: True
-    Feedback:
-      Join the VMware Customer Experience Improvement Program: False
+      Read \& unread:
+        Confirm mark all read: False
+        Dock icon badge: True
+      Article lists:
+        Show thumbnails: False
+    Font Sizes:
+      Article list (%): 90  # Configurable via defaults
+      Article (%): 90  # Configurable via defaults
+      Use fixed maximum article width: Maximum
+
+  Web apps:
+    - Google Finance
 
   WireGuard:
     - Add VPN configuration, see https://github.com/jmcvaughn/dotfiles/tree/home-router/.docs#wireguard
@@ -459,4 +381,3 @@ File associations:
 Licenses:
   - LaunchBar
   - SoundSource
-  - VMware Fusion

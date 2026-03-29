@@ -3,8 +3,6 @@
 #-------------------------------------------------------------------------------
 
 tap 'homebrew/cask'  # Explicitly tap to keep during `brew bundle cleanup`
-cask 'anydesk'
-cask 'citrix-workspace'
 cask 'coconutbattery'
 cask 'displaycal'
 cask 'drawio'
@@ -14,22 +12,11 @@ cask 'iina'
 cask 'iterm2'
 cask 'karabiner-elements'
 cask 'launchbar'
-cask 'librecad'
-cask 'microsoft-teams'
-cask 'netnewswire'
 cask 'qobuz'
 cask 'raspberry-pi-imager'
 cask 'slack'
 cask 'soundsource'
-cask 'tailscale'
 cask 'telegram'
-cask 'tunnelblick'
-cask 'vagrant'
-cask 'vagrant-manager'
-cask 'vagrant-vmware-utility'
-cask 'virtualbox'  # Required for Vagrant even if unused
-cask 'vmware-fusion'
-cask 'vmware-horizon-client'
 cask 'whatsapp'
 cask 'wkhtmltopdf'  # Used by pandoc to create files
 cask 'zoom'
@@ -68,7 +55,6 @@ brew 'luarocks'
 brew 'mas'
 brew 'neovim'
 brew 'node'
-brew 'oci-cli'
 brew 'p7zip'
 brew 'pandoc'
 brew 'pdsh'
@@ -79,7 +65,6 @@ brew 'ripgrep'  # fzf-lua (LazyVim)
 brew 'rsync'
 brew 'sipcalc'
 brew 'speedtest-cli'
-brew 'teleport'
 brew 'tree'
 brew 'watch'
 brew 'xz'
@@ -119,15 +104,6 @@ mas 'Pages', id: 409201541
 mas 'PiPifier', id: 1160374471
 mas 'WireGuard', id: 1451685025
 mas 'Unread', id: 1363637349
-mas 'Twingate', id: 1501592214
-
-# Microsoft
-mas 'Microsoft Excel', id: 462058435
-mas 'Microsoft Powerpoint', id: 462062816
-mas 'Microsoft Word', id: 462054704
-mas 'Okta Verify', id: 490179405
-mas 'OneDrive', id: 823766827
-mas 'Windows App', id: 1295203466
 
 
 #-------------------------------------------------------------------------------
