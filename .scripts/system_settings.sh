@@ -1,47 +1,14 @@
 #!/bin/sh
 
+set -x
+
 system_settings() {  # {{{
-	#-----------------------------------------------------------------------------
-	# Sound {{{
-	#-----------------------------------------------------------------------------
-
-	# System Settings
-	## Sound Effects > Alert volume: 50%
-	defaults write -g com.apple.sound.beep.volume -float 0.6065307
-
-	## Sound Effects > Play sound on startup: False
-	sudo nvram StartupMute=%01
-
-	## Sound Effects > Play user interface sound effects: False
-	defaults write -g com.apple.sound.uiaudio.enabled -int 0
-	# }}}
-
-
-	#-----------------------------------------------------------------------------
-	# Appearance {{{
-	#-----------------------------------------------------------------------------
-
-	# System Settings
-	## Appearance: Dark
-	defaults write -g AppleInterfaceStyle -string 'Dark'
-
-	## Allow wallpaper tinting in windows: False
-	defaults write -g AppleReduceDesktopTinting -bool true
-
-	## Show scroll bars: Always
-	defaults write -g AppleShowScrollBars -string 'Always'
-
-	## Click in the scroll bar to: Jump to the spot that's clicked
-	defaults write -g AppleScrollerPagingBehavior -bool true
-	# }}}
-
-
 	#-----------------------------------------------------------------------------
 	# Accessibility {{{
 	#-----------------------------------------------------------------------------
 
 	# System Settings
-	# Pointer Control > Spring-loading delay: Short
+	# Pointer Control > Spring-loading speed: Fastest
 	defaults write -g com.apple.springing.delay -float 0
 
 	## Pointer Control > Mouse & Trackpad > Trackpad Options > Use trackpad for dragging: True
@@ -53,46 +20,21 @@ system_settings() {  # {{{
 
 
 	#-----------------------------------------------------------------------------
-	# Control Centre {{{
+	# Appearance {{{
 	#-----------------------------------------------------------------------------
 
-	# Remove com.apple.controlcenter plist; this will be automatically populated
-	defaults delete com.apple.controlcenter 2> /dev/null
-
 	# System Settings
-	## Control Centre Modules > Wi-Fi: Don't Show in Menu Bar
-	defaults -currentHost write com.apple.controlcenter WiFi -int 8
-	defaults write com.apple.controlcenter 'NSStatusItem Visible WiFi' -bool false
+	## Appearance: Dark
+	defaults write -g AppleInterfaceStyle -string 'Dark'
 
-	## Control Centre Modules > Screen Mirroring: Don't Show in Menu Bar
-	defaults -currentHost write com.apple.controlcenter ScreenMirroring -int 8
-	defaults write com.apple.airplay showInMenuBarIfPresent -bool false
+	## Tint window background with wallpaper colour: False
+	defaults write -g AppleReduceDesktopTinting -bool true
 
-	## Control Centre Modules > Display: Don't Show in Menu Bar
-	defaults -currentHost write com.apple.controlcenter Display -int 8
+	## Show scroll bars: Always
+	defaults write -g AppleShowScrollBars -string 'Always'
 
-	## Control Centre Modules > Sound: Don't Show in Menu Bar
-	defaults -currentHost write com.apple.controlcenter Sound -int 8
-
-	## Other Modules > Battery > Show Percentage: True
-	defaults -currentHost write com.apple.controlcenter BatteryShowPercentage -bool true
-
-	## Menu Bar Only > Clock > Clock Options > Show the day of the week: True
-	### Should be default on fresh install but not if dict is deleted
-	defaults write com.apple.menuextra.clock ShowDayOfWeek -bool true
-
-	## Menu Bar Only > Clock > Clock Options > Show date: When Space Allows
-	defaults write com.apple.menuextra.clock ShowDate -int 0
-
-	## Menu Bar Only > Clock > Clock Options > Display the time with seconds: True
-	defaults write com.apple.menuextra.clock ShowSeconds -bool true
-
-	## Menu Bar Only > Spotlight: Don't Show in Menu Bar
-	defaults -currentHost write com.apple.Spotlight MenuItemHidden -bool true
-	defaults delete com.apple.Spotlight 'NSStatusItem Visible Item-0' 2> /dev/null
-
-	## Menu Bar Only > Siri: Don't Show in Menu Bar
-	defaults write com.apple.Siri StatusMenuVisible -bool false
+	## Click in the scroll bar to: Jump to the spot that's clicked
+	defaults write -g AppleScrollerPagingBehavior -bool true
 	# }}}
 
 
@@ -113,7 +55,7 @@ system_settings() {  # {{{
 	## Dock > Automatically hide and show the Dock: True
 	defaults write com.apple.dock autohide -bool true
 
-	## Dock > Show recent applications in Dock: False
+	## Dock > Show suggested and recent apps in Dock: False
 	defaults write com.apple.dock show-recents -bool false
 
 	## Mission Control > Automatically rearrange Spaces based on most recent use: False
@@ -125,9 +67,8 @@ system_settings() {  # {{{
 	## Mission Control > Group windows by application: True
 	defaults write com.apple.dock expose-group-apps -bool true
 
-	## Hot Corners > Bottom Left: Command + Put Display to Sleep
-	defaults write com.apple.dock wvous-bl-corner -int 10
-	defaults write com.apple.dock wvous-bl-modifier -int 1048576
+	## Hot Corners > Bottom Right: False
+	defaults write com.apple.dock wvous-br-corner -int 1
 
 	# Other
 	## Remove delay showing the Dock
@@ -146,6 +87,79 @@ system_settings() {  # {{{
 
 
 	#-----------------------------------------------------------------------------
+	# Displays {{{
+	#-----------------------------------------------------------------------------
+
+	## Advanced > Slightly dim the display while on battery: False
+	sudo pmset -b lessbright 0
+
+	## Advanced > Prevent computer from sleeping automatically on power adapter when the display is off: True
+	sudo pmset -c sleep 0
+	# }}}
+
+
+	#-----------------------------------------------------------------------------
+	# Menu Bar {{{
+	#-----------------------------------------------------------------------------
+
+	# Remove com.apple.controlcenter plist; this will be automatically populated
+	defaults delete com.apple.controlcenter 2> /dev/null
+
+	# System Settings
+	## Menu Bar Controls > Clock > Clock Options > Show the day of the week: True
+	### Should be default on fresh install but not if dict is deleted
+	defaults write com.apple.menuextra.clock ShowDayOfWeek -bool true
+
+	## Menu Bar Controls > Clock > Clock Options > Show date: True
+	### Used to be 0 (When Space Allows)
+	defaults write com.apple.menuextra.clock ShowDate -int 1
+
+	## Menu Bar Controls > Clock > Clock Options > Display the time with seconds: True
+	defaults write com.apple.menuextra.clock ShowSeconds -bool true
+
+	## Menu Bar Control > Siri: False
+	defaults -currentHost write com.apple.controlcenter Siri -int 8
+
+	## Menu Bar Controls > Spotlight: False
+	defaults -currentHost write com.apple.controlcenter Spotlight -int 8
+
+	## Menu Bar Controls > Wi-Fi: False
+	defaults -currentHost write com.apple.controlcenter WiFi -int 8
+
+	## Menu Bar Controls > Battery: True
+	defaults -currentHost write com.apple.controlcenter Battery -int 8
+
+	## Menu Bar Controls > Battery > Show Percentage: True
+	defaults -currentHost write com.apple.controlcenter BatteryShowPercentage -bool true
+
+	## Menu Bar Controls > Screen Mirroring: False
+	defaults -currentHost write com.apple.controlcenter ScreenMirroring -int 8
+
+	## Menu Bar Controls > Display: False
+	defaults -currentHost write com.apple.controlcenter Display -int 8
+
+	## Menu Bar Controls > Sound: False
+	defaults -currentHost write com.apple.controlcenter Sound -int 8
+	# }}}
+
+
+	#-----------------------------------------------------------------------------
+	# Sound {{{
+	#-----------------------------------------------------------------------------
+
+	# System Settings
+	## Sound Effects > Alert volume: 50%
+	defaults write -g com.apple.sound.beep.volume -float 0.6065307
+
+	## Sound Effects > Play sound on startup: False
+	sudo nvram StartupMute=%01
+
+	## Sound Effects > Play user interface sound effects: False
+	defaults write -g com.apple.sound.uiaudio.enabled -int 0
+	# }}}
+
+
+	#-----------------------------------------------------------------------------
 	# Lock Screen {{{
 	#-----------------------------------------------------------------------------
 
@@ -156,18 +170,6 @@ system_settings() {  # {{{
 
 	## Turn display off on power adapter when inactive: For 15 minutes (custom)
 	sudo pmset -c displaysleep 15
-	# }}}
-
-
-	#-----------------------------------------------------------------------------
-	# Displays {{{
-	#-----------------------------------------------------------------------------
-
-	## Advanced > Slightly dim the display while on battery: False
-	sudo pmset -b lessbright 0
-
-	## Advanced > Prevent computer from sleeping automatically on power adapter when the display is off: True
-	sudo pmset -c sleep 0
 	# }}}
 
 
@@ -232,9 +234,6 @@ system_settings() {  # {{{
 	defaults write com.apple.MultitouchTrackpad TrackpadFourFingerVertSwipeGesture -int 2
 	defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadFourFingerVertSwipeGesture -int 2
 	defaults write com.apple.dock showAppExposeGestureEnabled -bool true
-
-	## More Gestures > Launchpad: False
-	defaults write com.apple.dock showLaunchpadGestureEnabled -bool false
 	# }}}
 
 
@@ -274,8 +273,7 @@ other_settings(){  # {{{
 	# Move windows by holding Cmd + Ctrl + drag
 	defaults write -g NSWindowShouldDragOnGesture -bool true
 
-	# Add Google DNS network location (removed from Ventura GUI but still
-	# switchable using LaunchBar)
+	# Add Google DNS network location
 	networksetup -createlocation 'Google DNS' populate
 	networksetup -switchtolocation 'Google DNS'
 	networksetup -setdnsservers 'Wi-Fi' 8.8.8.8 8.8.4.4
