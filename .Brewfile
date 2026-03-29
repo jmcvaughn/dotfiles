@@ -38,6 +38,10 @@ cask 'zoom'
 tap 'homebrew/cask-versions'
 cask 'sonos-s1-controller'
 
+# Window manager
+tap 'nikitabobko/tap'
+cask 'nikitabobko/tap/aerospace'
+
 
 #-------------------------------------------------------------------------------
 # Homebrew packages
@@ -97,12 +101,6 @@ brew 'wget'
 brew 'helm'
 brew 'k9s'
 brew 'kubectl'
-
-# Window manager
-tap 'homebrew/services'  # Explicitly tap to keep during `brew bundle cleanup`
-tap 'koekeishiya/formulae'
-brew 'yabai'
-brew 'skhd'
 
 # Hashicorp Terraform
 tap 'hashicorp/tap'

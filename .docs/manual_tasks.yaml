@@ -91,12 +91,11 @@ System Settings:
         - LaunchBar.app  # Required for certain indexing rules: https://www.obdev.at/products/launchbar/releasenotes.html
         - iTerm.app
       Accessibility:
+        - AeroSpace.app
         - LaunchBar.app  # Required for certain features: https://www.obdev.at/products/launchbar/releasenotes.html
         - Qobuz.app
-        - skhd
         - SoundSource.app
         - VMware Fusion.app
-        - yabai
       Input Monitoring:
         - karabiner_grabber
         - karabiner_observer
@@ -177,34 +176,6 @@ System Settings:
           # Scriptable, but enabled by changing input sources, so do this
           # afterwards
           Show Input menu in menu bar: False
-
-# Using 'All Desktops' instead of yabai rules means no SIP changes needed
-# Using PlistBuddy/defaults to set com.apple.spaces[app-bindings] doesn't work
-Dock:
-  Calendar:
-    Options:
-      Assign To: All Desktops
-  Messages:
-    Options:
-      Assign To: All Desktops
-  Microsoft Teams:
-    Options:
-      Assign To: All Desktops
-  Podcasts:
-    Options:
-      Assign To: All Desktops
-  Qobuz:
-    Options:
-      Assign To: All Desktops
-  Slack:
-    Options:
-      Assign To: All Desktops
-  Telegram:
-    Options:
-      Assign To: All Desktops
-  WhatsApp:
-    Options:
-      Assign To: All Desktops
 
 Applications:
   App Store:
