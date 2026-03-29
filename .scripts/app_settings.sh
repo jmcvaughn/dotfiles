@@ -156,13 +156,6 @@ launchbar() {
 }
 
 
-netnewswire() {
-	# Settings
-	## General > Article Text Size: Medium
-	defaults write com.ranchero.NetNewsWire-Evergreen articleTextSize -int 2
-}
-
-
 notes() {
 	# Settings
 	## Automatically sort ticked items: True
@@ -201,43 +194,10 @@ textedit() {
 }
 
 
-vagrant_manager() {
-	# Preferences
-	## Terminal Preference: iTerm/iTerm2
-	defaults write lanayo.Vagrant-Manager terminalPreference -string 'iTerm'
-
-	## Terminal Editor Preference: vim
-	defaults write lanayo.Vagrant-Manager terminalEditorPreference -string 'vim'
-
-	## Status Bar Icon Theme: Flat
-	defaults write lanayo.Vagrant-Manager statusBarIconTheme -string 'flat'
-
-	## Halt machines on exit: True
-	defaults write lanayo.Vagrant-Manager haltOnExit -bool true
-
-	## Don't show task windows: True
-	defaults write lanayo.Vagrant-Manager hideTaskWindows -bool true
-
-	## Refresh every: 1 minute
-	defaults write lanayo.Vagrant-Manager refreshEvery -bool true
-	defaults write lanayo.Vagrant-Manager refreshEveryInterval -int 60
-
-	## Show task notifications: True
-	defaults write lanayo.Vagrant-Manager showTaskNotification -bool true
-
-	## Send anonymous profile data: False
-	defaults write lanayo.Vagrant-Manager sendProfileData -bool false
-}
-
-
-vmware_fusion() {
+utm() {
 	# Settings
-	## General > Applications menu > Show in menu bar: Never
-	defaults write com.vmware.fusion showStartMenu3 -int 0
-
-	# Menu options
-	## View > Show Tab Bar: True
-	defaults write com.vmware.fusion NSWindowTabbingShoudShowTabBarKey-PLFSMWindow-PLFSMWindowProvider-PLVMWindowController-HT-FS -bool true
+	## Application > Do not show confirmation when closing a running VM: True
+	defaults write com.utmapp.UTM NoQuitConfirmation -bool true
 }
 
 
@@ -257,9 +217,6 @@ main() {
 	launchbar
 	pkill -x LaunchBar && open -a LaunchBar
 
-	netnewswire
-	pkill -x NetNewsWire && open -a NetNewsWire
-
 	if ! pgrep -qx Notes; then
 		open -a Notes
 		sleep 5
@@ -278,15 +235,10 @@ main() {
 	pkill -x soundsource && open -a SoundSource
 
 	textedit
-	pkill -x TextEdit && open -a 'TextEdit'
+	pkill -x TextEdit && open -a TextEdit
 
-	vagrant_manager
-	pkill -x 'Vagrant Manager' && open -a 'Vagrant Manager'
-
-	vmware_fusion
-	if pkill -x 'VMware Fusion'; then
-		open -a 'VMware Fusion' 2> /dev/null || open -a 'VMware Fusion Tech Preview'
-	fi
+	utm
+	pkill -x UTM && open -a UTM
 }
 
 main
