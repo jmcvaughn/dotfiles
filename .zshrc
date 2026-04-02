@@ -16,24 +16,26 @@ os=$(uname --operating-system 2> /dev/null || uname)  # GNU coreutils | BSD
 
 # Paths
 if [[ $os == 'Darwin' ]]; then
-	eval "$(/opt/homebrew/bin/brew shellenv)"
-	PATH="/opt/homebrew/sbin:$PATH"  # Mainly for brew doctor
+	brew_prefix=$(brew --prefix)
+	eval "$($brew_prefix/bin/brew shellenv)"
+	PATH="$brew_prefix/sbin:$PATH"  # Mainly for brew doctor
 	# GNU coreutils
-	PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
-	MANPATH="/opt/homebrew/opt/coreutils/libexec/gnuman:$MANPATH"
+	PATH="$brew_prefix/opt/coreutils/libexec/gnubin:$PATH"
+	MANPATH="$brew_prefix/opt/coreutils/libexec/gnuman:$MANPATH"
 	# GNU findutils
-	PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH"
-	MANPATH="/opt/homebrew/opt/findutils/libexec/gnuman:$MANPATH"
+	PATH="$brew_prefix/opt/findutils/libexec/gnubin:$PATH"
+	MANPATH="$brew_prefix/opt/findutils/libexec/gnuman:$MANPATH"
 	# GNU grep
-	PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
-	MANPATH="/opt/homebrew/opt/grep/libexec/gnuman:$MANPATH"
+	PATH="$brew_prefix/opt/grep/libexec/gnubin:$PATH"
+	MANPATH="$brew_prefix/opt/grep/libexec/gnuman:$MANPATH"
 	# GNU sed
-	PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
-	MANPATH="/opt/homebrew/opt/gnu-sed/libexec/gnuman:$MANPATH"
+	PATH="$brew_prefix/opt/gnu-sed/libexec/gnubin:$PATH"
+	MANPATH="$brew_prefix/opt/gnu-sed/libexec/gnuman:$MANPATH"
 	# GNU tar
-	PATH="/opt/homebrew/opt/gnu-tar/libexec/gnubin:$PATH"
-	MANPATH="/opt/homebrew/opt/gnu-tar/libexec/gnuman:$MANPATH"
+	PATH="$brew_prefix/opt/gnu-tar/libexec/gnubin:$PATH"
+	MANPATH="$brew_prefix/opt/gnu-tar/libexec/gnuman:$MANPATH"
 	export MANPATH
+	unset brew_prefix
 elif [[ $os == 'GNU/Linux' ]]; then
 	PATH="$PATH:/snap/bin"  # Canonical snaps
 fi
@@ -122,15 +124,9 @@ precmd() {
 autoload -Uz compinit
 [[ $os == 'Darwin' ]] && compinit -u || compinit
 
-autoload -Uz bashcompinit
-bashcompinit
-
-if [[ $os == 'Darwin' ]]; then
-	# Load Terraform completions
-	complete -o nospace -C /opt/homebrew/bin/terraform terraform
-fi
-
 if [[ $PRETTY_NAME == 'Ubuntu'* ]]; then
+	autoload -Uz bashcompinit
+	bashcompinit
 	# Load aws-cli snap completion
 	aws_completer='/snap/aws-cli/current/bin/aws_completer'
 	if [ -f "$aws_completer" ]; then
