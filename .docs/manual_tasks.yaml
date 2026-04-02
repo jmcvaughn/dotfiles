@@ -3,10 +3,10 @@
 System Settings:
   Apple ID:
     iCloud:
-      Password \& Keychain: False  # Might be default
+      Password \& Keychain: False
       iCloud Mail: False
       Contacts: False
-      Calendars: False
+      iCloud Calendar: False
 
   Network:
     Firewall:
@@ -16,25 +16,21 @@ System Settings:
     Software Update:
       Automatic Updates:
         Install macOS Updates: False
-        Install application updates from the App Store: True
     Storage:
       - Remove GarageBand and related components
     Login Items & Extensions:
       Extensions:
-        Sharing:
-          - Add to Reading List  # Always first in Safari Share Menu
-          - AirDrop
-          - Contact Suggestions  # default
-          - Mail
-          - Messages
-          - Subscribe in Unread
-          - Telegram
+        By Category:
+          Sharing:
+            Telegram: True
+            Subscribe in Unread: True
 
   Apple Intelligence \& Siri:
     Apple Intelligence: True
     Siri: True
     Listen for: \"Siri" or "Hey Siri"
-    Keyboard shortcut: Press Either Command Key Twice
+    Keyboard shortcut: Hold Command Space
+    Voice: British (Voice 1)
     Extensions:
       ChatGPT:
         Use ChatGPT: True
@@ -54,50 +50,45 @@ System Settings:
         Colour profile: Set for display
         Refresh Rate (Hz): 100
 
-  Notifications:
-    Allow notifications when the display is sleeping: False
+  Menu Bar:
+    Menu Bar Controls:
+      Siri: False
+      Spotlight: False
+      Wi-Fi: False
+      Battery:
+        - Enabled: True
+        - Battery Options:
+            Show Percentage: True
+      Screen Mirroring: False
+      Display: False
+      Sound: False
 
-  Sound:
-    Play sound effects through: Selected Sound Output Device
+
+  Notifications:
+    Show Notifications:
+      when display is sleeping: False
 
   Privacy \& Security:
     Location Services:
       Enabled: True
       System Services:
-        Find My Mac: True
         Networking and wireless: False
         Mac Analytics: False
-    Contacts:
-      - iTerm.app  # For app_settings.sh to configure Contacts.app, will only appear when triggered
-    Full Disk Access:
-      - LaunchBar.app  # Required for certain indexing rules: https://www.obdev.at/products/launchbar/releasenotes.html
-      - iTerm.app
-    Accessibility:
-      - AeroSpace.app
-      - LaunchBar.app  # Required for certain features: https://www.obdev.at/products/launchbar/releasenotes.html
-      - SoundSource.app
-    Input Monitoring:
-      - karabiner_grabber
-      - karabiner_observer
-      - iTerm.app
-    Automation:
-      iTerm.app:  # Will only appear when triggered
-        - System Events.app
     Analytics \& Improvements:
       Share Mac Analytics: False  # default, Might be re-enabled when sharing crash reports
-      Improve Siri \& Dictation: False  # default
     Apple Advertising:
       Personalised Ads: False
 
   Touch ID \& Password:
     Touch ID: Add fingerprints
-    Use Touch ID for purchases in iTunes Store, App Store and Apple Books: True
 
   Internet Accounts: Configure as appropriate
 
   Keyboard:
     Adjust keyboard brightness in low light: False
     Keyboard Shortcuts:
+      Dock:
+        Turn Dock hiding on/off: False
       Mission Control:
         Mission Control: Alt + Ctrl + M
         Show Notification Center: Alt + N
@@ -107,7 +98,7 @@ System Settings:
       Keyboard:
         Move focus to next window: Alt + Tab
       Input Sources:
-        Select the previous input source: False
+        Select the previous input source: False  # Otherwise blocks Ctrl-Space for zsh-autocomplete
         Select next source in Input menu: False
       Spotlight:
         Show Spotlight search: False
@@ -127,6 +118,7 @@ System Settings:
 Applications:
   App Store:
     Settings:
+      Automatic Updates: True
       In-App Ratings \& Reviews: False
 
   Safari:
@@ -142,20 +134,14 @@ Applications:
       Search:
         Search engine: DuckDuckGo
       Websites:
-        When visiting other websites (%): 85
+        Page Zoom:
+          When visiting other websites (%): 85
       Extensions:
-        # Allow all in Private Browsing
-        - AdGuard Advanced Blocking
-        - AdGuard Custom
-        - AdGuard General
-        - AdGuard Other
-        - AdGuard Privacy
-        - AdGuard Safari Icon
-        - AdGuard Security
-        - AdGuard Social
-        - PiPifier
-      Advanced:
-        Show Develop menu in menu bar: True
+        PiPifier:
+          Allow in Private Browsing: True
+        uBlock Origin Lite:
+          Allow in Private Browsing: True
+          Always Allow on Every Website: True
     View Menu:
       Always Show Tab Bar: True
       Show status bar: True
@@ -165,28 +151,10 @@ Applications:
       - Flexible Space
       - Address and Search
       - Privacy Report
-      - AdGuard for Safari
+      - uBlock Origin Lite
       - PiPifier
       - Flexible Space
       - Share
-
-  AdGuard for Safari:
-    General:
-      Launch AdGuard for Safari at Login: True
-      Show AdGuard for Safari in the menu bar: False
-      Notify about extension updates: False
-    Filters:
-      Allowlist: |
-        docs.ansible.com
-        www.notion.so
-      Enable filters in the following categories using best judgement:  # No overlaps etc.
-        - Privacy
-        - Social Widgets
-        - Annoyances
-        - Security
-    Keep AdGuard running in the background?:
-      - Yes (recommended)
-      - Remember my choice: True
 
   asciinema: Run `asciinema auth`
 
@@ -210,15 +178,11 @@ Applications:
       Sort By:
         Snap to Grid: True  # While on Desktop
       Show Path Bar: True  # While in Finder window
-    Sidebar:
-      - Add Home folder above default user folders
 
   Google Chrome:
-    Settings:
-      You and Google:
-        Sync and Google services:
-          Help improve Chrome's features and performance: False
-      Default browser: False
+    Welcome to Google Chrome:
+      Make Google Chrome the default browser: False
+      Automatically send usage statistics and crash reports to Google: False
     Menu options:
       Warn Before Quitting: False
 
@@ -231,7 +195,7 @@ Applications:
 
   iTerm2:
     General:
-      Preferences:
+      Settings:
         Load preferences from a custom folder or URL: ~/.config/iterm2/
 
   LaunchBar:
@@ -241,7 +205,7 @@ Applications:
   Mail:
     Preferences:
       Accounts:
-        Work:
+        All:
           Account Information:
             Email Address:
               Edit Email Addresses:
@@ -254,19 +218,11 @@ Applications:
         Use fixed-width font for plain text messages: True
         Colour quoted text: False
       Composing:
-        Use the same message format as the original message: True
         Undo send delay (seconds): 30
+        Use the same message format as the original message: True
     Mailbox List:
-      - Expand Smart Mailboxes and any account mailbox sections
       - Shrink Favourites
-
-  Maps:
-    Always use light map appearance: True
-    Use Large Labels: True
-
-  Podcasts:
-    Playback:
-      Headphone Controls: Forward/Back
+    Categories: Turn Off
 
   Qobuz:
     Menu:
@@ -300,9 +256,6 @@ Applications:
       Disable hardware acceleration: True  # Global
 
   SoundSource:
-    Settings:
-      Audio:
-        Super Volume Keys: True  # Requires Accessibility access
     Other:
       - Remove default effects, set default devices
 
@@ -323,7 +276,6 @@ Applications:
       Download Folder: ~/Downloads/Telegram/
     Appearance:
       Color Theme: System
-      Bubble Mode: True
 
   Unread:
     General:
@@ -332,6 +284,7 @@ Applications:
         Dock icon badge: True
       Article lists:
         Show thumbnails: False
+    Accounts: Set up
     Font Sizes:
       Article list (%): 90  # Configurable via defaults
       Article (%): 90  # Configurable via defaults

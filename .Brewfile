@@ -2,7 +2,6 @@
 # Casks
 #-------------------------------------------------------------------------------
 
-tap 'homebrew/cask'  # Explicitly tap to keep during `brew bundle cleanup`
 cask 'coconutbattery'
 cask 'displaycal'
 cask 'drawio'
@@ -14,17 +13,14 @@ cask 'karabiner-elements'
 cask 'launchbar'
 cask 'qobuz'
 cask 'raspberry-pi-imager'
+cask 'font-sauce-code-pro-nerd-font'
 cask 'slack'
+cask 'sonos-s1-controller'
 cask 'soundsource'
 cask 'telegram'
 cask 'utm'
 cask 'whatsapp'
-cask 'wkhtmltopdf'  # Used by pandoc to create files
 cask 'zoom'
-
-# Alternative versions
-tap 'homebrew/cask-versions'
-cask 'sonos-s1-controller'
 
 # Window manager
 tap 'nikitabobko/tap'
@@ -43,7 +39,6 @@ brew 'awscli'
 brew 'ffmpeg'
 brew 'exiftool'
 brew 'fd'  # fzf-lua (LazyVim)
-brew 'font-sauce-code-pro-nerd-font'
 brew 'fzf'  # fzf-lua (LazyVim)
 brew 'gh'
 brew 'git'
@@ -56,8 +51,8 @@ brew 'luarocks'
 brew 'mas'
 brew 'neovim'
 brew 'node'
+brew 'opentofu'
 brew 'p7zip'
-brew 'pandoc'
 brew 'pdsh'
 brew 'pinentry-mac'
 brew 'pyenv'
@@ -88,61 +83,16 @@ brew 'helm'
 brew 'k9s'
 brew 'kubectl'
 
-# Hashicorp Terraform
-tap 'hashicorp/tap'
-brew 'hashicorp/tap/terraform'  # Run `terraform -install-autocomplete` afterwards
-
 
 #-------------------------------------------------------------------------------
 # Mac App Store
 #-------------------------------------------------------------------------------
 
 mas 'Actions', id: 1586435171  # For developing iOS Shortcuts on Mac
-mas 'AdGuard for Safari', id: 1440147259
 mas 'Linn', id: 1292218680
 mas 'Numbers', id: 409203825
 mas 'Pages', id: 409201541
 mas 'PiPifier', id: 1160374471
 mas 'WireGuard', id: 1451685025
+mas 'uBlock Origin Lite', id: 6745342698
 mas 'Unread', id: 1363637349
-
-
-#-------------------------------------------------------------------------------
-# QMK
-# https://docs.qmk.fm/#/newbs_getting_started?id=set-up-your-environment
-#-------------------------------------------------------------------------------
-
-# All packages are dependencies of the "qmk" package. They are all specified
-# here to ensure they're kept during a `brew bundle cleanup`. The same applies
-# for packages in the "Packages with dependencies" subsection and their own
-# dependencies. These dependent packages are the last ones in their respective
-# groups.
-
-# Packages without dependencies
-brew 'bootloadhid'
-brew 'clang-format'
-brew 'dfu-util'
-
-tap 'osx-cross/arm'
-brew 'arm-gcc-bin@8', link: true
-
-# Packages with dependencies
-brew 'libelf'
-brew 'libftdi0'
-brew 'libhid'
-brew 'avrdude'
-
-brew 'libusb-compat'
-brew 'dfu-programmer'
-
-brew 'isl'
-brew 'libmpc'
-tap 'osx-cross/avr'
-brew 'avr-binutils'
-brew 'avr-gcc@8', link: true
-
-brew 'teensy_loader_cli'
-tap 'qmk/qmk'
-brew 'qmk'
-
-# vim: set expandtab shiftwidth=0 tabstop=2:

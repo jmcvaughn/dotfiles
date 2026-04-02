@@ -179,11 +179,14 @@ preview() {
 
 soundsource() {
 	# Settings
-	## Audio > Super Volume Keys: True
+	## General > Super Volume Keys: True
 	defaults write com.rogueamoeba.soundsource keyboardVolume -bool true
 
 	## Appearance > Follow System Accent Color: True
 	defaults write com.rogueamoeba.soundsource followSystemAccent -bool true
+
+	## Appearance > Menu Bar Icon: Speaker (System)
+	defaults write com.rogueamoeba.soundsource menuBarIcon -string speaker
 }
 
 

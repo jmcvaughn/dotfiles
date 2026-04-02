@@ -102,9 +102,6 @@ system_settings() {  # {{{
 	# Menu Bar {{{
 	#-----------------------------------------------------------------------------
 
-	# Remove com.apple.controlcenter plist; this will be automatically populated
-	defaults delete com.apple.controlcenter 2> /dev/null
-
 	# System Settings
 	## Menu Bar Controls > Clock > Clock Options > Show the day of the week: True
 	### Should be default on fresh install but not if dict is deleted
@@ -116,30 +113,6 @@ system_settings() {  # {{{
 
 	## Menu Bar Controls > Clock > Clock Options > Display the time with seconds: True
 	defaults write com.apple.menuextra.clock ShowSeconds -bool true
-
-	## Menu Bar Control > Siri: False
-	defaults -currentHost write com.apple.controlcenter Siri -int 8
-
-	## Menu Bar Controls > Spotlight: False
-	defaults -currentHost write com.apple.controlcenter Spotlight -int 8
-
-	## Menu Bar Controls > Wi-Fi: False
-	defaults -currentHost write com.apple.controlcenter WiFi -int 8
-
-	## Menu Bar Controls > Battery: True
-	defaults -currentHost write com.apple.controlcenter Battery -int 8
-
-	## Menu Bar Controls > Battery > Show Percentage: True
-	defaults -currentHost write com.apple.controlcenter BatteryShowPercentage -bool true
-
-	## Menu Bar Controls > Screen Mirroring: False
-	defaults -currentHost write com.apple.controlcenter ScreenMirroring -int 8
-
-	## Menu Bar Controls > Display: False
-	defaults -currentHost write com.apple.controlcenter Display -int 8
-
-	## Menu Bar Controls > Sound: False
-	defaults -currentHost write com.apple.controlcenter Sound -int 8
 	# }}}
 
 
