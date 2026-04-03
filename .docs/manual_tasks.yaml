@@ -155,6 +155,17 @@ Applications:
       - PiPifier
       - Flexible Space
       - Share
+    uBlock Origin Lite:
+      Settings:
+        Default filtering mode: Complete
+      Filter lists:
+        Annoyances:
+          - EasyList – AI Widgets
+          - EasyList/uBO – Cookie Notices
+          - EasyList – Notifications
+          - EasyList – Other Annoyances
+          - EasyList/uBO – Overlay Notices
+          - EasyList – Social Widgets
 
   asciinema: Run `asciinema auth`
 
