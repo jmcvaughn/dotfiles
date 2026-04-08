@@ -90,8 +90,8 @@ brew 'kubectl'
 
 mas 'Actions', id: 1586435171  # For developing iOS Shortcuts on Mac
 mas 'Linn', id: 1292218680
-mas 'Numbers', id: 409203825
-mas 'Pages', id: 409201541
+mas 'Numbers', id: 361304891
+mas 'Pages', id: 361309726
 mas 'PiPifier', id: 1160374471
 mas 'WireGuard', id: 1451685025
 mas 'uBlock Origin Lite', id: 6745342698

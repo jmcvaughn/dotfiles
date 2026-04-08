@@ -163,20 +163,6 @@ notes() {
 }
 
 
-pages() {
-	# Menu options
-	## View > Show Tab Bar: True
-	defaults write com.apple.iWork.Pages NSWindowTabbingShoudShowTabBarKey-TPMacDocumentWindow-TPAdaptiveDocumentWindowController-TPAdaptiveDocumentWindowController-VT-FS -bool true
-}
-
-
-preview() {
-	# Menu options
-	## View > Show Tab Bar: True
-	defaults write com.apple.Preview NSWindowTabbingShoudShowTabBarKey-PVWindow-PVWindowController-PVWindowController-VT-FS -bool true
-}
-
-
 soundsource() {
 	# Settings
 	## General > Super Volume Keys: True
@@ -187,13 +173,6 @@ soundsource() {
 
 	## Appearance > Menu Bar Icon: Speaker (System)
 	defaults write com.rogueamoeba.soundsource menuBarIcon -string speaker
-}
-
-
-textedit() {
-	# View menu options
-	## Show Tab Bar: True
-	defaults write com.apple.TextEdit NSWindowTabbingShoudShowTabBarKey-NSWindow-DocumentWindowController-DocumentWindowController-VT-FS -bool true
 }
 
 
@@ -228,17 +207,8 @@ main() {
 	notes
 	pkill -x Notes && open -a Notes
 
-	pages
-	pkill -x Pages && open -a Pages
-
-	preview
-	pkill -x Preview && open -a Preview
-
 	soundsource
 	pkill -x soundsource && open -a SoundSource
-
-	textedit
-	pkill -x TextEdit && open -a TextEdit
 
 	utm
 	pkill -x UTM && open -a UTM
