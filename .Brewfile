@@ -20,7 +20,6 @@ cask 'soundsource'
 cask 'telegram'
 cask 'utm'
 cask 'whatsapp'
-cask 'zoom'
 
 # Window manager
 tap 'nikitabobko/tap'

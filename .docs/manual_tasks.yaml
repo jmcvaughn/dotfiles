@@ -307,28 +307,6 @@ Applications:
   WireGuard:
     - Add VPN configuration, see https://github.com/jmcvaughn/dotfiles/tree/home-router/.docs#wireguard
 
-  zoom.us:
-    General:
-      Always show meeting controls: True
-      Ask me to confirm when I leave a meeting: False
-      Show meeting timers: True
-      Add Zoom to macOS menu bar: False
-      Stop my video and audio when my display is off or screen saver begins: True
-    Video:
-      Original ratio: True
-      HD: True
-      Always display participant name on their videos: True
-      Stop my video when joining a meeting: True
-      Always show video preview dialog when joining: False
-    Audio:
-      Speaker: Same as System
-      Microphone: Same as System
-      Automatically join computer audio when joining: True
-      Mute my mic when joining: True
-    Share Screen:
-      Window size when screen sharing: Maintain current size
-      When I share directly to a Zoom Room: Show all sharing options
-
 File associations:
   less.app:
     - .cfg
