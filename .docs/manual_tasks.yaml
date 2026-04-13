@@ -243,17 +243,14 @@ Applications:
         Favorite Audio Output: WH-1000XM3
 
   Slack:
-    # All settings per-workspace unless specified otherwise
-    Themes:
-      Sync with OS setting: True  # Global
-      Colours: Aubergine (Clean and minimal)
+    Appearance:
+      Colour mode: System  # Default but may need clicking off/on to take effect
+      Theme: Ochin
     Messages \& media:
       Theme: Compact
-      Names: Full & display names
-      Show times with 24-hour clock: True
       Show one-click reactions on messages: My most frequently used emoji
     Language \& region:
-      Language: English (UK)
+      Default translation language: English (UK)
     Accessibility:
       Zoom (%): 80  # Global
       Underline links to websites: True
