@@ -14,12 +14,9 @@ cask 'launchbar'
 cask 'qobuz'
 cask 'raspberry-pi-imager'
 cask 'font-sauce-code-pro-nerd-font'
-cask 'slack'
 cask 'sonos-s1-controller'
 cask 'soundsource'
-cask 'telegram'
 cask 'utm'
-cask 'whatsapp'
 
 # Window manager
 tap 'nikitabobko/tap'
@@ -92,6 +89,9 @@ mas 'Linn', id: 1292218680
 mas 'Numbers', id: 361304891
 mas 'Pages', id: 361309726
 mas 'PiPifier', id: 1160374471
-mas 'WireGuard', id: 1451685025
+mas 'Slack', id: 803453959
+mas 'Telegram', id: 747648890
 mas 'uBlock Origin Lite', id: 6745342698
 mas 'Unread', id: 1363637349
+mas 'WhatsApp Messenger', id: 310633997
+mas 'WireGuard', id: 1451685025
