@@ -186,6 +186,9 @@ system_settings() {  # {{{
 	defaults write com.apple.AppleMultitouchTrackpad FirstClickThreshold -int 0
 	defaults write com.apple.AppleMultitouchTrackpad SecondClickThreshold -int 0
 
+	## Point & Click > Quiet Click: True
+	defaults write com.apple.AppleMultitouchTrackpad ActuationStrength -int 0
+
 	## Point & Click > Tap to click: False
 	defaults -currentHost write -g com.apple.mouse.tapBehavior -int 0
 	defaults write com.apple.AppleMultitouchTrackpad Clicking -bool false
