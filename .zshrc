@@ -124,9 +124,15 @@ precmd() {
 autoload -Uz compinit
 [[ $os == 'Darwin' ]] && compinit -u || compinit
 
+autoload -Uz bashcompinit
+bashcompinit
+
+if [[ $os == 'Darwin' ]]; then
+	# Load OpenTofu bash completion
+	complete -o nospace -C tofu tofu
+fi
+
 if [[ $PRETTY_NAME == 'Ubuntu'* ]]; then
-	autoload -Uz bashcompinit
-	bashcompinit
 	# Load aws-cli snap completion
 	aws_completer='/snap/aws-cli/current/bin/aws_completer'
 	if [ -f "$aws_completer" ]; then
