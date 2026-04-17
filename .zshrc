@@ -179,6 +179,7 @@ fi
 
 if [[ $os == 'Darwin' ]]; then
 	# Homebrew
+	HOMEBREW_NO_ENV_HINTS=1
 	## Disable analytics (https://docs.brew.sh/Analytics)
 	export HOMEBREW_NO_ANALYTICS=1
 	## Don't create Brewfile.lock.json
