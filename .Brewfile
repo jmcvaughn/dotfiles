@@ -28,7 +28,6 @@ cask 'nikitabobko/tap/aerospace'
 #-------------------------------------------------------------------------------
 
 brew 'ansible'
-brew 'ansible-lint'
 brew 'aria2'
 brew 'asciinema'
 brew 'awscli'
