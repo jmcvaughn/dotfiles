@@ -4,6 +4,7 @@
 # yarn: list of packages
 # zsh: list of 2-tuples of URL and branch
 zsh = [
+    ('https://github.com/peterhurford/up.zsh', 'master'),
     ('https://github.com/zsh-users/zsh-autosuggestions', 'master'),
     ('https://github.com/zsh-users/zsh-completions', 'master'),
     ('https://github.com/zsh-users/zsh-history-substring-search', 'master'),

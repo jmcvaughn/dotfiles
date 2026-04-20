@@ -179,7 +179,6 @@ fi
 
 if [[ $os == 'Darwin' ]]; then
 	# Homebrew
-	HOMEBREW_NO_ENV_HINTS=1
 	## Disable analytics (https://docs.brew.sh/Analytics)
 	export HOMEBREW_NO_ANALYTICS=1
 	## Don't create Brewfile.lock.json
@@ -410,6 +409,9 @@ bindkey -M vicmd '\t' expandorcomplete-vicmd  # Tab
 
 # https://www.iterm2.com/documentation-shell-integration.html
 source $HOME/.zsh/iterm2_shell_integration.zsh
+
+# https://github.com/peterhurford/up.zsh
+source $HOME/.zsh/up.zsh/up.plugin.zsh
 
 # https://github.com/zsh-users/zsh-autosuggestions
 source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
