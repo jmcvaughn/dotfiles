@@ -190,6 +190,8 @@ Applications:
         Snap to Grid: True  # While on Desktop
       Show Path Bar: True  # While in Finder window
 
+  gh: Run `gh auth login`
+
   Google Chrome:
     Welcome to Google Chrome:
       Make Google Chrome the default browser: False
