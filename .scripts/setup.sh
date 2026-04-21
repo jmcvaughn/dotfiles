@@ -206,9 +206,9 @@ fi
 if [ ! -f /etc/systemd/system/restart-home-assistant.timer ]; then
 	sudo tee /etc/systemd/system/restart-home-assistant.timer <<- 'EOF'
 	[Unit]
-	Description=Restart Home Assistant containers at 03:45
+	Description=Restart Home Assistant containers on Sundays at 03:45
 	[Timer]
-	OnCalendar=*-*-* 03:45
+	OnCalendar=Sun 03:45
 	Unit=restart-home-assistant.service
 	Persistent=true
 	[Install]
