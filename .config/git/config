@@ -1,15 +1,113 @@
-[user]
-	name = James Vaughn
-	email = james.vaughn@weka.io
-[merge]
-	tool = vimdiff
-[mergetool]
-	path = nvim
-	prompt = false
 [alias]
+	; For `git ...` commands, e.g. `git igrep`
+	d = diff
+	df = difftool
 	egrep = grep -E
 	igrep = grep -i
+	l = log
+	lg = log --oneline --graph --decorate --all
+
+[branch]
+	; Both options here will only apply to newly-created branches!
+
+	; When uncommented, if branch exists on remote, track it (i.e. `git
+	; checkout`), otherwise track the *local* branch that was checked out on
+	; branch creation (i.e. `git checkout -b`). In simplest terms, assume
+	; the following repositories:
+	;
+	;   - main (exists on GitHub)
+	;   - foo (exists on GitHub)
+	;
+	; The following scenarios would play out as follows:
+	;
+	;   - If `main` was currently checked out and you wanted to checkout
+	;     `foo` (`git checkout foo`) for the first time, local `foo` would
+	;     be configured to track `foo` on GitHub.
+	;
+	;   - If `main` was currently checked out and you wanted to create `bar`
+	;     (`git checkout -b bar`), `bar` would track `main` locally.
+	;
+	;   - If `foo` was currently checked out and you wanted to create `bar`
+	;     (`git checkout -b bar`), `bar` would track `foo` locally.
+	;
+	; Uncomment with caution, as this will probably only be desirable in the
+	; case where:
+	; - You are working on a feature branch;
+	; - You are the **only** one working on this feature branch;
+	; - `pull`ing only ever involves rebasing from another branch (e.g.
+	; main), so you only ever `push` to the remote of this feature branch.
+	;
+	; If commented, with the rest of this `git` configuration tracking won't
+	; be set up until the first push. Using the above scenario,
+	; newly-created `bar` would track nothing on creation, but track `bar`
+	; on GitHub after first push.
+	;
+	; Leaving this commented out is likely the desirable behaviour, as any
+	; rebase/merge from other branches requires you to be explicit.
+	; autoSetupMerge = always
+
+	; Set up branch so that `git pull` will always rebase from tracking
+	; branch rather than merge. See also:
+	; - push.autoSetupRemote and push.default
+	; - pull.rebase
+	autoSetupRebase = always
+
 [core]
 	excludesFile = ~/.config/git/ignore
+
+[init]
+	defaultBranch = main
+
+[merge]
+	tool = nvimdiff
+
 [pager]
 	status = true
+
+[pull]
+	; Simply *always* use `--rebase` when running `git pull` command.
+	; Doesn't touch any branch configurations.
+	rebase = true
+
+[push]
+	; Both of these options are required together. Think of this as being
+	; the equivalent of the "branch.autoSetup*" configuration but for `git
+	; push`.
+	;
+	; Set up the branch locally so that `git push` will automatically push
+	; to a remote branch (i.e. GitHub) of the same name, avoiding the
+	; prompts to set an upstream etc.
+	;
+	; See also: remote.pushDefault
+	autoSetupRemote = true
+	default = current
+
+[rebase]
+	; `stash` before rebase and `stash pop` after rebase automatically. If
+	; `pull.rebase` is true then this will also happen when running
+	; `git pull`.
+	autostash = true
+
+[remote]
+	; Automatically configure the remote as "origin" (i.e. where cloned
+	; from, usually), otherwise can get into strange situation where
+	; `git push` is simply pushing locally.
+	pushDefault = origin
+
+; Required for authentication purposes
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+
+[user]
+	name = James Vaughn
+	; Personal email goes here. Obtain from
+	; https://github.com/settings/emails. Assumes anonymised configuration
+	; for personal repositories, overwrite with an include
+	email = 24993138+jmcvaughn@users.noreply.github.com
+
+; Includes are ignored if paths doesn't exist. Paths are relative to this config
+; file.
+[include]
+	path = mac
+[include]
+	path = localincludes
