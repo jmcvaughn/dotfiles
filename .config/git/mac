@@ -1,0 +1,4 @@
+[gpg]
+	program = /opt/homebrew/bin/gpg
+
+# vim: set filetype=gitconfig:
