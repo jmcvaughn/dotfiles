@@ -19,6 +19,9 @@ if [[ $os == 'Darwin' ]]; then
 	brew_prefix=$(brew --prefix)
 	eval "$($brew_prefix/bin/brew shellenv)"
 	PATH="$brew_prefix/sbin:$PATH"  # Mainly for brew doctor
+	# GNU awk
+	PATH="$brew_prefix/opt/gawk/libexec/gnubin:$PATH"
+	MANPATH="$brew_prefix/opt/gawk/libexec/gnuman/:$MANPATH"
 	# GNU coreutils
 	PATH="$brew_prefix/opt/coreutils/libexec/gnubin:$PATH"
 	MANPATH="$brew_prefix/opt/coreutils/libexec/gnuman:$MANPATH"
