@@ -9,6 +9,9 @@ return {
 
         -- Markdown
         "rumdl",
+
+        -- OpenTofu
+        "tofu-ls",
       },
     },
   },

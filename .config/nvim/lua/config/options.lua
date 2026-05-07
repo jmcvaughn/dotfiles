@@ -6,6 +6,10 @@
 vim.g.autoformat = false
 vim.g.snacks_animate_scroll = false
 
+-- markdown-preview.nvim options
+--- Keep Markdown Preview open when switching to another buffer
+vim.g.mkdp_auto_close = 0
+
 -- Neovim options
 vim.opt.colorcolumn = "+1"
 vim.opt.formatoptions:append("1") -- Insert line break after one letter word
