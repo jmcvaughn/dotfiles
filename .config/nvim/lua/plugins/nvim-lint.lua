@@ -1,9 +1,9 @@
 return {
-  "mfussenegger/nvim-lint",
-  opts = {
-    linters = {
-      ["markdownlint-cli2"] = {
-        args = { "--config", vim.fn.expand("~/.config/nvim/lua/plugins/.markdownlint-cli2.yaml") },
+  {
+    "mfussenegger/nvim-lint",
+    opts = {
+      linters_by_ft = {
+        markdown = { "rumdl" },
       },
     },
   },

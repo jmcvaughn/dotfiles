@@ -4,7 +4,7 @@
 
 -- LazyVim options
 vim.g.autoformat = false
-vim.g.snacks_animate = false
+vim.g.snacks_animate_scroll = false
 
 -- Neovim options
 vim.opt.colorcolumn = "+1"
@@ -20,3 +20,10 @@ vim.opt.tabstop = 8
 
 -- Disable diagnostics by default
 -- vim.diagnostic.enable(false)
+
+-- Text options
+vim.opt.modelines = 1
+vim.opt.textwidth = 80
+
+-- LSP
+vim.g.lazyvim_python_lsp = "basedpyright"
