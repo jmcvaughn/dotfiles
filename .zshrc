@@ -187,6 +187,8 @@ if [[ $os == 'Darwin' ]]; then
 	## Don't create Brewfile.lock.json
 	## (https://github.com/Homebrew/homebrew-bundle#install)
 	export HOMEBREW_BUNDLE_NO_LOCK=1
+	## Hide auto-update hints
+	export HOMEBREW_NO_ENV_HINTS=1
 fi
 # }}}
 
