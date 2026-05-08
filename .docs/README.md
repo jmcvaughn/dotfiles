@@ -15,6 +15,7 @@ Note that some of the manual tasks in particular might need to be performed out 
 1) Install Xcode Command Line Tools by running `xcode-select --install`
 1) Follow the cloning instructions in the main repository [README](../README.md)
 1) Sign in to the Mac App Store
+1) Open a new Terminal window
 1) Run `../.scripts/packages.sh`. You'll be prompted to allow various system extensions; allow them.
 1) Run `../.scripts/system_settings.sh`
 1) Reboot
@@ -23,4 +24,5 @@ Note that some of the manual tasks in particular might need to be performed out 
 1) Run `../.scripts/app_settings.sh`
 1) Install Python packages: `pip3 install -r ../.scripts/requirements.txt`
 1) Run `../bin/update` to pull all Git repositories and Zsh plugins
+1) Run `qmk setup`
 1) Go to System Settings > Privacy & Security > Full Disk Access and remove Terminal.

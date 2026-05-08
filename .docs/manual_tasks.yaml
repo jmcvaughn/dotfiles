@@ -13,6 +13,8 @@ System Settings:
       Firewall: True
 
   General:
+    About:
+      Name: Set as appropriate
     Software Update:
       Automatic Updates:
         Install macOS Updates: False
@@ -29,7 +31,7 @@ System Settings:
     Apple Intelligence: True
     Siri: True
     Listen for: \"Siri" or "Hey Siri"
-    Keyboard shortcut: Hold Command Space
+    Keyboard shortcut: Option-Space
     Voice: British (Voice 1)
     Extensions:
       ChatGPT:
@@ -62,11 +64,17 @@ System Settings:
       Screen Mirroring: False
       Display: False
       Sound: False
+    Allow in the Menu Bar: Configure as appropriate
 
+  Spotlight:
+    Help Apple Improve Search: False
 
   Notifications:
     Show Notifications:
       when display is sleeping: False
+
+  Lock Screen:
+    Require password after screen saver begins or display is turned off: After 1 minute
 
   Privacy \& Security:
     Location Services:
@@ -124,8 +132,8 @@ Applications:
   Safari:
     Settings:
       General:
-        Open "safe" files after downloading: False
         Remove download list items: When Safari quits
+        Open "safe" files after downloading: False
         AutoFill:
           Using information from my contacts: False
           Usernames and passwords: False
@@ -143,8 +151,8 @@ Applications:
           Allow in Private Browsing: True
           Always Allow on Every Website: True
     View Menu:
-      Always Show Tab Bar: True
-      Show status bar: True
+      Always Show Tab Bar: True  # Requires window with only one tab open
+      Show Status Bar: True
     Toolbar:
       - Sidebar
       - Back/Forward
@@ -216,7 +224,7 @@ Applications:
       - Grant access: https://github.com/bswinnerton/launchbar-github#github-access-token
 
   Mail:
-    Preferences:
+    Settings:
       Accounts:
         All:
           Account Information:
@@ -238,8 +246,6 @@ Applications:
     Categories: Turn Off
 
   Qobuz:
-    Menu:
-      Synchronise with OS settings: True
     Settings:
       Music playing:
         Favorite Audio Output: WH-1000XM3
@@ -247,7 +253,7 @@ Applications:
   Slack:
     Appearance:
       Colour mode: System  # Default but may need clicking off/on to take effect
-      Theme: Ochin
+      Theme: As desired
     Messages \& media:
       Theme: Compact
       Show one-click reactions on messages: My most frequently used emoji
