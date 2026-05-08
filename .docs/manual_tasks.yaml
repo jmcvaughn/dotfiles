@@ -94,7 +94,7 @@ System Settings:
         Show Notification Center: Alt + N
         Turn Do Not Disturb On/Off: Alt + Shift + N
         Application windows: Alt + A
-        Mission Control: False
+        Mission Control (Spaces): False
       Keyboard:
         Move focus to next window: Alt + Tab
       Input Sources:
@@ -150,11 +150,11 @@ Applications:
       - Back/Forward
       - Flexible Space
       - Address and Search
+      - Share
+      - PiPifier
       - Privacy Report
       - uBlock Origin Lite
-      - PiPifier
       - Flexible Space
-      - Share
     uBlock Origin Lite:
       Settings:
         Default filtering mode: Complete
