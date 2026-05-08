@@ -19,7 +19,6 @@ cask 'soundsource'
 cask 'utm'
 
 # Window manager
-tap 'nikitabobko/tap'
 cask 'nikitabobko/tap/aerospace'
 
 
@@ -31,10 +30,8 @@ brew 'ansible'
 brew 'aria2'
 brew 'asciinema'
 brew 'awscli'
-brew 'ffmpeg'
 brew 'exiftool'
-brew 'fd'  # fzf-lua (LazyVim)
-brew 'fzf'  # fzf-lua (LazyVim)
+brew 'ffmpeg'
 brew 'gh'
 brew 'git'
 brew 'gnupg'
@@ -42,25 +39,20 @@ brew 'imagemagick'
 brew 'ipmitool'
 brew 'iproute2mac'
 brew 'jq'
-brew 'luarocks'
 brew 'mas'
-brew 'neovim'
-brew 'node'
 brew 'opentofu'
 brew 'p7zip'
 brew 'pdsh'
 brew 'pinentry-mac'
 brew 'pyenv'
-brew 'pylint'
-brew 'ripgrep'  # fzf-lua (LazyVim)
+brew 'qemu'  # E.g. for `qemu-img`
 brew 'rsync'
 brew 'sipcalc'
 brew 'speedtest-cli'
+brew 'telnet'
 brew 'tree'
 brew 'watch'
 brew 'xz'
-brew 'yamllint'
-brew 'yarn'
 
 # GNU utilities
 brew 'coreutils'
@@ -77,6 +69,15 @@ brew 'wget'
 brew 'helm'
 brew 'k9s'
 brew 'kubectl'
+
+# LazyVim
+brew 'neovim'
+brew 'luarocks'
+brew 'node'
+## fzf-lua
+brew 'fd'
+brew 'fzf'
+brew 'ripgrep'
 
 
 #-------------------------------------------------------------------------------
