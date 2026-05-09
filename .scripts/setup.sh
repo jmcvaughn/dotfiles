@@ -13,6 +13,7 @@ packages=(
 	docker-compose-plugin
 	gh
 	hwloc-nox
+	incus
 	iperf
 	ipmitool
 	jq
@@ -91,6 +92,9 @@ for package in helm kubectl nvim; do
 done
 sudo snap install --classic node
 sudo snap install --channel v2/candidate --classic aws-cli
+
+# Remove LXD as Incus used instead
+sudo snap remove lxd
 
 # Create Intel One Boot Flash Update (OFU) symlink
 sudo ln -s /usr/bin/flashupdt/flashupdt /usr/local/sbin/
@@ -209,6 +213,12 @@ fi
 
 # Add current user to docker group
 sudo usermod -aG docker "$USER"
+
+# Add current user to incus-admin group to run commands without sudo
+# Copied from
+# https://linuxcontainers.org/incus/docs/main/tutorial/first_steps/#install-and-initialize-incus
+sudo adduser "$USER" incus-admin
+newgrp incus-admin
 
 # Enable passwordless sudo for current user
 if sudo [ ! -f /etc/sudoers.d/"$USER" ]; then
