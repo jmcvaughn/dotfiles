@@ -103,13 +103,13 @@ sudo apt-get -y install --no-install-recommends virtinst
 sudo apt-get -y install ${packages[@]}
 sudo apt-get -y build-dep vagrant ruby-libvirt
 sudo snap set system experimental.parallel-instances=true
-for package in canonical-livepatch; do
+for package in canonical-livepatch fwupd; do
 	sudo snap install "$package"
 done
-for package in nvim; do
+for package in helm kubectl nvim; do
 	sudo snap install "$package" --classic
 done
-sudo snap install --channel 18/stable --classic node
+sudo snap install --classic node
 sudo snap install --channel v2/candidate --classic aws-cli
 
 # Install Python 3 packages
