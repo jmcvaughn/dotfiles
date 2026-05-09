@@ -280,6 +280,7 @@ tm() {
 # Miscellaneous
 alias aria2c='aria2c --seed-time=0'
 alias ddi='sudo dd bs=16K conv=fsync status=progress'
+alias lxc='incus'
 alias oc='openstack --os-cloud'
 alias os='openstack'
 alias ucomment="grep -vE '^([[:space:]]*(#|/|;)|$)'"
