@@ -3,6 +3,7 @@
 #-------------------------------------------------------------------------------
 
 cask 'coconutbattery'
+cask 'cyberduck'
 cask 'displaycal'
 cask 'drawio'
 cask 'firefox'
@@ -30,6 +31,7 @@ brew 'ansible'
 brew 'aria2'
 brew 'asciinema'
 brew 'awscli'
+brew 'duck'
 brew 'exiftool'
 brew 'ffmpeg'
 brew 'gh'
