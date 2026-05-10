@@ -46,6 +46,7 @@ brew 'opentofu'
 brew 'p7zip'
 brew 'pdsh'
 brew 'pinentry-mac'
+brew 'pipx'
 brew 'pyenv'
 brew 'qemu'  # E.g. for `qemu-img`
 brew 'rsync'
