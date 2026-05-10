@@ -16,33 +16,34 @@ os=$(uname --operating-system 2> /dev/null || uname)  # GNU coreutils | BSD
 
 # Paths
 if [[ $os == 'Darwin' ]]; then
-	brew_prefix=$(brew --prefix)
-	eval "$($brew_prefix/bin/brew shellenv)"
-	PATH="$brew_prefix/sbin:$PATH"  # Mainly for brew doctor
+	case "$(uname -m)" in
+		arm64) eval "$(/opt/homebrew/bin/brew shellenv)" ;;
+		*) "$(/usr/local/bin/brew shellenv)" ;;
+	esac
+	PATH="$HOMEBREW_PREFIX/sbin:$PATH"  # Mainly for brew doctor
 	# GNU awk
-	PATH="$brew_prefix/opt/gawk/libexec/gnubin:$PATH"
-	MANPATH="$brew_prefix/opt/gawk/libexec/gnuman/:$MANPATH"
+	PATH="$HOMEBREW_PREFIX/opt/gawk/libexec/gnubin:$PATH"
+	MANPATH="$HOMEBREW_PREFIX/opt/gawk/libexec/gnuman/:$MANPATH"
 	# GNU coreutils
-	PATH="$brew_prefix/opt/coreutils/libexec/gnubin:$PATH"
-	MANPATH="$brew_prefix/opt/coreutils/libexec/gnuman:$MANPATH"
+	PATH="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
+	MANPATH="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnuman:$MANPATH"
 	# GNU findutils
-	PATH="$brew_prefix/opt/findutils/libexec/gnubin:$PATH"
-	MANPATH="$brew_prefix/opt/findutils/libexec/gnuman:$MANPATH"
+	PATH="$HOMEBREW_PREFIX/opt/findutils/libexec/gnubin:$PATH"
+	MANPATH="$HOMEBREW_PREFIX/opt/findutils/libexec/gnuman:$MANPATH"
 	# GNU grep
-	PATH="$brew_prefix/opt/grep/libexec/gnubin:$PATH"
-	MANPATH="$brew_prefix/opt/grep/libexec/gnuman:$MANPATH"
+	PATH="$HOMEBREW_PREFIX/opt/grep/libexec/gnubin:$PATH"
+	MANPATH="$HOMEBREW_PREFIX/opt/grep/libexec/gnuman:$MANPATH"
 	# GNU sed
-	PATH="$brew_prefix/opt/gnu-sed/libexec/gnubin:$PATH"
-	MANPATH="$brew_prefix/opt/gnu-sed/libexec/gnuman:$MANPATH"
+	PATH="$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin:$PATH"
+	MANPATH="$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnuman:$MANPATH"
 	# GNU tar
-	PATH="$brew_prefix/opt/gnu-tar/libexec/gnubin:$PATH"
-	MANPATH="$brew_prefix/opt/gnu-tar/libexec/gnuman:$MANPATH"
+	PATH="$HOMEBREW_PREFIX/opt/gnu-tar/libexec/gnubin:$PATH"
+	MANPATH="$HOMEBREW_PREFIX/opt/gnu-tar/libexec/gnuman:$MANPATH"
 	export MANPATH
-	unset brew_prefix
 elif [[ $os == 'GNU/Linux' ]]; then
 	PATH="$PATH:/snap/bin"  # Canonical snaps
 fi
-export PATH="$HOME/bin:$HOME/.local/bin:$PATH"  # ~/.local/bin/ for pip
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 export CDPATH="$HOME"
 # }}}
 
