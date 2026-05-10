@@ -202,6 +202,7 @@ fi
 # Regardless of quotes, aliases will be substituted in other aliases
 
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dfiles='dotfiles'
 
 # Editor
 alias vi='$EDITOR'
