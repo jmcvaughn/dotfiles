@@ -58,6 +58,15 @@ system_settings() {  # {{{
 	## Dock > Show suggested and recent apps in Dock: False
 	defaults write com.apple.dock show-recents -bool false
 
+	## Windows > Drag windows to left or right edge of screen to tile: False
+	defaults write com.apple.WindowManager EnableTilingByEdgeDrag -bool false
+
+	## Windows > Drag windows to menu bar to fill screen: False
+	defaults write com.apple.WindowManager EnableTopTilingByEdgeDrag -bool false
+
+	## Windows > Hold Option key while dragging windows to tile: False
+	defaults write com.apple.WindowManager EnableTilingOptionAccelerator -bool false
+
 	## Mission Control > Automatically rearrange Spaces based on most recent use: False
 	defaults write com.apple.dock mru-spaces -bool false
 
