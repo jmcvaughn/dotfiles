@@ -37,7 +37,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "python",
-  command = "set shiftwidth=0 tabstop=4 textwidth=79 nowrap",
+  command = "set shiftwidth=0 tabstop=4 textwidth=88 nowrap",
 })
 
 -- LaTeX
