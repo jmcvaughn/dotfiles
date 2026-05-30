@@ -106,8 +106,9 @@ run = ['layout floating']
 #     activate
 # end tell'
 # '''
-alt-c = 'exec-and-forget ~/.config/aerospace/scripts/toggle_app.sh Telegram'
-alt-d = 'exec-and-forget ~/.config/aerospace/scripts/toggle_app.sh Slack'
+alt-c = 'exec-and-forget ~/.config/aerospace/scripts/toggle_app.py ru.keepcoder.Telegram'
+alt-d = 'exec-and-forget ~/.config/aerospace/scripts/toggle_app.py com.tinyspeck.slackmacgap'
+alt-x = 'exec-and-forget ~/.config/aerospace/scripts/toggle_app.py net.whatsapp.WhatsApp'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
 alt-comma = 'layout tiles horizontal vertical'
@@ -119,6 +120,10 @@ alt-h = 'focus --boundaries all-monitors-outer-frame left'
 alt-j = 'focus --boundaries all-monitors-outer-frame down'
 alt-k = 'focus --boundaries all-monitors-outer-frame up'
 alt-l = 'focus --boundaries all-monitors-outer-frame right'
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#focus-back-and-forth
+alt-p = 'exec-and-forget ~/.config/aerospace/scripts/toggle_prev.sh'
+alt-shift-p = 'workspace-back-and-forth'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#focus-monitor
 alt-m = 'focus-monitor --wrap-around next'
@@ -148,7 +153,6 @@ alt-y = 'workspace 6'
 alt-u = 'workspace 7'
 alt-i = 'workspace 8'
 alt-o = 'workspace 9'
-alt-p = 'workspace 10'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
 alt-shift-q = 'move-node-to-workspace 1'
@@ -160,7 +164,6 @@ alt-shift-y = 'move-node-to-workspace 6'
 alt-shift-u = 'move-node-to-workspace 7'
 alt-shift-i = 'move-node-to-workspace 8'
 alt-shift-o = 'move-node-to-workspace 9'
-alt-shift-p = 'move-node-to-workspace 10'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-monitor
 alt-shift-m = 'move-node-to-monitor --focus-follows-window --wrap-around next'
