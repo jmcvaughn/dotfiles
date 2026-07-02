@@ -43,6 +43,12 @@ if [[ $os == 'Darwin' ]]; then
 elif [[ $os == 'GNU/Linux' ]]; then
 	PATH="$PATH:/snap/bin"  # Canonical snaps
 fi
+
+# Add Mason (LazyVim) binaries
+if [ -d "$HOME/.local/share/nvim/mason/bin/" ]; then
+	PATH="$HOME/.local/share/nvim/mason/bin/:$PATH"
+fi
+
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 export CDPATH="$HOME"
 # }}}
