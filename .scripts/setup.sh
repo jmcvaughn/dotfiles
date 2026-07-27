@@ -5,7 +5,7 @@ duckdns_token=''
 lan_interface='eno1'
 subnets=''
 wan_interface='enp2s0'
-ha_port=''
+reverse_proxy_port=''
 
 # WireGuard (remote access)
 wg0_port=''
@@ -25,7 +25,7 @@ packages=(
 	dnsmasq
 	docker-ce
 	docker-compose-plugin
-	iperf
+	iperf3
 	ipmitool
 	iptables-persistent
 	jq
@@ -117,7 +117,7 @@ sudo apt-get -y install ${packages[@]}
 for i in canonical-livepatch; do
 	sudo snap install "$i"
 done
-for i in certbot nvim; do
+for i in nvim; do
 	sudo snap install "$i" --classic
 done
 # sudo snap install --channel 18/stable --classic node
@@ -241,8 +241,8 @@ if [ ! -f /etc/iptables/rules.v4 ]; then
 	--append INPUT --in-interface $wan_interface --protocol icmp --icmp-type echo-request --match limit --limit 1/second --jump ACCEPT
 	--append INPUT --in-interface $wan_interface --protocol icmp --icmp-type fragmentation-needed --jump ACCEPT
 	--append INPUT --in-interface $wan_interface --protocol icmp --icmp-type time-exceeded --jump ACCEPT
-	--append INPUT --in-interface $wan_interface --protocol tcp --dport 80 --match conntrack --ctstate NEW --jump ACCEPT --match comment --comment letsencrypt
-	--append INPUT --in-interface $wan_interface --protocol tcp --dport $ha_port --match conntrack --ctstate NEW --jump ACCEPT --match comment --comment ha
+	--append INPUT --in-interface $wan_interface --protocol tcp --dport $reverse_proxy_port --match conntrack --ctstate NEW --jump ACCEPT --match comment --comment reverse-proxy
+	--append INPUT --in-interface $wan_interface --protocol tcp --dport 80 --match conntrack --ctstate NEW --jump ACCEPT --match comment --comment reverse-proxy
 	--append INPUT --jump REJECT
 
 	--append FORWARD --match conntrack --ctstate ESTABLISHED,RELATED,DNAT --jump ACCEPT
@@ -314,30 +314,6 @@ if ! sudo ls /etc/wireguard/wg1.conf > /dev/null 2>&1; then
 	#Endpoint = $wg1_peer
 	EOF
 	sudo systemctl enable --now wg-quick@wg1.service
-fi
-
-# Create Unifi Controller Docker container directories
-sudo mkdir -p /srv/unifi/{data,log}/ 2> /dev/null
-
-# Add script to copy certificates for Docker containers
-sudo mkdir -p /etc/letsencrypt/renewal-hooks/deploy/ > /dev/null 2>&1
-if [ ! -f /etc/letsencrypt/renewal-hooks/deploy/copy-certs.sh ]; then
-	sudo tee /etc/letsencrypt/renewal-hooks/deploy/copy-certs.sh <<- EOF
-	#!/bin/bash
-
-	domain='$domain'
-
-	if [ "\$RENEWED_LINEAGE" = /etc/letsencrypt/live/"\$domain" ]; then
-	  # For containers that use the default Let's Encrypt naming scheme
-	  # Docker volumes don't allow symlinks to be resolved
-	  sudo mkdir -p /srv/ssl/ > /dev/null 2>&1
-	  sudo cp -r --dereference /etc/letsencrypt/live/"\$domain"/* /srv/ssl/
-
-	  # Restart all Docker containers
-	  sudo docker restart \$(sudo docker ps | awk '!/CONTAINER ID/ { print \$1 }')
-	fi
-	EOF
-	sudo chmod +x /etc/letsencrypt/renewal-hooks/deploy/copy-certs.sh
 fi
 
 # Add current user to docker group
