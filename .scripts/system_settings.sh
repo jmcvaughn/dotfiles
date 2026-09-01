@@ -58,6 +58,9 @@ system_settings() {  # {{{
 	## Dock > Show suggested and recent apps in Dock: False
 	defaults write com.apple.dock show-recents -bool false
 
+	## Desktop & Stage Manager > Click wallpaper to show desktop: Only in Stage Manager
+	defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false
+
 	## Windows > Drag windows to left or right edge of screen to tile: False
 	defaults write com.apple.WindowManager EnableTilingByEdgeDrag -bool false
 
