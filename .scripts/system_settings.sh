@@ -266,6 +266,9 @@ other_settings(){  # {{{
 	networksetup -switchtolocation 'Google DNS'
 	networksetup -setdnsservers 'Wi-Fi' 8.8.8.8 8.8.4.4
 	networksetup -switchtolocation Automatic
+
+	# Create symlink for iCloud Drive in user home directory
+	gln -s "$HOME/Library/Mobile Documents/" "$HOME/iCloud Drive"
 }  # }}}
 
 
