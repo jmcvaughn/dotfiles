@@ -4,7 +4,7 @@ install_packages() {
 	# Check if these applications are already installed. They need to run in
 	# order to complete installation; they will only be launched if newly
 	# installed.
-	cask_before=$(brew cask list soundsource telegram 2> /dev/null)
+	cask_before=$(brew cask list telegram 2> /dev/null)
 
 	# Install packages
 	brew bundle --global && hash -r
@@ -21,11 +21,6 @@ install_packages() {
 		show_donation_message = 0
 		startup_sound.enable = 0
 		EOF
-	fi
-
-	# If SoundSource newly installed, run Audio Capture Engine installer
-	if ! echo "$cask_before" | grep -q SoundSource && brew cask list soundsource > /dev/null 2>&1; then
-		sudo /Applications/SoundSource.app/Contents/Resources/aceinstaller install -s
 	fi
 
 	# Run Telegram if newly installed, for Share menu extension
@@ -50,7 +45,6 @@ set_login_items() {
 	## Use separate osascript calls, otherwise you only get output from the last
 	## to run and order seems to change
 	osascript -e 'tell application "System Events" to make login item at end with properties {name: "LaunchBar", path: "/Applications/LaunchBar.app", hidden: false}' > /dev/null
-	osascript -e 'tell application "System Events" to make login item at end with properties {name: "SoundSource", path: "/Applications/SoundSource.app", hidden: true}' > /dev/null
 }
 
 

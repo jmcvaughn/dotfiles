@@ -271,10 +271,6 @@ Applications:
       Send me occasional surveys via Slackbot: False
       Disable hardware acceleration: True  # Global
 
-  SoundSource:
-    Other:
-      - Remove default effects, set default devices
-
   Telegram:
     # First sign-in doesn't work with proxy
     General:
@@ -327,4 +323,3 @@ File associations:
 
 Licenses:
   - LaunchBar
-  - SoundSource

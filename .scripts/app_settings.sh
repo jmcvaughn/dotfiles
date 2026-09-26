@@ -166,19 +166,6 @@ notes() {
 }
 
 
-soundsource() {
-	# Settings
-	## General > Super Volume Keys: True
-	defaults write com.rogueamoeba.soundsource keyboardVolume -bool true
-
-	## Appearance > Follow System Accent Color: True
-	defaults write com.rogueamoeba.soundsource followSystemAccent -bool true
-
-	## Appearance > Menu Bar Icon: Speaker (System)
-	defaults write com.rogueamoeba.soundsource menuBarIcon -string speaker
-}
-
-
 utm() {
 	# Settings
 	## Application > Do not show confirmation when closing a running VM: True
@@ -209,9 +196,6 @@ main() {
 	fi
 	notes
 	pkill -x Notes && open -a Notes
-
-	soundsource
-	pkill -x soundsource && open -a SoundSource
 
 	utm
 	pkill -x UTM && open -a UTM

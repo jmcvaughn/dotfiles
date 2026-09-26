@@ -16,7 +16,6 @@ cask 'qobuz'
 cask 'raspberry-pi-imager'
 cask 'font-sauce-code-pro-nerd-font'
 cask 'sonos-s1-controller'
-cask 'soundsource'
 cask 'utm'
 
 # Window manager
