@@ -2,7 +2,6 @@
 # Casks
 #-------------------------------------------------------------------------------
 
-cask 'coconutbattery'
 cask 'cyberduck'
 cask 'displaycal'
 cask 'drawio'
